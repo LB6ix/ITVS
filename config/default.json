@@ -1,3 +1,4 @@
 {
-    "mongoURI": "mongodb+srv://Lbulota:admin123@itvscluster.ubwga.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
+    "mongoURI": "mongodb+srv://Lbulota:admin123@itvscluster.ubwga.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
+    "jwtSecret": "tokenforjwtbd"
 }
