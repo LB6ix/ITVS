@@ -18,6 +18,7 @@ router.post(
     check('firstname', 'Įrašykite vardą').not().isEmpty(),
     check('lastname', 'Įrašykite pavardę').not().isEmpty(),
     check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
+    //check('title', 'Pasirinkite einamas pareigas').not().isEmpty(),
     check(
       'password',
       'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
