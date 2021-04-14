@@ -18,7 +18,7 @@ router.post(
     check('firstname', 'Įrašykite vardą').not().isEmpty(),
     check('lastname', 'Įrašykite pavardę').not().isEmpty(),
     check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
-    //check('title', 'Pasirinkite einamas pareigas').not().isEmpty(),
+    check('role', 'Nurodykite rolę').not().isEmpty(),
     check(
       'password',
       'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
@@ -30,7 +30,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { firstname, lastname, email, password } = req.body;
+    const { firstname, lastname, email, role, password } = req.body;
 
     try {
       let user = await User.findOne({ email });
@@ -51,6 +51,7 @@ router.post(
         firstname,
         lastname,
         email,
+        role,
         avatar,
         password,
       });
