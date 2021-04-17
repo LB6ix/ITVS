@@ -1,13 +1,17 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
+import { setAlert } from '../../actions/alert';
+import { createuser } from '../../actions/auth';
+import PropTypes from 'prop-types';
 
-const CreateUser = () => {
+const CreateUser = ({ setAlert, createuser }) => {
   const [formData, setFormData] = useState({
     firstname: '',
     lastname: '',
     email: '',
     role: '',
     password: '',
-    password2: '',
+    password2: ''
   });
 
   const { firstname, lastname, email, role, password, password2 } = formData;
@@ -18,9 +22,10 @@ const CreateUser = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     if (password !== password2) {
-      console.log('passwords not match');
+      setAlert('Slaptažodžiai nesutampa', 'danger');
     } else {
-      console.log(formData);
+      createuser({ firstname, lastname, email, role, password });
+      setAlert('Naudotojas sėkmingai sukurtas!', 'success');
     }
   };
 
@@ -67,13 +72,12 @@ const CreateUser = () => {
         <div className="form-group">
           <input
             type="text"
-            placeholder="Parinkti rolę"
+            placeholder="Parinkti rolę FIX THIS"
             name="role"
             value={role}
             onChange={(e) => onChange(e)}
             required
           />
-          //fix
         </div>
         <div className="form-group">
           <input
@@ -101,4 +105,9 @@ const CreateUser = () => {
   );
 };
 
-export default CreateUser;
+CreateUser.propTypes = {
+  setAlert: PropTypes.func.isRequired,
+  createuser: PropTypes.func.isRequired
+};
+
+export default connect(null, { setAlert, createuser })(CreateUser);

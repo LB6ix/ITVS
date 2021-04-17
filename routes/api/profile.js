@@ -127,7 +127,7 @@ router.get('/user/:user_id', async (req, res) => {
   }
 });
 
-//@route  DELETE api/profile
+//@route  DELETE api/profile/id
 //@desc   Delete profile, user, posts
 //@access Private
 

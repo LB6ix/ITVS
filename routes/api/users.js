@@ -16,17 +16,17 @@ const auth = require('../../middleware/auth');
 router.post(
   '/',
   [
-    auth,
-    [
-      check('firstname', 'Įrašykite vardą').not().isEmpty(),
-      check('lastname', 'Įrašykite pavardę').not().isEmpty(),
-      check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
-      check('role', 'Nurodykite rolę').not().isEmpty(),
-      check(
-        'password',
-        'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
-      ).isLength({ min: 6 }),
-    ],
+    // auth,
+    // [
+    check('firstname', 'Įrašykite vardą').not().isEmpty(),
+    check('lastname', 'Įrašykite pavardę').not().isEmpty(),
+    check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
+    check('role', 'Nurodykite rolę').not().isEmpty(),
+    check(
+      'password',
+      'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
+    ).isLength({ min: 6 }),
+    // ],
   ],
   async (req, res) => {
     const errors = validationResult(req);
