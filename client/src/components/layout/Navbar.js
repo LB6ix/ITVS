@@ -8,7 +8,7 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const authLinks = (
     <ul>
       <li>
-        <a onClick={logout} href="#!">
+        <a onClick={logout} href='#!'>
           Logout
         </a>
       </li>
@@ -18,22 +18,22 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
   const nonAuthLinks = (
     <ul>
       <li>
-        <a href="profiles.html">Developers</a>
+        <Link to='/'>Pradinis Puslapis</Link>
       </li>
       <li>
-        <Link to="/create-user">Sukurti naudotoją</Link>
+        <Link to='/create-user'>Sukurti naudotoją</Link>
       </li>
       <li>
-        <Link to="/login">Prisijungti</Link>
+        <Link to='/login'>Prisijungti</Link>
       </li>
     </ul>
   );
 
   return (
-    <nav className="navbar bg-dark">
+    <nav className='navbar bg-dark'>
       <h1>
-        <Link to="/">
-          <i className="fas fa-code"></i>ITVS
+        <Link to='/'>
+          <i className='fas fa-code'></i>ITVS
         </Link>
       </h1>
       {!loading && (

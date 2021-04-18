@@ -25,16 +25,16 @@ export default function (state = initialState, action) {
         ...state,
         isAuthenticated: true,
         loading: false,
-        // role: payload.user.role,
         user: payload
+        //role: payload.user.role
       };
     case LOGIN_SUCCESS:
       return {
         ...state,
         ...payload,
-        // role: payload.role,
         isAuthenticated: true,
         loading: false
+        //role: payload.user.role
       };
     case CREATE_USER_SUCCESS:
       return {
