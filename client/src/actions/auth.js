@@ -6,7 +6,8 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
+  CLEAR_PROFILE
 } from './constants';
 import { setAlert } from './alert';
 
@@ -73,7 +74,6 @@ export const login = ({ email, password }) => async (dispatch) => {
   const body = JSON.stringify({
     email,
     password
-    //role
   });
 
   try {
@@ -95,5 +95,6 @@ export const login = ({ email, password }) => async (dispatch) => {
 };
 
 export const logout = () => (dispatch) => {
+  dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };

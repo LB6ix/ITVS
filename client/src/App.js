@@ -1,12 +1,14 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
+import Sidebar from './components/layout/Sidebar';
 import Landing from './components/layout/Landing';
 import CreateUser from './components/auth/CreateUser';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import Dashboard from './components/dashboard/Dashboard';
 import PrivateRoute from './components/routes/PrivateRoute';
+import auth from './reducers/auth';
 import './App.css';
 
 import { Provider } from 'react-redux';
@@ -27,7 +29,8 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          <Navbar />
+          {store.getState.showPageConent ? null : <Navbar />}
+          {/* <Sidebar /> */}
           <Route exact path='/' component={Landing} />
           <section className='container'>
             <Alert />

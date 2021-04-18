@@ -3,8 +3,9 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { login } from '../../actions/auth';
+import Sidebar from '../layout/Sidebar';
 
-const Login = ({ login, isAuthenticated }) => {
+const Login = ({ login, isAuthenticated, showPageContent }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -22,38 +23,42 @@ const Login = ({ login, isAuthenticated }) => {
 
   //redirect
 
+  // if (showPageContent) {
+  //   <Sidebar>
+  // }
+
   if (isAuthenticated) {
-    return <Redirect to="/dashboard" />;
+    return <Redirect to='/dashboard' />;
   }
 
   return (
     <Fragment>
-      <h5 className="large text-primary">Prisijungti</h5>
-      <p className="lead">
-        <i className="fas fa-user"></i> Prisijunkite prie savo paskyros:
+      <h5 className='large text-primary'>Prisijungti</h5>
+      <p className='lead'>
+        <i className='fas fa-user'></i> Prisijunkite prie savo paskyros:
       </p>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
+      <form className='form' onSubmit={(e) => onSubmit(e)}>
+        <div className='form-group'>
           <input
-            type="email"
-            placeholder="Elektroninis paštas"
-            name="email"
+            type='email'
+            placeholder='Elektroninis paštas'
+            name='email'
             value={email}
             onChange={(e) => onChange(e)}
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            type="password"
-            placeholder="Slaptažodis"
-            name="password"
+            type='password'
+            placeholder='Slaptažodis'
+            name='password'
             value={password}
             onChange={(e) => onChange(e)}
-            minLength="6"
+            minLength='6'
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Prisijungti" />
+        <input type='submit' className='btn btn-primary' value='Prisijungti' />
       </form>
     </Fragment>
   );
@@ -61,11 +66,13 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  showPageContent: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  showPageContent: state.auth.showPageContent
 });
 
 export default connect(mapStateToProps, { login })(Login);

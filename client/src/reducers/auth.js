@@ -13,6 +13,7 @@ const initialState = {
   isAuthenticated: null,
   role: null,
   loading: true, //request is made, response received
+  showPageContent: false,
   user: null
 };
 
@@ -24,6 +25,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
+        showPageContent: false,
         loading: false,
         user: payload
         //role: payload.user.role
@@ -33,7 +35,8 @@ export default function (state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true,
-        loading: false
+        loading: false,
+        showPageContent: false
         //role: payload.user.role
       };
     case CREATE_USER_SUCCESS:
@@ -56,6 +59,7 @@ export default function (state = initialState, action) {
         token: null,
         isAuthenticated: false,
         loading: false,
+        showPageContent: false,
         user: null
       };
     case CREATE_USER_FAIL:

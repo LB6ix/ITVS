@@ -1,13 +1,41 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import Loading from '../layout/Loading';
 import { getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({ getCurrentProfile, auth, profile }) => {
+const Dashboard = ({
+  getCurrentProfile,
+  auth: { user },
+  profile: { profile, loading }
+}) => {
   useEffect(() => {
     getCurrentProfile();
-  }, []);
-  return <div>Dashboard</div>;
+  }, [getCurrentProfile]);
+  return loading && profile === null ? (
+    <Loading />
+  ) : (
+    <Fragment>
+      <h1 className='large text-primary'>Pagrindinis puslapis</h1>
+      <p className='lead'>
+        <i className='fas fa-user'></i> Sveiki, {user && user.email}!
+      </p>
+      {profile !== null ? (
+        <Fragment>has</Fragment>
+      ) : (
+        <Fragment>
+          <p>
+            Jūs nesate užpildę asmeninės informacijos, prašome tai padaryti kuo
+            greičiau!
+          </p>{' '}
+          <Link to='/create-profile' className='btn btn-primary my-1'>
+            Susikurti profilį
+          </Link>
+        </Fragment>
+      )}
+    </Fragment>
+  );
 };
 
 Dashboard.propTypes = {
