@@ -29,7 +29,7 @@ router.post(
   '/',
   [
     check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
-    check('password', 'Įveskite slaptažodį').exists(),
+    check('password', 'Įveskite slaptažodį').exists()
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -59,8 +59,8 @@ router.post(
       const payload = {
         user: {
           id: user.id,
-          role: user.role,
-        },
+          role: user.role
+        }
       };
 
       jwt.sign(
