@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
+const { authUser, authAdmin } = require('../../middleware/auth');
 
 const Hardware = require('../../models/Hardware');
 
@@ -12,12 +12,12 @@ const Hardware = require('../../models/Hardware');
 router.post(
   '/add-hardware',
   [
-    auth,
+    authAdmin,
     [
       check('name', 'Įrašykite pavadinimą').not().isEmpty(),
       check('model', 'Įrašykite modelį').not().isEmpty(),
-      check('category', 'Įrašykite katogeriją').not().isEmpty(),
-    ],
+      check('category', 'Įrašykite katogeriją').not().isEmpty()
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -32,7 +32,7 @@ router.post(
       status,
       checkedOut,
       location,
-      cost,
+      cost
     } = req.body;
 
     try {
@@ -40,7 +40,7 @@ router.post(
 
       if (hardware) {
         return res.status(400).json({
-          errors: [{ msg: 'Įranga su tokiu pavadinimu jau egzistuoja' }],
+          errors: [{ msg: 'Įranga su tokiu pavadinimu jau egzistuoja' }]
         });
       }
 
@@ -51,7 +51,7 @@ router.post(
         status,
         checkedOut,
         location,
-        cost,
+        cost
       });
 
       await hardware.save();
@@ -67,7 +67,7 @@ router.post(
 //@desc   Get all hwardware assets
 //@access Private
 
-router.get('/', auth, async (req, res) => {
+router.get('/', authAdmin, async (req, res) => {
   try {
     const hardwarelist = await Hardware.find();
     res.json(hardwarelist);
@@ -81,7 +81,7 @@ router.get('/', auth, async (req, res) => {
 //@desc   Delete hardware entry
 //@access Private
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', authAdmin, async (req, res) => {
   try {
     const hardware = await Hardware.findById(req.params.id);
 

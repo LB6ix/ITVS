@@ -7,7 +7,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 
 const User = require('../../models/User');
-const auth = require('../../middleware/auth');
+const { authUser, authAdmin } = require('../../middleware/auth');
 
 //@route  POST api/users
 //@desc   User registracija
@@ -16,17 +16,17 @@ const auth = require('../../middleware/auth');
 router.post(
   '/',
   [
-    // auth,
-    // [
-    check('firstname', 'Įrašykite vardą').not().isEmpty(),
-    check('lastname', 'Įrašykite pavardę').not().isEmpty(),
-    check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
-    check('role', 'Nurodykite rolę').not().isEmpty(),
-    check(
-      'password',
-      'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
-    ).isLength({ min: 6 })
-    // ],
+    authAdmin,
+    [
+      check('firstname', 'Įrašykite vardą').not().isEmpty(),
+      check('lastname', 'Įrašykite pavardę').not().isEmpty(),
+      check('email', 'Įrašykite tinkamą elektroninį paštą').isEmail(),
+      check('role', 'Nurodykite rolę').not().isEmpty(),
+      check(
+        'password',
+        'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
+      ).isLength({ min: 6 })
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);

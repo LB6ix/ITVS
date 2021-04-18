@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
+const { authUser, authAdmin } = require('../../middleware/auth');
 
 const User = require('../../models/User');
 const Post = require('../../models/Posts');
@@ -14,11 +14,11 @@ const { route } = require('./users');
 router.post(
   '/',
   [
-    auth,
+    authUser,
     [
       check('text', 'Aprašymas privalomas').not().isEmpty(),
-      check('category', 'Nurodykite kategoriją').not().isEmpty(),
-    ],
+      check('category', 'Nurodykite kategoriją').not().isEmpty()
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -35,7 +35,7 @@ router.post(
         firstname: user.firstname,
         lastname: user.lastname,
         avatar: user.avatar,
-        user: req.user.id,
+        user: req.user.id
       });
 
       const post = await newPost.save();
@@ -51,7 +51,7 @@ router.post(
 //@desc   Get all posts
 //@access Private
 
-router.get('/', auth, async (req, res) => {
+router.get('/', [authUser, authAdmin], async (req, res) => {
   try {
     const posts = await Post.find().sort({ date: -1 });
     res.json(posts);
@@ -65,7 +65,7 @@ router.get('/', auth, async (req, res) => {
 //@desc   post by ID
 //@access Private
 
-router.get('/:id', auth, async (req, res) => {
+router.get('/:id', [authUser, authAdmin], async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -85,7 +85,7 @@ router.get('/:id', auth, async (req, res) => {
 //@desc   Delete a post
 //@access Private
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', [authUser, authAdmin], async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const auth = require('../../middleware/auth');
+const { authUser, authAdmin } = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 
 const Profile = require('../../models/Profile');
@@ -9,10 +9,10 @@ const User = require('../../models/User');
 //@route  GET api/profile/me
 //@desc   Get current user profile
 //@access Private
-router.get('/me', auth, async (req, res) => {
+router.get('/me', authUser, async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.user.id,
+      user: req.user.id
     }).populate('user', ['firstname', 'lastname', 'email', 'title', 'avatar']);
 
     if (!profile) {
@@ -35,7 +35,7 @@ router.get('/me', auth, async (req, res) => {
 router.post(
   '/',
   [
-    auth,
+    authUser,
     [
       check('location', 'Darbo vietą privaloma nurodyti').not().isEmpty(),
       check('phoneNumber', 'Nurodykite darbinį telefoną').isMobilePhone(
@@ -47,8 +47,8 @@ router.post(
         .isEmpty() /*{
         options: { locale: 'lt-LT' },
         errorMessage: 'Privalote nurodyti tinkamą, lietuvišką telefono numerį.',
-      }),*/,
-    ],
+      }),*/
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -97,7 +97,7 @@ router.get('/', async (req, res) => {
       'lastname',
       'email',
       'title',
-      'avatar',
+      'avatar'
     ]);
     res.json(profiles);
   } catch (err) {
@@ -113,7 +113,7 @@ router.get('/', async (req, res) => {
 router.get('/user/:user_id', async (req, res) => {
   try {
     const profile = await Profile.findOne({
-      user: req.params.user_id,
+      user: req.params.user_id
     }).populate('user', ['firstname', 'lastname', 'email', 'title', 'avatar']);
 
     if (!profile) return res.status(400).json({ msg: 'Profilis nerastas' });
@@ -131,7 +131,7 @@ router.get('/user/:user_id', async (req, res) => {
 //@desc   Delete profile, user, posts
 //@access Private
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', authUser, async (req, res) => {
   try {
     await Profile.findOneAndRemove({ user: req.user.id });
     await User.findOneAndRemove({ _id: req.user.id });

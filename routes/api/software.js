@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const auth = require('../../middleware/auth');
+const { authUser, authAdmin } = require('../../middleware/auth');
 const formatDate = require('../../utils/formatDate');
 
 const Software = require('../../models/Software');
@@ -13,7 +13,7 @@ let currentDate = new Date().toISOString();
 router.post(
   '/add-software',
   [
-    auth,
+    authAdmin,
     [
       check('license', 'Įrašykite licencijos pavadinimą').not().isEmpty(),
       check('key', 'Įrašykite produkto raktą').not().isEmpty(),
@@ -24,8 +24,8 @@ router.post(
       check('totalAmount', 'Įveskite tinkamą bendrą kiekį')
         .not()
         .isEmpty()
-        .isInt({ min: 1, max: 100 }),
-    ],
+        .isInt({ min: 1, max: 100 })
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -41,7 +41,7 @@ router.post(
       totalAmount,
       //   availAmount,
       checkedOut,
-      cost,
+      cost
     } = req.body;
 
     try {
@@ -49,7 +49,7 @@ router.post(
 
       if (software) {
         return res.status(400).json({
-          errors: [{ msg: 'Licencija su tokiu pavadinimu jau egzistuoja' }],
+          errors: [{ msg: 'Licencija su tokiu pavadinimu jau egzistuoja' }]
         });
       }
 
@@ -61,7 +61,7 @@ router.post(
         totalAmount,
         // availAmount,
         checkedOut,
-        cost,
+        cost
       });
 
       await software.save();
@@ -77,7 +77,7 @@ router.post(
 //@desc   Get all software assets
 //@access Private
 
-router.get('/', auth, async (req, res) => {
+router.get('/', authAdmin, async (req, res) => {
   try {
     const softwarelist = await Software.find().sort({ expDate: 1 });
     res.json(softwarelist);
@@ -91,7 +91,7 @@ router.get('/', auth, async (req, res) => {
 //@desc   Delete software entry
 //@access Private
 
-router.delete('/:id', auth, async (req, res) => {
+router.delete('/:id', authAdmin, async (req, res) => {
   try {
     const software = await Software.findById(req.params.id);
 
