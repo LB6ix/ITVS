@@ -11,7 +11,7 @@ const auth = require('../../middleware/auth');
 
 //@route  POST api/users
 //@desc   User registracija
-//@access rivate
+//@access Private
 
 router.post(
   '/',
@@ -25,7 +25,7 @@ router.post(
     check(
       'password',
       'Įrašykite vienkartinį slaptažodį, ne trumpesnį nei 6 simbolių'
-    ).isLength({ min: 6 }),
+    ).isLength({ min: 6 })
     // ],
   ],
   async (req, res) => {
@@ -48,7 +48,7 @@ router.post(
       const avatar = gravatar.url(email, {
         s: '200',
         r: 'pg',
-        d: 'mm',
+        d: 'mm'
       });
 
       user = new User({
@@ -57,7 +57,7 @@ router.post(
         email,
         role,
         avatar,
-        password,
+        password
       });
 
       const salt = await bcrypt.genSalt(10);
