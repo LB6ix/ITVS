@@ -15,6 +15,7 @@ router.post(
     authAdmin,
     [
       check('name', 'Įrašykite pavadinimą').not().isEmpty(),
+      check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
       check('model', 'Įrašykite modelį').not().isEmpty(),
       check('category', 'Įrašykite katogeriją').not().isEmpty()
     ]
@@ -27,10 +28,11 @@ router.post(
 
     const {
       name,
+      serialNumber,
       model,
       category,
       status,
-      checkedOut,
+      assignedTo,
       location,
       cost
     } = req.body;
@@ -46,10 +48,11 @@ router.post(
 
       hardware = new Hardware({
         name,
+        serialNumber,
         model,
         category,
         status,
-        checkedOut,
+        assignedTo,
         location,
         cost
       });

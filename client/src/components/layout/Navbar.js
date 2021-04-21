@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
-const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
+const Navbar = ({
+  auth: { isAuthenticated, loading, showPageContent },
+  logout
+}) => {
   const authLinks = (
     <ul>
       <li>
-        <Link to='/dashboard'>
+        <Link to='/main'>
           <i className='fas fa-user'> </i>
           <span className='hide-sm'> </span>
           Pagrindinis puslapis
@@ -54,13 +57,13 @@ const Navbar = ({ auth: { isAuthenticated, loading }, logout }) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
-  //showPageContent: PropTypes.bool.isRequired
+  auth: PropTypes.object.isRequired,
+  showPageContent: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  auth: state.auth
-  //showPageContent: state.showPageContent
+  auth: state.auth,
+  showPageContent: state.showPageContent
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

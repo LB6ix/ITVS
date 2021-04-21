@@ -4,34 +4,34 @@ const SoftwareSchema = new mongoose.Schema({
   license: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
   },
   key: {
     type: String,
-    required: true,
+    required: true
   },
   expDate: {
-    type: Date,
+    type: Date
   },
   manufacturer: {
-    type: String,
+    type: String
   },
   totalAmount: {
-    type: Number,
+    type: Number
   },
   //   availAmount: {
   //     type: Number,
   //   },
-  checkedOut: {
-    type: String,
+  assignedTo: {
+    type: String
   },
   cost: {
-    type: String,
+    type: String
   },
   date: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
 module.exports = Software = mongoose.model('software', SoftwareSchema);

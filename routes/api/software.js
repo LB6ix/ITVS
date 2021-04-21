@@ -40,7 +40,7 @@ router.post(
       manufacturer,
       totalAmount,
       //   availAmount,
-      checkedOut,
+      assignedTo,
       cost
     } = req.body;
 
@@ -60,7 +60,7 @@ router.post(
         manufacturer,
         totalAmount,
         // availAmount,
-        checkedOut,
+        assignedTo,
         cost
       });
 

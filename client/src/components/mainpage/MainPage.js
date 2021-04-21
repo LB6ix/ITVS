@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
+import MainActions from '../mainpage/MainActions';
 import { getCurrentProfile } from '../../actions/profile';
 
-const Dashboard = ({
+const MainPage = ({
   getCurrentProfile,
   auth: { user },
   profile: { profile, loading }
@@ -22,7 +23,9 @@ const Dashboard = ({
         <i className='fas fa-user'></i> Sveiki, {user && user.email}!
       </p>
       {profile !== null ? (
-        <Fragment>has</Fragment>
+        <Fragment>
+          <MainActions />
+        </Fragment>
       ) : (
         <Fragment>
           <p>
@@ -38,7 +41,7 @@ const Dashboard = ({
   );
 };
 
-Dashboard.propTypes = {
+MainPage.propTypes = {
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired
@@ -49,4 +52,4 @@ const mapStateToProps = (state) => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getCurrentProfile })(Dashboard);
+export default connect(mapStateToProps, { getCurrentProfile })(MainPage);

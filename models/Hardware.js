@@ -4,32 +4,36 @@ const HardwareSchema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-    unique: true,
+    unique: true
+  },
+  serialNumber: {
+    type: String,
+    required: true
   },
   model: {
     type: String,
-    required: true,
+    required: true
   },
   category: {
     type: String,
-    required: true,
+    required: true
   },
   status: {
-    type: String,
+    type: String
   },
-  checkedOut: {
-    type: String,
+  assignedTo: {
+    type: String
   },
   location: {
-    type: String,
+    type: String
   },
   cost: {
-    type: String,
+    type: String
   },
   date: {
     type: Date,
-    default: Date.now,
-  },
+    default: Date.now
+  }
 });
 
 module.exports = Hardware = mongoose.model('hardware', HardwareSchema);

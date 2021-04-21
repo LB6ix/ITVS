@@ -6,7 +6,8 @@ import Landing from './components/layout/Landing';
 import CreateUser from './components/auth/CreateUser';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
-import Dashboard from './components/dashboard/Dashboard';
+import MainPage from './components/mainpage/MainPage';
+import CreateProfile from './components/createProfile/CreateProfile';
 import PrivateRoute from './components/routes/PrivateRoute';
 import auth from './reducers/auth';
 import './App.css';
@@ -29,15 +30,24 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          {store.getState.showPageConent ? null : <Navbar />}
-          {/* <Sidebar /> */}
+          {/* {console.log(this.state.showPageContent)} */}
+          {/* {this.props.showPageContent ? null : <Navbar />}
+          <Sidebar /> */}
+          {/* {isAuthenticated ? <Sidebar /> : <Navbar />} */}
+          <Sidebar />
+          <Navbar />
           <Route exact path='/' component={Landing} />
           <section className='container'>
             <Alert />
             <Switch>
               <Route exact path='/create-user' component={CreateUser} />
               <Route exact path='/login' component={Login} />
-              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <PrivateRoute exact path='/main' component={MainPage} />
+              <PrivateRoute
+                exact
+                path='/create-profile'
+                component={CreateProfile}
+              />
             </Switch>
           </section>
         </Fragment>
