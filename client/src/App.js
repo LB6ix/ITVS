@@ -7,7 +7,8 @@ import CreateUser from './components/auth/CreateUser';
 import Login from './components/auth/Login';
 import Alert from './components/layout/Alert';
 import MainPage from './components/mainpage/MainPage';
-import CreateProfile from './components/createProfile/CreateProfile';
+import CreateProfile from './components/profileForms/CreateProfile';
+import EditProfile from './components/profileForms/EditProfile';
 import PrivateRoute from './components/routes/PrivateRoute';
 import auth from './reducers/auth';
 import './App.css';
@@ -47,6 +48,11 @@ const App = () => {
                 exact
                 path='/create-profile'
                 component={CreateProfile}
+              />
+              <PrivateRoute
+                exact
+                path='/edit-profile'
+                component={EditProfile}
               />
             </Switch>
           </section>

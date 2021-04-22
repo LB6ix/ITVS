@@ -28,7 +28,6 @@ export default function (state = initialState, action) {
         showPageContent: false,
         loading: false,
         user: payload
-        //role: payload.user.role
       };
     case LOGIN_SUCCESS:
       return {
@@ -37,7 +36,6 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false,
         showPageContent: false
-        //role: payload.user.role
       };
     case CREATE_USER_SUCCESS:
       return {

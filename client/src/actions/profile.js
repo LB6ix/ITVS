@@ -40,7 +40,7 @@ export const createProfile = (formData, history, edit = false) => async (
     );
 
     if (!edit) {
-      history.push('/dashboard');
+      history.push('/main');
     }
   } catch (err) {
     const errors = err.response.data.errors;
