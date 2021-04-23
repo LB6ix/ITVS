@@ -11,7 +11,7 @@ const MainActions = () => {
         <i class='fab fa-black-tie text-primary'></i> Sukurti pranešimą
       </Link>
       <Link to='add-education' class='btn btn-light'>
-        <i class='fas fa-graduation-cap text-primary'></i> Add Education
+        <i class='fas fa-graduation-cap text-primary'></i> Test
       </Link>
     </div>
   );

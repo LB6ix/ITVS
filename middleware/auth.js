@@ -25,13 +25,18 @@ function authUser(req, res, next) {
 
 function authAdmin(req, res, next) {
   const token = req.header('x-auth-token');
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, auth denied' });
+  }
   try {
     jwt.verify(token, config.get('jwtSecret'), (error, decoded) => {
       if (error) {
         return res.status(401).json({ msg: 'Token is not valid for admin' });
+      } else if (decoded.user.role === 'admin') {
+        req.user = decoded.user;
+        next();
       } else {
-        decoded.user.role === 'admin';
-        return next();
+        authUser();
       }
     });
   } catch (err) {

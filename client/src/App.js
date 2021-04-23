@@ -10,21 +10,28 @@ import MainPage from './components/mainpage/MainPage';
 import CreateProfile from './components/profileForms/CreateProfile';
 import EditProfile from './components/profileForms/EditProfile';
 import PrivateRoute from './components/routes/PrivateRoute';
+import Profiles from './components/profiles/Profiles';
+import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 import auth from './reducers/auth';
 import './App.css';
 
 import { Provider } from 'react-redux';
 import store from './store';
-import { loadUser } from './actions/auth';
+import { checkAdminAuth, loadAdmin, loadUser } from './actions/auth';
 import setAuthToken from './utility/setAuthToken';
+import { stringify } from 'uuid';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
+//testingas
 store.dispatch(loadUser());
+//store.dispatch(loadAdmin());
 
 const App = () => {
   useEffect(() => {
+    //testingas
+    //checkAdminAuth();
     store.dispatch(loadUser());
   }, []); //componentdidmount, runs once
   return (
@@ -43,6 +50,7 @@ const App = () => {
             <Switch>
               <Route exact path='/create-user' component={CreateUser} />
               <Route exact path='/login' component={Login} />
+              <PrivateRoute exact path='/profile-list' component={Profiles} />
               <PrivateRoute exact path='/main' component={MainPage} />
               <PrivateRoute
                 exact

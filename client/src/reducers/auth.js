@@ -1,19 +1,21 @@
 import {
   CREATE_USER_SUCCESS,
   CREATE_USER_FAIL,
+  ADMIN_LOADED,
   USER_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
+  ACCOUNT_DELETED,
   LOGOUT
 } from '../actions/constants';
 
 const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
-  role: null,
+  isAdmin: null,
   loading: true, //request is made, response received
-  showPageContent: false,
+
   user: null
 };
 
@@ -21,11 +23,19 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case ADMIN_LOADED:
+      return {
+        ...state,
+        isAuthenticated: true,
+        isAdmin: true,
+        loading: false,
+        user: payload
+      };
     case USER_LOADED:
       return {
         ...state,
         isAuthenticated: true,
-        showPageContent: false,
+        admin: false,
         loading: false,
         user: payload
       };
@@ -34,8 +44,7 @@ export default function (state = initialState, action) {
         ...state,
         ...payload,
         isAuthenticated: true,
-        loading: false,
-        showPageContent: false
+        loading: false
       };
     case CREATE_USER_SUCCESS:
       return {
@@ -52,12 +61,14 @@ export default function (state = initialState, action) {
       };
     case AUTH_ERROR:
     case LOGOUT:
+    case ACCOUNT_DELETED:
       return {
         ...state,
         token: null,
         isAuthenticated: false,
+        isAdmin: false,
         loading: false,
-        showPageContent: false,
+
         user: null
       };
     case CREATE_USER_FAIL:

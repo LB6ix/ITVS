@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login } from '../../actions/auth';
+import { login, checkAdminAuth } from '../../actions/auth';
 import Sidebar from '../layout/Sidebar';
 
 const Login = ({ login, isAuthenticated, showPageContent }) => {
@@ -66,8 +66,7 @@ const Login = ({ login, isAuthenticated, showPageContent }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool,
-  showPageContent: PropTypes.bool
+  isAuthenticated: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({

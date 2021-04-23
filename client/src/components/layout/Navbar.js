@@ -18,6 +18,13 @@ const Navbar = ({
         </Link>
       </li>
       <li>
+        <Link to='/profile-list'>
+          <i className='fas fa-user'> </i>
+          <span className='hide-sm'> </span>
+          Naudotojų sąrašas
+        </Link>
+      </li>
+      <li>
         <a onClick={logout} href='#!'>
           <i className='fas fa-sign-out-alt'> </i>
           <span className='hide-sm'> </span>

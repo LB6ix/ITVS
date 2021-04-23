@@ -21,6 +21,16 @@ router.get('/', authUser, async (req, res) => {
   }
 }); // auth 2nd parameter, apsaugotas route
 
+//testing admin
+router.get('/admin', authAdmin, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select('-password');
+    res.json(user);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+});
 //@route  POST api/auth
 //@desc   Auth User get token
 //@access Public
