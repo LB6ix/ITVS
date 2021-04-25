@@ -107,7 +107,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-//@route  GET api/profile/user/:user_id
+//@route  GET api/profile/:user_id //
 //@desc   Get prof by user id
 //@access Public
 
@@ -117,8 +117,9 @@ router.get('/user/:user_id', async (req, res) => {
       user: req.params.user_id
     }).populate('user', ['firstname', 'lastname', 'email', 'title', 'avatar']);
 
-    if (!profile) return res.status(400).json({ msg: 'Profilis nerastas' });
-    res.json(profile);
+    if (!profile) return res.status(400).json({ msg: 'Profile not found' });
+
+    return res.json(profile);
   } catch (err) {
     console.error(err.message);
     if (err.kind == 'ObjectId') {
@@ -127,6 +128,23 @@ router.get('/user/:user_id', async (req, res) => {
     res.status(500).status('Server Error');
   }
 });
+
+// router.get('/user/:user_id', async (req, res) => {
+//   try {
+//     const profile = await Profile.findOne({
+//       user: req.params.user_id
+//     }).populate('user', ['firstname', 'lastname', 'email', 'title', 'avatar']);
+
+//     if (!profile) return res.status(400).json({ msg: 'Profilis nerastas' });
+//     res.json(profile);
+//   } catch (err) {
+//     console.error(err.message);
+//     if (err.kind == 'ObjectId') {
+//       return res.status(400).json({ msg: 'Profilis nerastas' });
+//     }
+//     res.status(500).status('Server Error');
+//   }
+// });
 
 //@route  DELETE api/profile/id
 //@desc   Delete profile, user, posts

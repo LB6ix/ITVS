@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { createuser } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router';
 
 const CreateUser = ({ setAlert, createuser }) => {
   const [formData, setFormData] = useState({
@@ -26,80 +27,81 @@ const CreateUser = ({ setAlert, createuser }) => {
     } else {
       createuser({ firstname, lastname, email, role, password });
       setAlert('Naudotojas sėkmingai sukurtas!', 'success');
+      return <Redirect to='/main' />;
     }
   };
 
   return (
     <Fragment>
-      <h5 className="large text-primary">Sukurkite naują naudotoją</h5>
-      <p className="lead">
-        <i className="fas fa-user"></i> Užpildykite formą:
+      <h5 className='large text-primary'>Sukurkite naują naudotoją</h5>
+      <p className='lead'>
+        <i className='fas fa-user'></i> Užpildykite formą:
       </p>
-      <form className="form" onSubmit={(e) => onSubmit(e)}>
-        <div className="form-group">
+      <form className='form' onSubmit={(e) => onSubmit(e)}>
+        <div className='form-group'>
           <input
-            type="text"
-            placeholder="Vardas"
-            name="firstname"
+            type='text'
+            placeholder='Vardas'
+            name='firstname'
             value={firstname}
             onChange={(e) => onChange(e)}
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            type="text"
-            placeholder="Pavardė"
-            name="lastname"
+            type='text'
+            placeholder='Pavardė'
+            name='lastname'
             value={lastname}
             onChange={(e) => onChange(e)}
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            type="email"
-            placeholder="Elektroninis paštas"
-            name="email"
+            type='email'
+            placeholder='Elektroninis paštas'
+            name='email'
             value={email}
             onChange={(e) => onChange(e)}
             required
           />
-          <small className="form-text">
+          <small className='form-text'>
             Būtinai kurkite naudotoją tik su jo darbiniu elektroniniu paštu!
           </small>
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            type="text"
-            placeholder="Parinkti rolę FIX THIS"
-            name="role"
+            type='text'
+            placeholder='Parinkti rolę FIX THIS'
+            name='role'
             value={role}
             onChange={(e) => onChange(e)}
             required
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            type="password"
-            placeholder="Slaptažodis"
-            name="password"
+            type='password'
+            placeholder='Slaptažodis'
+            name='password'
             value={password}
             onChange={(e) => onChange(e)}
-            minLength="6"
+            minLength='6'
           />
         </div>
-        <div className="form-group">
+        <div className='form-group'>
           <input
-            type="password"
-            placeholder="Pakartokite slaptažodį"
-            name="password2"
+            type='password'
+            placeholder='Pakartokite slaptažodį'
+            name='password2'
             value={password2}
             onChange={(e) => onChange(e)}
-            minLength="6"
+            minLength='6'
           />
         </div>
-        <input type="submit" className="btn btn-primary" value="Patvirtinti" />
+        <input type='submit' className='btn btn-primary' value='Patvirtinti' />
       </form>
     </Fragment>
   );

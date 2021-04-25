@@ -2,10 +2,15 @@ import React, { Fragment, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { login, checkAdminAuth } from '../../actions/auth';
-import Sidebar from '../layout/Sidebar';
+import { adminLogin } from '../../actions/auth';
+// import Sidebar from '../layout/Sidebar';
 
-const Login = ({ login, isAuthenticated, showPageContent }) => {
+const AdminLogin = ({
+  adminLogin,
+  isAuthenticated,
+  history,
+  showPageContent
+}) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -18,7 +23,12 @@ const Login = ({ login, isAuthenticated, showPageContent }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    login({ email, password });
+    adminLogin({ email, password });
+    setTimeout(() => {
+      {
+        history.push('/main');
+      }
+    }, 1000);
   };
 
   //redirect
@@ -28,14 +38,17 @@ const Login = ({ login, isAuthenticated, showPageContent }) => {
   // }
 
   if (isAuthenticated) {
-    return <Redirect to='/main' />;
+    setTimeout(() => {
+      return <Redirect to='/main' />;
+    }, 2000);
   }
 
   return (
     <Fragment>
       <h5 className='large text-primary'>Prisijungti</h5>
       <p className='lead'>
-        <i className='fas fa-user'></i> Prisijunkite prie savo paskyros:
+        <i className='fas fa-user'></i> Prisijunkite prie administratoriaus
+        paskyros:
       </p>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
@@ -64,8 +77,8 @@ const Login = ({ login, isAuthenticated, showPageContent }) => {
   );
 };
 
-Login.propTypes = {
-  login: PropTypes.func.isRequired,
+AdminLogin.propTypes = {
+  adminLogin: PropTypes.func.isRequired,
   isAuthenticated: PropTypes.bool
 };
 
@@ -74,4 +87,4 @@ const mapStateToProps = (state) => ({
   showPageContent: state.auth.showPageContent
 });
 
-export default connect(mapStateToProps, { login })(Login);
+export default connect(mapStateToProps, { adminLogin })(AdminLogin);

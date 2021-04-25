@@ -18,7 +18,7 @@ const Sidebar = ({ auth: { isAuthenticated, loading } }) => {
   const nonAuthLinks = (
     <ul>
       <li>
-        <Link to='/login'>Prisijungti</Link>
+        <Link to='/user-login'>Darbuotojo prisijungimas</Link>
       </li>
     </ul>
   );

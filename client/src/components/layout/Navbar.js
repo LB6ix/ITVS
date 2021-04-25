@@ -5,11 +5,14 @@ import PropTypes from 'prop-types';
 import { logout } from '../../actions/auth';
 
 const Navbar = ({
-  auth: { isAuthenticated, loading, showPageContent },
+  auth: { isAuthenticated, isAdmin, loading, showPageContent },
   logout
 }) => {
-  const authLinks = (
+  const adminLinks = (
     <ul>
+      <li>
+        <Link to='/create-user'>Sukurti naudotoją</Link>
+      </li>
       <li>
         <Link to='/main'>
           <i className='fas fa-user'> </i>
@@ -18,7 +21,7 @@ const Navbar = ({
         </Link>
       </li>
       <li>
-        <Link to='/profile-list'>
+        <Link to='/user-list'>
           <i className='fas fa-user'> </i>
           <span className='hide-sm'> </span>
           Naudotojų sąrašas
@@ -34,19 +37,44 @@ const Navbar = ({
     </ul>
   );
 
-  const nonAuthLinks = (
+  const authLinks = (
     <ul>
       <li>
         <Link to='/'>Pradinis Puslapis</Link>
       </li>
       <li>
-        <Link to='/create-user'>Sukurti naudotoją</Link>
+        <a onClick={logout} href='#!'>
+          <i className='fas fa-sign-out-alt'> </i>
+          <span className='hide-sm'> </span>
+          Atsijungti
+        </a>
       </li>
-      <li>
-        <Link to='/login'>Prisijungti</Link>
-      </li>
+      {/* <li>
+        <Link to='/user-login'>Darbuotojo prisijungimas</Link>
+      </li> */}
     </ul>
   );
+
+  const nonAuthLinks = (
+    <ul>
+      <li>
+        <Link to='/'>Pradinis Puslapis</Link>
+      </li>
+      {/* <li>
+        <Link to='/user-login'>Darbuotojo prisijungimas</Link>
+      </li> */}
+    </ul>
+  );
+
+  const getLinks = (isAuthenticated, isAdmin) => {
+    if (isAuthenticated && !isAdmin) {
+      return authLinks;
+    }
+    if (isAuthenticated && isAdmin) {
+      return adminLinks;
+    }
+    return nonAuthLinks;
+  };
 
   return (
     <nav className='navbar bg-dark'>
@@ -55,9 +83,7 @@ const Navbar = ({
           <i className='fas fa-code'> </i>ITVS
         </Link>
       </h1>
-      {!loading && (
-        <Fragment>{isAuthenticated ? authLinks : nonAuthLinks}</Fragment>
-      )}
+      {!loading && <Fragment>{getLinks(isAuthenticated, isAdmin)}</Fragment>}
     </nav>
   );
 };

@@ -35,7 +35,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isAuthenticated: true,
-        admin: false,
+        isAdmin: false,
         loading: false,
         user: payload
       };
@@ -49,7 +49,7 @@ export default function (state = initialState, action) {
     case CREATE_USER_SUCCESS:
       return {
         ...state,
-        ...payload,
+        // ...payload,
         loading: false
       };
     //add password confirmation?
@@ -68,7 +68,7 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         isAdmin: false,
         loading: false,
-
+        profiles: null,
         user: null
       };
     case CREATE_USER_FAIL:

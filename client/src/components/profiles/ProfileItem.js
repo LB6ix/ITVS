@@ -15,22 +15,23 @@ const ProfileItem = ({
     <div className='profile bg-light'>
       <img src={avatar} alt='' className='round-img' />
       <div>
-        <h2>{name}</h2>
+        <h2>{firstname}</h2>
         <p>
-          {status} {company && <span> at {company}</span>}
+          {title} {department && <span>, {department}</span>}
         </p>
         <p className='my-1'>{location && <span>{location}</span>}</p>
+        {/* MAP TO TABLE */}
         <Link to={`/profile/${_id}`} className='btn btn-primary'>
-          View Profile
+          Peržiūrėti profilį
         </Link>
       </div>
-      <ul>
+      {/* <ul>
         {skills.slice(0, 4).map((skill, index) => (
           <li key={index} className='text-primary'>
             <i className='fas fa-check' /> {skill}
           </li>
         ))}
-      </ul>
+      </ul> */}
     </div>
   );
 };

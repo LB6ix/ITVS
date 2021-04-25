@@ -14,8 +14,11 @@ const Landing = ({ isAuthenticated }) => {
           <h1 className='x-large'>IT Turto valdymo sistema</h1>
           <p className='lead'>Valdykite savo įmonės IT turtą!</p>
           <div className='buttons'>
-            <Link to='/login' className='btn btn-light'>
-              Login
+            <Link to='/user-login' className='btn btn-light'>
+              Darbuotojo prisijungimas
+            </Link>
+            <Link to='/admin-login' className='btn btn-light'>
+              Administratoriaus prisijungimas
             </Link>
           </div>
         </div>

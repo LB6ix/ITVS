@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../actions/profile';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const EditProfile = ({
   profile: { profile, loading },
@@ -30,7 +30,7 @@ const EditProfile = ({
       department: loading || !profile.department ? '' : profile.department,
       location: loading || !profile.location ? '' : profile.location
     });
-  }, [loading]);
+  }, [loading, getCurrentProfile]);
 
   const { phoneNumber, company, title, department, location } = formData;
 

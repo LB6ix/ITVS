@@ -36,7 +36,7 @@ function authAdmin(req, res, next) {
         req.user = decoded.user;
         next();
       } else {
-        authUser();
+        return res.status(401).json({ errors: [{ msg: 'Neautorizuota' }] });
       }
     });
   } catch (err) {

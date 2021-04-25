@@ -11,9 +11,9 @@ import {
   CLEAR_PROFILE
 } from './constants';
 import { setAlert } from './alert';
-import decode from 'jwt-decode';
-import jwt from 'jsonwebtoken';
-import { check } from 'express-validator';
+// import decode from 'jwt-decode';
+// import jwt from 'jsonwebtoken';
+// import { check } from 'express-validator';
 
 //user load
 export const loadUser = () => async (dispatch) => {
@@ -81,7 +81,7 @@ export const createuser = ({
 };
 
 //login user
-export const login = ({ email, password }) => async (dispatch) => {
+export const userLogin = ({ email, password }) => async (dispatch) => {
   const config = {
     headers: {
       'Content-Type': 'application/json'
@@ -101,6 +101,38 @@ export const login = ({ email, password }) => async (dispatch) => {
 
     dispatch(loadUser());
     // dispatch(loadAdmin());
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+    dispatch({
+      type: LOGIN_FAIL
+    });
+  }
+};
+
+export const adminLogin = ({ email, password }) => async (dispatch) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+
+  const body = JSON.stringify({
+    email,
+    password
+  });
+
+  try {
+    const res = await axios.post('/api/auth/admin', body, config);
+    dispatch({ type: LOGIN_SUCCESS, payload: res.data });
+
+    //checkAdminAuth();
+
+    //dispatch(loadUser());
+    dispatch(loadAdmin());
   } catch (err) {
     const errors = err.response.data.errors;
 
