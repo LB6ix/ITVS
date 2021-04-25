@@ -16,8 +16,8 @@ router.post(
   [
     authUser,
     [
-      check('text', 'Aprašymas privalomas').not().isEmpty(),
-      check('category', 'Nurodykite kategoriją').not().isEmpty()
+      (check('text', 'Aprašymas privalomas').not().isEmpty(),
+      check('category', 'Nurodykite kategoriją').not().isEmpty())
     ]
   ],
   async (req, res) => {
@@ -95,11 +95,12 @@ router.delete('/:id', [authUser, authAdmin], async (req, res) => {
 
     //check user
     // todo - admin delete
-    if (post.user.toString() !== req.user.id) {
+    if (req.user.role !== 'admin') {
       return res.status(401).json({ msg: 'Not authorized' });
     }
+    //} else if (req.user.role === 'admin') {
     await post.remove();
-
+    //}
     res.json({ msg: 'Prašymas ištrintas' });
   } catch (err) {
     if (err.kind === 'ObjectId') {

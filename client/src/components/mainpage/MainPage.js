@@ -14,6 +14,7 @@ const MainPage = ({
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);
+
   return loading && profile === null ? (
     <Loading />
   ) : (

@@ -69,9 +69,7 @@ const CreateProfile = ({ createProfile, history }) => {
             <option value='Vadybininkas'>Vadybininkas</option>
             <option value='Direktorius'>Direktorius</option>
           </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
+          <small className='form-text'>ASDASDASD FIX</small>
         </div>
         <div className='form-group'>
           <select
@@ -89,9 +87,7 @@ const CreateProfile = ({ createProfile, history }) => {
             <option value='Pardavimų skyrius'>Pardavimų skyrius</option>
             <option value='Marketingo skyrius'>Marketingo skyrius</option>
           </select>
-          <small className='form-text'>
-            Give us an idea of where you are at in your career
-          </small>
+          <small className='form-text'>FIXXXXXXXXXXX</small>
         </div>
         <div className='form-group'>
           <input
@@ -101,9 +97,7 @@ const CreateProfile = ({ createProfile, history }) => {
             value={location}
             onChange={(e) => onChange(e)}
           />
-          <small className='form-text'>
-            City and state suggested (eg. Boston, MA)
-          </small>
+          <small className='form-text'>Dabartinė darbo vieta</small>
         </div>
         <input type='submit' class='btn btn-primary my-1' />
         {/* FIX THIS */}
@@ -126,7 +120,7 @@ const CreateProfile = ({ createProfile, history }) => {
               <input
                 type='text'
                 placeholder='Pakartokite Slaptažodį'
-                name='passwordč'
+                name='password2'
               />
               <small className='form-text'></small>
             </div>

@@ -13,14 +13,16 @@ import EditProfile from './components/profileForms/EditProfile';
 import PrivateRoute from './components/routes/PrivateRoute';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profiles/Profile';
+import Posts from './components/posts/Posts';
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 // import auth from './reducers/auth';
 import './App.css';
 
-import { Provider } from 'react-redux';
+import { connect, Provider } from 'react-redux';
 import store from './store';
-import { loadUser } from './actions/auth';
+import { loadUser, loadAdmin } from './actions/auth';
 import setAuthToken from './utility/setAuthToken';
+import { check } from 'express-validator';
 // import { stringify } from 'uuid';
 
 if (localStorage.token) {
@@ -30,11 +32,32 @@ if (localStorage.token) {
 store.dispatch(loadUser());
 //store.dispatch(loadAdmin());
 
-const App = () => {
+// const checkAdmin = (isAdmin) => {
+//   if (user.role === 'admin') {
+//     isAdmin: true;
+//   }
+// };
+
+// const checkAdmin = () => {
+//   console.log(store.getState);
+//   if (store.role !== undefined || store.role !== 'admin') {
+//     store.isAdmin = false;
+//   } else {
+//     store.isAdmin = true;
+//   }
+// };
+
+const App = ({ auth: { user } }) => {
   useEffect(() => {
     //testingas
     //checkAdminAuth();
+    // if (user.role === 'admin') {
+    //   store.dispatch(loadAdmin());
+    // } else {
+    //   store.dispatch(loadUser());
+    // }
     store.dispatch(loadUser());
+    // checkAdmin();
   }, []); //componentdidmount, runs once
   return (
     <Provider store={store}>
@@ -66,6 +89,7 @@ const App = () => {
                 path='/edit-profile'
                 component={EditProfile}
               />
+              <PrivateRoute exact path='/posts' component={Posts} />
             </Switch>
           </section>
         </Fragment>
@@ -74,4 +98,8 @@ const App = () => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(App);

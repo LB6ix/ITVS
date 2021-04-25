@@ -20,7 +20,7 @@ const ProfileItem = ({
           {title} {department && <span>, {department}</span>}
         </p>
         <p className='my-1'>{location && <span>{location}</span>}</p>
-        {/* MAP TO TABLE */}
+        {/* MAP TO TABLW */}
         <Link to={`/profile/${_id}`} className='btn btn-primary'>
           Peržiūrėti profilį
         </Link>

@@ -29,20 +29,20 @@ const UserLogin = ({
       {
         history.push('/main');
       }
-    }, 500);
+    }, 1000);
   };
 
-  //redirect
+  // //redirect
 
-  // if (showPageContent) {
-  //   <Sidebar>
-  // }
-  if (isAuthenticated)
-    setTimeout(() => {
-      {
-        return <Redirect to='/main' />;
-      }
-    }, 2000);
+  // // if (showPageContent) {
+  // //   <Sidebar>
+  // // }
+  // if (isAuthenticated)
+  //   setTimeout(() => {
+  //     {
+  //       return <Redirect to='/main' />;
+  //     }
+  //   }, 2000);
 
   return (
     <Fragment>

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { authUser, authAdmin } = require('../../middleware/auth');
-const formatDate = require('../../utils/formatDate');
 
 const Software = require('../../models/Software');
 let currentDate = new Date().toISOString();

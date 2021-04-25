@@ -5,12 +5,7 @@ import PropTypes from 'prop-types';
 import { adminLogin } from '../../actions/auth';
 // import Sidebar from '../layout/Sidebar';
 
-const AdminLogin = ({
-  adminLogin,
-  isAuthenticated,
-  history,
-  showPageContent
-}) => {
+const AdminLogin = ({ adminLogin, isAuthenticated, history }) => {
   const [formData, setFormData] = useState({
     email: '',
     password: ''
