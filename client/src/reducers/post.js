@@ -3,7 +3,10 @@ import {
   POST_ERROR,
   DELETE_POST,
   ADD_POST,
-  GET_POST
+  GET_POST,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  COMMENT_ERROR
 } from '../actions/constants';
 
 const initialState = {
@@ -42,9 +45,27 @@ function postReducer(state = initialState, action) {
         loading: false
       };
     case POST_ERROR:
+    case COMMENT_ERROR:
       return {
         ...state,
         error: payload,
+        loading: false
+      };
+    case ADD_COMMENT:
+      return {
+        ...state,
+        post: { ...state.post, comments: payload },
+        loading: false
+      };
+    case REMOVE_COMMENT:
+      return {
+        ...state,
+        post: {
+          ...state.post,
+          comments: state.post.comments.filter(
+            (comment) => comment._id !== payload
+          )
+        },
         loading: false
       };
     default:

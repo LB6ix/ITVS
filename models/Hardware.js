@@ -21,11 +21,21 @@ const HardwareSchema = new mongoose.Schema({
   status: {
     type: String
   },
+  assigned: {
+    type: Boolean,
+    default: false
+  },
   assignedTo: {
     type: String
   },
   location: {
     type: String
+  },
+  expectedCheckInDate: {
+    type: Date
+  },
+  checkInDate: {
+    type: Date
   },
   cost: {
     type: String

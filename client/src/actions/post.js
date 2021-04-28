@@ -5,7 +5,10 @@ import {
   POST_ERROR,
   DELETE_POST,
   ADD_POST,
-  GET_POST
+  GET_POST,
+  ADD_COMMENT,
+  REMOVE_COMMENT,
+  COMMENT_ERROR
 } from './constants';
 
 export const getPosts = () => async (dispatch) => {
@@ -32,7 +35,9 @@ export const addPost = (formData) => async (dispatch) => {
   };
   try {
     const res = await axios.post('/api/posts/', formData, config);
-
+    if (!res) {
+      throw new Error('Bloga užklausa į serverį');
+    }
     dispatch({
       type: ADD_POST,
       payload: res.data
@@ -76,6 +81,43 @@ export const getPost = (id) => async (dispatch) => {
   } catch (err) {
     dispatch({
       type: POST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+export const addComment = (postId, formData) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/posts/comment/${postId}`, formData);
+
+    dispatch({
+      type: ADD_COMMENT,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Pastaba pridėta', 'success'));
+  } catch (err) {
+    dispatch({
+      type: COMMENT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+export const deleteComment = (postId, commentId) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
+
+    dispatch({
+      type: REMOVE_COMMENT,
+      payload: commentId
+    });
+
+    dispatch(setAlert('Pastaba ištrinta', 'success'));
+  } catch (err) {
+    console.log(err.response);
+    dispatch({
+      type: COMMENT_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }

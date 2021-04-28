@@ -16,11 +16,14 @@ const CreatePost = ({ addPost, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    addPost(formData, history);
+    addPost(formData);
   };
 
   return (
     <div className='post-form'>
+      <div className='bg-primary p'>
+        <h3>Pateikite prašymą</h3>
+      </div>
       <form
         className='form my-1'
         onSubmit={(e) => {
@@ -48,7 +51,7 @@ const CreatePost = ({ addPost, history }) => {
             <option value='0'>* Pasirinkite prašymo kategoriją</option>
             <option value='Turto prašymas'>Turto prašymas</option>
             <option value='Turto remontas'>Turto remontas</option>
-            <option value='Lincencijos'>Lincencijos</option>
+            <option value='Licencijos'>Lincencijos</option>
             <option value='IT prašymas'>IT prašymas</option>
             <option value='Konsultacija'>Konsultacija</option>
           </select>

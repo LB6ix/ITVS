@@ -14,6 +14,7 @@ import PrivateRoute from './components/routes/PrivateRoute';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profiles/Profile';
 import Posts from './components/posts/Posts';
+import Post from './components/posts/Post';
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 // import auth from './reducers/auth';
 import './App.css';
@@ -90,6 +91,7 @@ const App = ({ auth: { user } }) => {
                 component={EditProfile}
               />
               <PrivateRoute exact path='/posts' component={Posts} />
+              <PrivateRoute exact path='/posts/:id' component={Post} />
             </Switch>
           </section>
         </Fragment>

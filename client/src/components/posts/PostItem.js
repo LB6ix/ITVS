@@ -7,7 +7,18 @@ import { deletePost } from '../../actions/post';
 const PostItem = ({
   deletePost,
   auth,
-  post: { _id, text, firstname, lastname, email, category, avatar, user, date },
+  post: {
+    _id,
+    text,
+    firstname,
+    lastname,
+    email,
+    category,
+    avatar,
+    user,
+    comments,
+    date
+  },
   showActions
 }) => (
   <div className='post bg-white p-1 my-1'>
@@ -22,12 +33,20 @@ const PostItem = ({
     </div>
     <div>
       <p className='my-1'>{text}</p>
-      <p className='post-date'>Posted on {date}</p>
+      <p className='post-date'>Prašymo data: {date}</p>
       <p>Kategorija: {category} </p>
       {/* fix */}
 
       {showActions && (
         <Fragment>
+          {!auth.loading && auth.isAuthenticated && (
+            <Link to={`/posts/${_id}`} className='btn btn-primary'>
+              Pastabos{' '}
+              {comments.length > 0 && (
+                <span className='comment-count'>{comments.length}</span>
+              )}
+            </Link>
+          )}
           {!auth.loading && auth.isAdmin && (
             <button
               onClick={() => deletePost(_id)}

@@ -27,7 +27,7 @@ const CreateUser = ({ setAlert, createuser }) => {
     } else {
       createuser({ firstname, lastname, email, role, password });
       setAlert('Naudotojas sėkmingai sukurtas!', 'success');
-      return <Redirect to='/main' />;
+      //fix
     }
   };
 
@@ -37,7 +37,11 @@ const CreateUser = ({ setAlert, createuser }) => {
       <p className='lead'>
         <i className='fas fa-user'></i> Užpildykite formą:
       </p>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+      <form
+        className='form'
+        onSubmit={(e) => onSubmit(e)}
+        // onReset={handleFormReset()}
+      >
         <div className='form-group'>
           <input
             type='text'
