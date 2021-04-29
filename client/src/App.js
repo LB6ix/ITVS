@@ -14,6 +14,7 @@ import PrivateRoute from './components/routes/PrivateRoute';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profiles/Profile';
 import Posts from './components/posts/Posts';
+import Hardwares from './components/hardware/Hardwares';
 import Post from './components/posts/Post';
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 // import auth from './reducers/auth';
@@ -30,34 +31,19 @@ if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 //testingas
-store.dispatch(loadUser());
+store.dispatch(loadAdmin());
 //store.dispatch(loadAdmin());
 
-// const checkAdmin = (isAdmin) => {
-//   if (user.role === 'admin') {
-//     isAdmin: true;
-//   }
-// };
+// {
+//   !loading && isAdmin && store.dispatch(loadAdmin());
+// }
+// {
+//   !loading && isAuthenticated && !isAdmin && store.dispatch(loadUser());
+// }
 
-// const checkAdmin = () => {
-//   console.log(store.getState);
-//   if (store.role !== undefined || store.role !== 'admin') {
-//     store.isAdmin = false;
-//   } else {
-//     store.isAdmin = true;
-//   }
-// };
-
-const App = ({ auth: { user } }) => {
+const App = ({ loading, isAuthenticated, isAdmin }) => {
   useEffect(() => {
-    //testingas
-    //checkAdminAuth();
-    // if (user.role === 'admin') {
-    //   store.dispatch(loadAdmin());
-    // } else {
-    //   store.dispatch(loadUser());
-    // }
-    store.dispatch(loadUser());
+    store.dispatch(loadAdmin());
     // checkAdmin();
   }, []); //componentdidmount, runs once
   return (
@@ -80,6 +66,7 @@ const App = ({ auth: { user } }) => {
               <PrivateRoute exact path='/user-list' component={Profiles} />
               <PrivateRoute exact path='/profile/:id' component={Profile} />
               <PrivateRoute exact path='/main' component={MainPage} />
+              {/* <PrivateRoute exact path='/userposts/:id' component={Posts} /> */}
               <PrivateRoute
                 exact
                 path='/create-profile'
@@ -92,6 +79,7 @@ const App = ({ auth: { user } }) => {
               />
               <PrivateRoute exact path='/posts' component={Posts} />
               <PrivateRoute exact path='/posts/:id' component={Post} />
+              <PrivateRoute exact path='/hardwares' component={Hardwares} />
             </Switch>
           </section>
         </Fragment>

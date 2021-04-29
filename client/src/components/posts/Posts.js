@@ -3,39 +3,65 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import PostItem from './PostItem';
 import CreatePost from './CreatePost';
-import { getPosts } from '../../actions/post';
+import { getPosts, getUserPosts } from '../../actions/post';
 import Loading from '../layout/Loading';
 
-const Posts = ({ getPosts, post: { posts, loading } }) => {
+const Posts = ({
+  getPosts,
+  post: { posts, loading },
+  getUserPosts,
+  showActions,
+  isAuthenticated,
+  isAdmin
+}) => {
   useEffect(() => {
-    getPosts();
-  }, [getPosts]);
+    {
+      isAdmin && getPosts();
+    }
+    {
+      !loading && isAuthenticated && !isAdmin && getUserPosts();
+    }
+  }, [getPosts, getUserPosts]);
 
   return loading ? (
     <Loading />
   ) : (
-    <Fragment>
-      <h1 className='large text-primary'>Prašymai</h1>
-      <p className='lead'>
-        <i className='fas fa-user' /> Pateikite prašymą
-      </p>
-      <CreatePost />
-      <div className='posts'>
-        {posts.map((post) => (
-          <PostItem key={post._id} post={post} />
-        ))}
-      </div>
-    </Fragment>
+    <div>
+      testing
+      {showActions && (
+        <Fragment>
+          <h1 className='large text-primary'>Prašymai</h1>
+          <p className='lead'>
+            <i className='fas fa-user' /> Pateikite prašymą
+          </p>
+          <CreatePost />
+          <div className='posts'>
+            {posts.map((post) => (
+              <PostItem key={post._id} post={post} />
+            ))}
+          </div>
+        </Fragment>
+      )}
+    </div>
   );
 };
 
+Posts.defaultProps = {
+  showActions: true
+};
+
 Posts.propTypes = {
+  isAdmin: PropTypes.bool,
   getPosts: PropTypes.func.isRequired,
-  post: PropTypes.object.isRequired
+  getUserPosts: PropTypes.func.isRequired,
+  post: PropTypes.object.isRequired,
+  showActions: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
-  post: state.post
+  post: state.post,
+  isAuthenticated: state.auth.isAuthenticated,
+  isAdmin: state.auth.isAdmin
 });
 
-export default connect(mapStateToProps, { getPosts })(Posts);
+export default connect(mapStateToProps, { getPosts, getUserPosts })(Posts);

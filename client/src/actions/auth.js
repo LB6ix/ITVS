@@ -8,7 +8,9 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT,
-  CLEAR_PROFILE
+  CLEAR_PROFILE,
+  CLEAR_PROFILES,
+  CLEAR_POSTS
 } from './constants';
 import { setAlert } from './alert';
 // import decode from 'jwt-decode';
@@ -198,5 +200,7 @@ export const adminLogin = ({ email, password }) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: CLEAR_PROFILES });
+  dispatch({ type: CLEAR_POSTS });
   dispatch({ type: LOGOUT });
 };

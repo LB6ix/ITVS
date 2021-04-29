@@ -20,6 +20,9 @@ const PostSchema = new Schema({
   lastname: {
     type: String
   },
+  title: {
+    type: String
+  },
   avatar: {
     type: String
   },
@@ -54,7 +57,6 @@ const PostSchema = new Schema({
     type: Date,
     default: Date.now
   }
-  //comments?
 });
 
 module.exports = Post = mongoose.model('post', PostSchema);

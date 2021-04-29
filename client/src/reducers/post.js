@@ -6,7 +6,9 @@ import {
   GET_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
-  COMMENT_ERROR
+  COMMENT_ERROR,
+  CLEAR_POSTS,
+  GET_USER_POSTS
 } from '../actions/constants';
 
 const initialState = {
@@ -20,6 +22,7 @@ function postReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case GET_USER_POSTS:
     case GET_POSTS:
       return {
         ...state,
@@ -66,6 +69,13 @@ function postReducer(state = initialState, action) {
             (comment) => comment._id !== payload
           )
         },
+        loading: false
+      };
+    case CLEAR_POSTS:
+      return {
+        ...state,
+        post: null,
+        posts: [],
         loading: false
       };
     default:

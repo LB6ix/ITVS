@@ -65,7 +65,7 @@ router.get('/', [authUser, authAdmin], async (req, res) => {
 //@desc   post by ID
 //@access Private
 
-router.get('/:id', [authUser, authAdmin], async (req, res) => {
+router.get('/:id', [authUser], async (req, res) => {
   try {
     const post = await Post.findById(req.params.id);
 
@@ -76,6 +76,31 @@ router.get('/:id', [authUser, authAdmin], async (req, res) => {
   } catch (err) {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Prašymas nerastas' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
+
+//@route  GET api/posts/userposts/:id
+//@desc   Get all users posts by user ID
+//@access Authenticated (user/admin)
+
+router.get('/userposts/:id', [authUser], async (req, res) => {
+  try {
+    //const user = await User.findById(req.user.id).select('-password');
+    const posts = await Post.find({ user: req.user.id })
+      .sort({
+        date: -1
+      })
+      .lean();
+
+    if (!posts) {
+      return res.status(404).json({ msg: 'Prašymų nerasta' });
+    }
+    res.json(posts);
+  } catch (err) {
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Prašymų nerasta' });
     }
     res.status(500).send('Server Error');
   }

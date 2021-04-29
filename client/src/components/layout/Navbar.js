@@ -31,6 +31,9 @@ const Navbar = ({
         <Link to='/posts'>Prašymai</Link>
       </li>
       <li>
+        <Link to='/hardwares'>Aparatinė Įranga</Link>
+      </li>
+      <li>
         <a onClick={logout} href='#!'>
           <i className='fas fa-sign-out-alt'> </i>
           <span className='hide-sm'> </span>
@@ -46,7 +49,7 @@ const Navbar = ({
         <Link to='/'>Pradinis Puslapis</Link>
       </li>
       <li>
-        <Link to='/posts'>Prašymai</Link>
+        <Link to={`/posts`}>Prašymai</Link>
       </li>
       <li>
         <a onClick={logout} href='#!'>

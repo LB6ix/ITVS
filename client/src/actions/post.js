@@ -8,7 +8,8 @@ import {
   GET_POST,
   ADD_COMMENT,
   REMOVE_COMMENT,
-  COMMENT_ERROR
+  COMMENT_ERROR,
+  GET_USER_POSTS
 } from './constants';
 
 export const getPosts = () => async (dispatch) => {
@@ -83,6 +84,26 @@ export const getPost = (id) => async (dispatch) => {
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
+  }
+};
+
+export const getUserPosts = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/posts/userposts/${id}`);
+
+    dispatch({
+      type: GET_USER_POSTS,
+      payload: res.data
+    });
+  } catch (err) {
+    if (err.response) {
+      dispatch({
+        type: POST_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    } else {
+      console.error(err);
+    }
   }
 };
 

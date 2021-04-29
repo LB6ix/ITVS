@@ -12,27 +12,24 @@ const ProfileItem = ({
   }
 }) => {
   return (
-    <div className='profile bg-light'>
-      <img src={avatar} alt='' className='round-img' />
-      <div>
-        <h2>{firstname}</h2>
-        <p>
-          {title} {department && <span>, {department}</span>}
-        </p>
-        <p className='my-1'>{location && <span>{location}</span>}</p>
-        {/* MAP TO TABLW */}
-        <Link to={`/profile/${_id}`} className='btn btn-primary'>
-          Peržiūrėti profilį
-        </Link>
-      </div>
-      {/* <ul>
-        {skills.slice(0, 4).map((skill, index) => (
-          <li key={index} className='text-primary'>
-            <i className='fas fa-check' /> {skill}
-          </li>
-        ))}
-      </ul> */}
-    </div>
+    <table className='table'>
+      <tr>
+        <td>
+          <img src={avatar} alt='' className='round-img' />
+        </td>
+        <td>{firstname}</td>
+        <td>{lastname}</td>
+        <td>{title}</td>
+        <td>{department}</td>
+        <td>{location}</td>
+        <td>{phoneNumber}</td>
+        <td>
+          <Link to={`/profile/${_id}`} className='btn btn-primary'>
+            Profilis
+          </Link>
+        </td>
+      </tr>
+    </table>
   );
 };
 

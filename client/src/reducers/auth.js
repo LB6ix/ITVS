@@ -15,7 +15,6 @@ const initialState = {
   isAuthenticated: null,
   isAdmin: null,
   loading: true, //request is made, response received
-
   user: null
 };
 
@@ -67,7 +66,6 @@ function authReducer(state = initialState, action) {
         isAuthenticated: false,
         isAdmin: false,
         loading: false,
-        profiles: null,
         user: null
       };
     case CREATE_USER_FAIL:
