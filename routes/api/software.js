@@ -108,4 +108,14 @@ router.delete('/:id', authAdmin, async (req, res) => {
   }
 });
 
+//checkin route
+
+//checkout route
+
+//add comment route
+
+//software by assinged user route
+
+//software by id route
+
 module.exports = router;

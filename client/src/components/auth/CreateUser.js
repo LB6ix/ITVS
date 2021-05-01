@@ -76,14 +76,19 @@ const CreateUser = ({ setAlert, createuser }) => {
           </small>
         </div>
         <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Parinkti rolę FIX THIS'
+          <select
             name='role'
             value={role}
             onChange={(e) => onChange(e)}
             required
-          />
+          >
+            <option value='0'>* Parinkite naudotojo rolę</option>
+            <option value='member'>Darbuotojas</option>
+            <option value='admin'>Administratorius</option>
+          </select>
+          <small className='form-text'>
+            Norint sukurti administratorių, reikės patvirtinimo
+          </small>
         </div>
         <div className='form-group'>
           <input

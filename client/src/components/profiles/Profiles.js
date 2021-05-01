@@ -7,14 +7,7 @@ import { getProfiles } from '../../actions/profile';
 import profile from '../../reducers/profile';
 import { Link } from 'react-router-dom';
 
-const Profiles = ({
-  getProfiles,
-  profile: {
-    // user: { _id },
-    profiles,
-    loading
-  }
-}) => {
+const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
   useEffect(() => {
     getProfiles();
   }, [getProfiles]);

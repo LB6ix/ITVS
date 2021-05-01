@@ -34,6 +34,9 @@ const Navbar = ({
         <Link to='/hardwares'>Aparatinė Įranga</Link>
       </li>
       <li>
+        <Link to='/softwares'>Programinė Įranga</Link>
+      </li>
+      <li>
         <a onClick={logout} href='#!'>
           <i className='fas fa-sign-out-alt'> </i>
           <span className='hide-sm'> </span>

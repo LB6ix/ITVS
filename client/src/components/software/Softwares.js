@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { getHardwares } from '../../actions/assets/hardware';
+import { getSoftwares } from '../../actions/assets/software';
 import Loading from '../layout/Loading';
 import { Link } from 'react-router-dom';
 
-const Hardwares = ({
-  getHardwares,
-  hardware: { hardwares, loading },
+const Softwares = ({
+  getSoftwares,
+  software: { softwares, loading },
   isAuthenticated,
   isAdmin
 }) => {
@@ -18,18 +18,18 @@ const Hardwares = ({
     // {
     //   !loading && isAuthenticated && !isAdmin && getUserHardwares();
     // }
-    getHardwares();
-  }, [getHardwares]);
+    getSoftwares();
+  }, [getSoftwares]);
 
-  const hardwarelist = hardwares.map((hw) => (
-    <tr key={hardwares._id}>
-      <td>{hw.name}</td>
-      <td>{hw.serialNumber}</td>
-      <td>{hw.model}</td>
-      <td>{hw.category}</td>
-      <td>{hw.status}</td>
-      <td>{hw.cost}</td>
-      <td>{hw.date}</td>
+  const softwarelist = softwares.map((sw) => (
+    <tr key={softwares._id}>
+      <td>{sw.name}</td>
+      <td>{sw.serialNumber}</td>
+      <td>{sw.model}</td>
+      <td>{sw.category}</td>
+      <td>{sw.status}</td>
+      <td>{sw.cost}</td>
+      <td>{sw.date}</td>
     </tr>
   ));
 
@@ -45,8 +45,8 @@ const Hardwares = ({
   // ) :
   return (
     <Fragment>
-      <h2 className='my-2'>Aparatinės įrangos sąrašas</h2>
-      <Link to={`/hardwares/add-hardware`} className='btn btn-primary'>
+      <h2 className='my-2'>Programinės įrangos sąrašas</h2>
+      <Link to={`/softwares/add-software`} className='btn btn-primary'>
         Pridėti naują įrangą
       </Link>
       <table className='table'>
@@ -61,23 +61,23 @@ const Hardwares = ({
             <th>Data</th>
           </tr>
         </thead>
-        <tbody>{hardwarelist}</tbody>
+        <tbody>{softwarelist}</tbody>
       </table>
     </Fragment>
   );
 };
 
-Hardwares.propTypes = {
+Softwares.propTypes = {
   isAdmin: PropTypes.bool,
-  getHardwares: PropTypes.func.isRequired,
+  getSoftwares: PropTypes.func.isRequired,
   //   getUserHardwares: PropTypes.func.isRequired,
-  hardware: PropTypes.object.isRequired
+  software: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  hardware: state.hardware,
+  software: state.software,
   isAuthenticated: state.auth.isAuthenticated,
   isAdmin: state.auth.isAdmin
 });
 
-export default connect(mapStateToProps, { getHardwares })(Hardwares);
+export default connect(mapStateToProps, { getSoftwares })(Softwares);

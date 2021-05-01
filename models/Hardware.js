@@ -27,7 +27,8 @@ const HardwareSchema = new mongoose.Schema({
     default: false
   },
   assignedTo: {
-    type: String
+    type: String,
+    default: 'Nepriskirtas'
   },
   location: {
     type: String
@@ -41,6 +42,11 @@ const HardwareSchema = new mongoose.Schema({
   cost: {
     type: String
   },
+  leaseExpDate: {
+    type: Date
+  },
+
+  //add more data?
   comments: [
     {
       user: {

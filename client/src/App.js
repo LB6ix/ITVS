@@ -15,6 +15,7 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profiles/Profile';
 import Posts from './components/posts/Posts';
 import Hardwares from './components/hardware/Hardwares';
+import Softwares from './components/software/Softwares';
 import Post from './components/posts/Post';
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 // import auth from './reducers/auth';
@@ -25,6 +26,7 @@ import store from './store';
 import { loadUser, loadAdmin } from './actions/auth';
 import setAuthToken from './utility/setAuthToken';
 import { check } from 'express-validator';
+import AddHardware from './components/hardware/AddHardware';
 // import { stringify } from 'uuid';
 
 if (localStorage.token) {
@@ -50,10 +52,6 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
     <Provider store={store}>
       <Router>
         <Fragment>
-          {/* {console.log(this.state.showPageContent)} */}
-          {/* {this.props.showPageContent ? null : <Navbar />}
-          <Sidebar /> */}
-          {/* {isAuthenticated ? <Sidebar /> : <Navbar />} */}
           <Sidebar />
           <Navbar />
           <Route exact path='/' component={Landing} />
@@ -80,6 +78,17 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
               <PrivateRoute exact path='/posts' component={Posts} />
               <PrivateRoute exact path='/posts/:id' component={Post} />
               <PrivateRoute exact path='/hardwares' component={Hardwares} />
+              <PrivateRoute
+                exact
+                path='/hardwares/add-hardware'
+                component={AddHardware}
+              />
+              <PrivateRoute exact path='/softwares' component={Softwares} />
+              {/* <PrivateRoute
+                exact
+                path='/softwares/add-software'
+                component={AddSoftware}
+              /> */}
             </Switch>
           </section>
         </Fragment>
