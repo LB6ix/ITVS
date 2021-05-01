@@ -1,9 +1,20 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getHardwares } from '../../actions/assets/hardware';
 import Loading from '../layout/Loading';
+import Tables from '../tables/Tables';
 import { Link } from 'react-router-dom';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableCell,
+  TablePagination,
+  TableRow,
+  Toolbar
+} from '@material-ui/core';
 
 const Hardwares = ({
   getHardwares,
@@ -21,48 +32,52 @@ const Hardwares = ({
     getHardwares();
   }, [getHardwares]);
 
-  const hardwarelist = hardwares.map((hw) => (
-    <tr key={hardwares._id}>
-      <td>{hw.name}</td>
-      <td>{hw.serialNumber}</td>
-      <td>{hw.model}</td>
-      <td>{hw.category}</td>
-      <td>{hw.status}</td>
-      <td>{hw.cost}</td>
-      <td>{hw.date}</td>
-    </tr>
-  ));
+  const headerCells = [
+    { id: 'name', label: 'Pavadinimas' },
+    { id: 'serialNumber', label: 'Serijinis Numeris', disableSorting: true },
+    { id: 'model', label: 'Modelis' },
+    { id: 'category', label: 'Kategorija' },
+    { id: 'status', label: 'Statusas' },
+    { id: 'cost', label: 'Kaina', disableSorting: true },
+    { id: 'date', label: 'Data' }
+  ];
 
-  // const hardwarelist = hardwares.map((hw) => (
-  //   <td key={hw._id}>
-  //     <td>{hw.name}</td>
-  //     <td>{hw.model}</td>
-  //     <td>{hw.category}</td>
-  //   </td>
-  // ));
-  // return loading ? (
-  //   <Loading />
-  // ) :
-  return (
+  //const TableContainer = (props) => <Table>{props.children}</Table>;
+
+  const {
+    TableContainer,
+    TableHeader,
+    TablePaginationKomp,
+    recordsAfterPagingAndSorting
+  } = Tables(hardwares, headerCells);
+
+  return loading ? (
+    <Loading />
+  ) : (
     <Fragment>
       <h2 className='my-2'>Aparatinės įrangos sąrašas</h2>
       <Link to={`/hardwares/add-hardware`} className='btn btn-primary'>
         Pridėti naują įrangą
       </Link>
-      <table className='table'>
-        <thead>
-          <tr>
-            <th>Pavadinimas</th>
-            <th>Serijinis Numeris</th>
-            <th>Modelis</th>
-            <th>Kategorija</th>
-            <th>Statusas</th>
-            <th>Kaina</th>
-            <th>Data</th>
-          </tr>
-        </thead>
-        <tbody>{hardwarelist}</tbody>
-      </table>
+      {/* <Toolbar>DO SEARCH</Toolbar> */}
+      <TableContainer>
+        <TableHeader />
+        <TableBody>
+          {recordsAfterPagingAndSorting().map((hw) => (
+            <TableRow key={hardwares._id}>
+              <TableCell>{hw.name}</TableCell>
+              <TableCell>{hw.serialNumber}</TableCell>
+              <TableCell>{hw.model}</TableCell>
+              <TableCell>{hw.category}</TableCell>
+              <TableCell>{hw.status}</TableCell>
+              {/* <TableCell>{sw.assignedTo}</TableCell> */}
+              <TableCell>{hw.cost}</TableCell>
+              <TableCell>{hw.date}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </TableContainer>
+      <TablePaginationKomp />
     </Fragment>
   );
 };

@@ -87,12 +87,12 @@ const AddHardware = ({ addHardware, history }) => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Vieta'
+            placeholder='Statusas'
             name='status'
             value={status}
             onChange={(e) => onChange(e)}
           />
-          <small className='form-text'>Dabartinė įrangos buvimo vieta</small>
+          <small className='form-text'>Dabartinis įrangos statusas</small>
         </div>
         <div className='form-group'>
           <input
@@ -107,7 +107,7 @@ const AddHardware = ({ addHardware, history }) => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Vieta'
+            placeholder='Kaina'
             name='cost'
             value={cost}
             onChange={(e) => onChange(e)}

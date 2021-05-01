@@ -15,7 +15,7 @@ const MainPage = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading && profile === null ? (
+  return loading ? (
     <Loading />
   ) : (
     <Fragment>
@@ -23,7 +23,7 @@ const MainPage = ({
       <p className='lead'>
         <i className='fas fa-user'></i> Sveiki, {user && user.email}!
       </p>
-      {profile !== null ? (
+      {!loading && profile !== null ? (
         <Fragment>
           <MainActions />
         </Fragment>

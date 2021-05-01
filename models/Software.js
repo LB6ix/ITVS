@@ -28,6 +28,9 @@ const SoftwareSchema = new mongoose.Schema({
   cost: {
     type: String
   },
+  supplier: {
+    type: String
+  },
   date: {
     type: Date,
     default: Date.now

@@ -3,36 +3,52 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
 import ProfileItem from './ProfileItem';
-import { getProfiles } from '../../actions/profile';
+import { getProfiles, deleteAccount } from '../../actions/profile';
 import profile from '../../reducers/profile';
 import { Link } from 'react-router-dom';
+import Tables from '../tables/Tables';
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableHead,
+  TableCell,
+  TablePagination,
+  TableRow,
+  Toolbar
+} from '@material-ui/core';
 
-const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
+const Profiles = ({
+  getProfiles,
+  deleteAccount,
+  profile: { profiles, loading }
+}) => {
   useEffect(() => {
     getProfiles();
   }, [getProfiles]);
 
-  const profilelist = profiles.map((prf) => (
-    <tr key={profiles._id}>
-      <td>
-        <img src={prf.user.avatar} alt='' className='round-img' />
-      </td>
-      <td>{prf.user.firstname}</td>
-      <td>{prf.user.lastname}</td>
-      <td>{prf.user.email}</td>
-      <td>{prf.title}</td>
-      <td>{prf.department}</td>
-      <td>{prf.location}</td>
-      <td>{prf.phoneNumber}</td>
-      <td>
-        <Link to={`/profile/${prf.user._id}`} className='btn btn-primary'>
-          Profilis
-        </Link>
-      </td>
-    </tr>
-  ));
+  const headerCells = [
+    { id: 'avatar', label: 'Nuotrauka', disableSorting: true },
+    { id: 'firstname', label: 'Vardas' },
+    { id: 'lastname', label: 'Pavardė' },
+    { id: 'email', label: 'El.paštas' },
+    { id: 'title', label: 'Pareigos' },
+    { id: 'department', label: 'Skyrius' },
+    { id: 'location', label: 'Vieta' },
+    { id: 'phoneNumber', label: 'Telefono numeris', disableSorting: true },
+    { id: 'actions', label: 'Veiksmai', disableSorting: true }
+  ];
 
-  return (
+  const {
+    TableContainer,
+    TableHeader,
+    TablePaginationKomp,
+    recordsAfterPagingAndSorting
+  } = Tables(profiles, headerCells);
+
+  return loading ? (
+    <Loading />
+  ) : (
     <Fragment>
       {loading ? (
         <Loading />
@@ -42,22 +58,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
           <p className='lead'>
             <i className='fab fa-connectdevelop' /> Testing
           </p>
-          <table className='table'>
-            <thead>
-              <tr>
-                <th>Nuotrauka</th>
-                <th>Vardas</th>
-                <th>Pavardė</th>
-                <th>El. paštas</th>
-                <th>Pareigos</th>
-                <th>Skyrius</th>
-                <th>Vieta</th>
-                <th>Telefono Numeris</th>
-                <th>Profilis</th>
-              </tr>
-            </thead>
-            <tbody>
-              {/* <tr>
+          {/* <tr>
               {profiles.length > 0 ? (
                 profiles.map((profile) => (
                   <tr>
@@ -70,9 +71,39 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
                 <h4>Nėraprof</h4>
               )}
             </tr> */}
-              {profilelist}
-            </tbody>
-          </table>
+          <TableContainer>
+            <TableHeader />
+            <TableBody>
+              {recordsAfterPagingAndSorting().map((prf) => (
+                <TableRow key={profiles._id}>
+                  <TableCell>
+                    <Link to={`/profile/${prf.user._id}`}>
+                      <img src={prf.user.avatar} alt='' className='round-img' />
+                    </Link>
+                  </TableCell>
+
+                  <TableCell>{prf.user.firstname}</TableCell>
+                  <TableCell>{prf.user.lastname}</TableCell>
+                  <TableCell>{prf.user.email}</TableCell>
+                  <TableCell>{prf.title}</TableCell>
+                  <TableCell>{prf.department}</TableCell>
+                  {/* <TableCell>{sw.assignedTo}</TableCell> */}
+                  <TableCell>{prf.location}</TableCell>
+                  <TableCell>{prf.phoneNumber}</TableCell>
+                  <TableCell>
+                    <button
+                      onClick={() => deleteAccount(prf.user._id)}
+                      type='button'
+                      className='btn btn-danger'
+                    >
+                      <i className='fas fa-times' />
+                    </button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </TableContainer>
+          <TablePaginationKomp />
         </Fragment>
       )}
     </Fragment>
@@ -81,6 +112,7 @@ const Profiles = ({ getProfiles, profile: { profiles, loading } }) => {
 
 Profiles.propTypes = {
   getProfiles: PropTypes.func.isRequired,
+  deleteAccount: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired
 };
 
@@ -88,4 +120,6 @@ const mapStateToProps = (state) => ({
   profile: state.profile
 });
 
-export default connect(mapStateToProps, { getProfiles })(Profiles);
+export default connect(mapStateToProps, { getProfiles, deleteAccount })(
+  Profiles
+);

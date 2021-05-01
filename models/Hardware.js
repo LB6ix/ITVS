@@ -11,6 +11,9 @@ const HardwareSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  manufacturer: {
+    type: String
+  },
   model: {
     type: String,
     required: true
@@ -20,7 +23,7 @@ const HardwareSchema = new mongoose.Schema({
     required: true
   },
   status: {
-    type: String
+    type: String //get enum going
   },
   assigned: {
     type: Boolean,
@@ -40,6 +43,12 @@ const HardwareSchema = new mongoose.Schema({
     type: Date
   },
   cost: {
+    type: String
+  },
+  supplier: {
+    type: String
+  },
+  warranty: {
     type: String
   },
   leaseExpDate: {

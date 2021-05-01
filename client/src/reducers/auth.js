@@ -59,7 +59,6 @@ function authReducer(state = initialState, action) {
       };
     case AUTH_ERROR:
     case LOGOUT:
-    case ACCOUNT_DELETED:
       return {
         ...state,
         token: null,
@@ -68,6 +67,9 @@ function authReducer(state = initialState, action) {
         loading: false,
         user: null
       };
+    case ACCOUNT_DELETED:
+      return { ...state };
+
     case CREATE_USER_FAIL:
       return {
         ...state,

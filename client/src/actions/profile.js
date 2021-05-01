@@ -99,9 +99,8 @@ export const createProfile = (formData, history, edit = false) => async (
 export const deleteAccount = (id) => async (dispatch) => {
   if (window.confirm('Tikrai?')) {
     try {
-      await axios.delete(`/profile/${id}`);
+      await axios.delete(`/api/profile/${id}`);
 
-      dispatch({ type: CLEAR_PROFILE });
       dispatch({ type: ACCOUNT_DELETED });
 
       dispatch(setAlert('Paskyra ištrinta'));

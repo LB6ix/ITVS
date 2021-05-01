@@ -6,10 +6,11 @@ import CreatePost from './CreatePost';
 import { getPosts, getUserPosts } from '../../actions/post';
 import Loading from '../layout/Loading';
 import profile from '../../reducers/profile';
+import { Link } from 'react-router-dom';
 
 const Posts = ({
   getPosts,
-  profile,
+  profile: { profile },
   post: { posts, loading },
   getUserPosts,
   showActions,
@@ -31,7 +32,7 @@ const Posts = ({
     <div>
       {showActions && (
         <Fragment>
-          {profile ? (
+          {profile !== null ? (
             <div>
               <h1 className='large text-primary'>Prašymai</h1>
               <p className='lead'>
@@ -40,7 +41,15 @@ const Posts = ({
               <CreatePost />
             </div>
           ) : (
-            <div>Negalima</div>
+            <Fragment>
+              <p>
+                Jūs nesate užpildę asmeninės informacijos, prašome tai padaryti
+                kuo greičiau!
+              </p>{' '}
+              <Link to='/create-profile' className='btn btn-primary my-1'>
+                Susikurti profilį
+              </Link>
+            </Fragment>
           )}
           <div className='posts'>
             {posts.map((post) => (
