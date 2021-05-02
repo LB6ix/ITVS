@@ -369,6 +369,4 @@ router.post(
 
 //checkin route
 
-//checkout route
-
 module.exports = router;
