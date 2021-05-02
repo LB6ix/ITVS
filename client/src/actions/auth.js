@@ -10,7 +10,11 @@ import {
   LOGOUT,
   CLEAR_PROFILE,
   CLEAR_PROFILES,
-  CLEAR_POSTS
+  CLEAR_POSTS,
+  CLEAR_HARDWARE,
+  CLEAR_HARDWARES,
+  CLEAR_SOFTWARE,
+  CLEAR_SOFTWARES
 } from './constants';
 import { setAlert } from './alert';
 // import decode from 'jwt-decode';
@@ -200,6 +204,10 @@ export const adminLogin = ({ email, password }) => async (dispatch) => {
 
 export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
+  dispatch({ type: CLEAR_HARDWARE });
+  dispatch({ type: CLEAR_HARDWARES });
+  dispatch({ type: CLEAR_SOFTWARE });
+  dispatch({ type: CLEAR_SOFTWARE });
   dispatch({ type: CLEAR_PROFILES });
   dispatch({ type: CLEAR_POSTS });
   dispatch({ type: LOGOUT });

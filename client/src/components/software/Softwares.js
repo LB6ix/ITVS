@@ -1,10 +1,10 @@
-import React, { Fragment, useEffect } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { getSoftwares } from '../../actions/assets/software';
-import Loading from '../layout/Loading';
-import { Link } from 'react-router-dom';
-import Tables from '../tables/Tables';
+import React, { Fragment, useEffect } from "react";
+import PropTypes from "prop-types";
+import { connect } from "react-redux";
+import { getSoftwares } from "../../actions/assets/software";
+import Loading from "../layout/Loading";
+import { Link } from "react-router-dom";
+import Tables from "../tables/Tables";
 import {
   Paper,
   Table,
@@ -14,7 +14,7 @@ import {
   TablePagination,
   TableRow,
   Toolbar
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const Softwares = ({
   getSoftwares,
@@ -33,13 +33,13 @@ const Softwares = ({
   }, [getSoftwares]);
 
   const headerCells = [
-    { id: 'license', label: 'Licencija' },
-    { id: 'key', label: 'Raktas', disableSorting: true },
-    { id: 'expDate', label: 'Galiojimo data' },
-    { id: 'manufacturer', label: 'Leidėjas' },
-    { id: 'totalAmount', label: 'Kiekis', disableSorting: true },
-    { id: 'cost', label: 'Kaina', disableSorting: true },
-    { id: 'date', label: 'Data' }
+    { id: "license", label: "Licencija" },
+    { id: "key", label: "Raktas", disableSorting: true },
+    { id: "expDate", label: "Galiojimo data" },
+    { id: "manufacturer", label: "Leidėjas" },
+    { id: "totalAmount", label: "Kiekis", disableSorting: true },
+    { id: "cost", label: "Kaina", disableSorting: true },
+    { id: "date", label: "Data" }
   ];
 
   const {
@@ -59,7 +59,7 @@ const Softwares = ({
     <Loading />
   ) : (
     <Fragment>
-      <h2 className='my-2'>Programinės įrangos sąrašas</h2>
+      <h3 className='MuiTypography-h3'>Programinės įrangos sąrašas</h3>
       <Link to={`/softwares/add-software`} className='btn btn-primary'>
         Pridėti naują įrangą
       </Link>

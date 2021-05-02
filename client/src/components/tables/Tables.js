@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 import {
   Paper,
@@ -10,22 +10,22 @@ import {
   TablePagination,
   makeStyles,
   TableSortLabel
-} from '@material-ui/core';
+} from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   table: {
     marginTop: theme.spacing(3),
-    '& thead th': {
-      fontWeight: '600',
-      color: '#212121',
+    "& thead th": {
+      fontWeight: "600",
+      color: "#212121",
       backgroundColor: theme.palette.primary.light
     },
-    '& tbody td': {
-      fontWeight: '300'
+    "& tbody td": {
+      fontWeight: "300"
     },
-    '& tbody td:hover': {
-      backgroundColor: '#fffbf2',
-      cursor: 'pointer'
+    "& tbody td:hover": {
+      backgroundColor: "#fffbf2",
+      cursor: "pointer"
     }
   }
 }));
@@ -35,7 +35,7 @@ export default function Tables(records, headerCells) {
 
   const pages = [5, 10];
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(pages[0]);
+  const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
   const [order, setOrder] = useState();
   const [orderBy, setOrderBy] = useState();
 
@@ -45,8 +45,8 @@ export default function Tables(records, headerCells) {
 
   const TableHeader = (props) => {
     const handleSortRequest = (cellId) => {
-      const isAsc = orderBy === cellId && order === 'asc';
-      setOrder(isAsc ? 'desc' : 'asc');
+      const isAsc = orderBy === cellId && order === "asc";
+      setOrder(isAsc ? "desc" : "asc");
       setOrderBy(cellId);
     };
     return (
@@ -62,12 +62,12 @@ export default function Tables(records, headerCells) {
               ) : (
                 <TableSortLabel
                   active={orderBy === headerCell.id}
-                  direction={orderBy === headerCell.id ? order : 'asc'}
+                  direction={orderBy === headerCell.id ? order : "asc"}
                   onClick={() => {
                     handleSortRequest(headerCell.id);
                   }}
                 >
-                  {headerCell.label}{' '}
+                  {headerCell.label}{" "}
                 </TableSortLabel>
               )}
             </TableCell>
@@ -81,8 +81,8 @@ export default function Tables(records, headerCells) {
     setPage(newPage);
   };
 
-  const handsChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.targe.value, 10));
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
 
@@ -97,6 +97,7 @@ export default function Tables(records, headerCells) {
       rowsPerPageOptions={pages}
       rowsPerPage={rowsPerPage}
       count={records.length}
+      onChangeRowsPerPage={handleChangeRowsPerPage}
       onChangePage={handleChangePage}
     />
   );
@@ -112,7 +113,7 @@ export default function Tables(records, headerCells) {
   }
 
   function getComparator(order, orderBy) {
-    return order === 'desc'
+    return order === "desc"
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }

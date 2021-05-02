@@ -1,23 +1,23 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const { check, validationResult } = require('express-validator');
-const { authUser, authAdmin } = require('../../middleware/auth');
+const { check, validationResult } = require("express-validator");
+const { authUser, authAdmin } = require("../../middleware/auth");
 
-const Hardware = require('../../models/Hardware');
+const Hardware = require("../../models/Hardware");
 
 //@route  POST api/hardware
 //@desc   hardware
 //@access Public
 
 router.post(
-  '/add-hardware',
+  "/add-hardware",
   [
     authAdmin,
     [
-      check('name', 'Įrašykite pavadinimą').not().isEmpty(),
-      check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
-      check('model', 'Įrašykite modelį').not().isEmpty(),
-      check('category', 'Įrašykite katogeriją').not().isEmpty()
+      check("name", "Įrašykite pavadinimą").not().isEmpty(),
+      check("serialNumber", "Įrašykite serijinį numerį").not().isEmpty(),
+      check("model", "Įrašykite modelį").not().isEmpty(),
+      check("category", "Įrašykite katogeriją").not().isEmpty()
     ]
   ],
   async (req, res) => {
@@ -46,7 +46,7 @@ router.post(
 
       if (hardware) {
         return res.status(400).json({
-          errors: [{ msg: 'Įrangu su tokiu pavadinimu jau egzistuoja' }]
+          errors: [{ msg: "Įrangu su tokiu pavadinimu jau egzistuoja" }]
         });
       }
       hardware = new Hardware({
@@ -69,7 +69,7 @@ router.post(
       res.json(hardware);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );
@@ -79,14 +79,14 @@ router.post(
 //@access Authenticated(admin only)
 
 router.post(
-  '/edit/:id',
+  "/edit/:id",
   [
     authAdmin,
     [
-      check('name', 'Įrašykite pavadinimą').not().isEmpty(),
-      check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
-      check('model', 'Įrašykite modelį').not().isEmpty(),
-      check('category', 'Įrašykite katogeriją').not().isEmpty()
+      check("name", "Įrašykite pavadinimą").not().isEmpty(),
+      check("serialNumber", "Įrašykite serijinį numerį").not().isEmpty(),
+      check("model", "Įrašykite modelį").not().isEmpty(),
+      check("category", "Įrašykite katogeriją").not().isEmpty()
     ]
   ],
   async (req, res) => {
@@ -145,7 +145,7 @@ router.post(
       res.json(hardware);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server error');
+      res.status(500).send("Server error");
     }
   }
 );
@@ -154,13 +154,36 @@ router.post(
 //@desc   Get all hwardware assets
 //@access Authenticated(admin only)
 
-router.get('/', authAdmin, async (req, res) => {
+router.get("/", authAdmin, async (req, res) => {
   try {
-    const hardwarelist = await Hardware.find();
-    res.json(hardwarelist);
+    await Hardware.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "assignedTo",
+          foreignField: "_id",
+          as: "hardwares"
+        }
+      },
+      { $unwind: { path: "$hardwares", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          name: 1,
+          serialNumber: 1,
+          model: 1,
+          category: 1,
+          status: 1,
+          assignedTo: "$hardwares.email",
+          cost: 1,
+          date: 1
+        }
+      }
+    ]).then((hardwares) => res.json(hardwares));
+    // const hardwarelist = await Hardware.find();
+    //console.log(hardwares);
   } catch (err) {
     console.error(err.message);
-    res.status(500).status('Server Error');
+    res.status(500).status("Server Error");
   }
 });
 
@@ -168,19 +191,19 @@ router.get('/', authAdmin, async (req, res) => {
 //@desc   Get hardware by id
 //@access Authenticated(admin only)
 
-router.get('/:id', authAdmin, async (req, res) => {
+router.get("/:id", authAdmin, async (req, res) => {
   try {
     const hardware = await Hardware.findById(req.params.id);
 
     if (!hardware) {
-      return res.status(404).json({ msg: 'Įranga nerasta' });
+      return res.status(404).json({ msg: "Įranga nerasta" });
     }
     res.json(hardware);
   } catch (err) {
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Įranga nerasta' });
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Įranga nerasta" });
     }
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
@@ -188,32 +211,164 @@ router.get('/:id', authAdmin, async (req, res) => {
 //@desc   Delete hardware entry
 //@access Private
 
-router.delete('/:id', authAdmin, async (req, res) => {
+router.delete("/:id", authAdmin, async (req, res) => {
   try {
     const hardware = await Hardware.findById(req.params.id);
 
     if (!hardware) {
-      return res.status(404).json({ msg: 'Apratinė įranga nerasta' });
+      return res.status(404).json({ msg: "Apratinė įranga nerasta" });
     }
     await hardware.remove();
 
-    res.json({ msg: 'Apratinės įrangos įrašas ištrintas' });
+    res.json({ msg: "Apratinės įrangos įrašas ištrintas" });
   } catch (err) {
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Apratinė įranga nerasta' });
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Apratinė įranga nerasta" });
     }
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
+
+router.post(
+  "/comment/:id",
+  authAdmin,
+  check("text", "Įrašykite įrangos pastabą").notEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const user = await User.findById(req.user.id).select("-password");
+      const hardware = await Hardware.findById(req.params.id);
+
+      const newComment = {
+        text: req.body.text,
+        firstname: user.firstname,
+        lastname: user.lastname,
+        title: user.title,
+        avatar: user.avatar,
+        user: req.user.id
+      };
+
+      hardware.comments.unshift(newComment); //komentarai nuo viršau į apačią makes sense
+
+      await hardware.save();
+
+      res.json(hardware.comments);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
+
+// @route    DELETE api/posts/comment/:id/:comment_id
+// @desc     Delete comment
+// @access   Authenticated (admin only)
+router.delete("/comment/:id/:comment_id", authAdmin, async (req, res) => {
+  try {
+    const hardware = await Hardware.findById(req.params.id);
+
+    const comment = hardware.comments.find(
+      (comment) => comment.id === req.params.comment_id //search komentaro pagal id iš url
+    );
+    if (!comment) {
+      return res.status(404).json({ msg: "Pastabos nėra" });
+    }
+
+    if (req.user.role === "admin") {
+      if (comment.user.toString() !== req.user.id) {
+        return res.status(401).json({ msg: "Neautorizuotas veiksmas" });
+      }
+    }
+
+    hardware.comments = hardware.comments.filter(
+      ({ id }) => id !== req.params.comment_id
+    );
+
+    await hardware.save();
+
+    return res.json(hardware.comments);
+  } catch (err) {
+    console.error(err.message);
+    return res.status(500).send("Server Error");
+  }
+});
+
+router.get("/assigned-hardware/:id", [authUser], async (req, res) => {
+  try {
+    //const user = await User.findById(req.user.id).select('-password');
+    const hardwares = await Hardware.find({ assignedTo: req.user.id })
+      .sort({
+        date: -1
+      })
+      .lean();
+
+    if (!hardwares) {
+      return res.status(404).json({ msg: "Priskirtos įrangos nerasta" });
+    }
+    res.json(hardwares);
+  } catch (err) {
+    if (err.kind === "ObjectId") {
+      return res.status(404).json({ msg: "Priskirtos įrangos nerasta" });
+    }
+    res.status(500).send("Server Error");
+  }
+});
+
+//checkout route'as
+router.post(
+  "/:id/checkout/:user_id",
+  [
+    authAdmin,
+    [
+      (check("assignedTo", "Privaloma nurodyti").not().isEmpty(),
+      check("checkOutDate", "Nurodykite datą").not().isEmpty())
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const user = await User.findById(req.params.user_id).select("-password");
+
+      const { assignedTo, checkOutDate, expectedCheckInDate } = req.body;
+
+      const hardwareFields = {};
+      hardwareFields.assignedTo = req.params.user_id;
+      hardwareFields.checkOutDate = checkOutDate;
+      hardwareFields.expectedCheckInDate = expectedCheckInDate;
+
+      let hardware = await Hardware.findOne({
+        _id: req.params.id
+      });
+      if (hardware) {
+        hardware = await Hardware.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: hardwareFields },
+          { new: true }
+        );
+        return res.json(hardware);
+      }
+
+      hardware = new Hardware(hardwareFields);
+
+      //await hardware.save();
+      res.json(hardware);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send("Server Error");
+    }
+  }
+);
 
 //checkin route
 
 //checkout route
-
-//add comment route
-
-//hardware by assinged user route
-
-//update hardware data
 
 module.exports = router;

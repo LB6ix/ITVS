@@ -1,17 +1,19 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Button } from "@material-ui/core";
 
 const MainActions = () => {
   return (
     <div class='dash-buttons'>
       <Link to='/edit-profile' class='btn btn-light'>
-        <i class='fas fa-user-circle text-primary'></i> Keisti profilį
+        <Button size='large' variant='contained' color='primary'>
+          Keisti profilį
+        </Button>
       </Link>
       <Link to='/posts' class='btn btn-light'>
-        <i class='fab fa-black-tie text-primary'></i> Sukurti pranešimą
-      </Link>
-      <Link to='add-education' class='btn btn-light'>
-        <i class='fas fa-graduation-cap text-primary'></i> Test
+        <Button size='large' variant='contained' color='primary'>
+          Sukurti pranešimą
+        </Button>
       </Link>
     </div>
   );

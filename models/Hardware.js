@@ -23,21 +23,25 @@ const HardwareSchema = new mongoose.Schema({
     required: true
   },
   status: {
-    type: String //get enum going
+    type: String, //get enum going
+    default: 'Nepriskirtas'
+  },
+  assignedTo: {
+    type: Schema.Types.ObjectId,
+    ref: 'users'
   },
   assigned: {
     type: Boolean,
     default: false
   },
-  assignedTo: {
-    type: String,
-    default: 'Nepriskirtas'
-  },
   location: {
     type: String
   },
   expectedCheckInDate: {
-    type: Date
+    type: String
+  },
+  checkOutDate: {
+    type: String
   },
   checkInDate: {
     type: Date
@@ -54,8 +58,6 @@ const HardwareSchema = new mongoose.Schema({
   leaseExpDate: {
     type: Date
   },
-
-  //add more data?
   comments: [
     {
       user: {
