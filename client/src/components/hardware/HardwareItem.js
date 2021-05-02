@@ -1,68 +1,46 @@
-import React, { useState } from 'react';
+import React, { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { addHardware } from '../../actions/assets/hardware';
 
-const AddHardware = ({ addHardware, history }) => {
-  const [formData, setFormData] = useState({
-    name: '',
-    serialNumber: '',
-    manufacturer: '',
-    model: '',
-    category: '',
-    status: '',
-    location: '',
-    cost: '',
-    supplier: '',
-    warranty: '',
-    leaseExpDate: ''
-  });
-
-  const {
+const HardwareItem = ({
+  hardware: {
     name,
     serialNumber,
     manufacturer,
     model,
     category,
     status,
+    assignedTo,
     location,
+    expectedCheckInDate,
+    checkOutDate,
+    checkInDate,
     cost,
     supplier,
     warranty,
     leaseExpDate
-  } = formData;
-
-  const onChange = (e) =>
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    addHardware(formData);
-  };
-
+  }
+}) => {
   return (
-    <div className='post-form'>
-      <div className='bg-primary p'>
-        <h3>Pridėkite naują aparatinės įrangos įrašą</h3>
-      </div>
-      <form className='form' onSubmit={(e) => onSubmit(e)}>
+    <Fragment>
+      <h1 className='large text-primary'>Įrangos duomenys</h1>
+      <form className='form'>
         <div className='form-group'>
           <input
             type='text'
             placeholder='Pavadinimas'
             name='name'
             value={name}
-            onChange={(e) => onChange(e)}
+            disabled
           />
-          <small className='form-text'>Pavadinimas turi būti unikalus!</small>
         </div>
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Serijinis Numeris'
+            placeholder='Serijinis numeris'
             name='serialNumber'
             value={serialNumber}
-            onChange={(e) => onChange(e)}
+            disabled
           />
         </div>
         <div className='form-group'>
@@ -71,7 +49,7 @@ const AddHardware = ({ addHardware, history }) => {
             placeholder='Gamintojas'
             name='manufacturer'
             value={manufacturer}
-            onChange={(e) => onChange(e)}
+            disabled
           />
         </div>
         <div className='form-group'>
@@ -80,15 +58,11 @@ const AddHardware = ({ addHardware, history }) => {
             placeholder='Modelis'
             name='model'
             value={model}
-            onChange={(e) => onChange(e)}
+            disabled
           />
         </div>
         <div className='form-group'>
-          <select
-            name='category'
-            value={category}
-            onChange={(e) => onChange(e)}
-          >
+          <select name='category' value={category} disabled>
             <option value='0'>* Parinkite įrangos kategoriją</option>
             <option value='Kompiuteriai'>Kompiuteriai</option>
             <option value='Telefonai'>Telefonai</option>
@@ -100,10 +74,9 @@ const AddHardware = ({ addHardware, history }) => {
             <option value='Spausdintuvai'>Spausdintuvai</option>
             <option value='Serveriai'>Serveriai</option>
           </select>
-          <small className='form-text'>FIXXXXXXXXXXX</small>
         </div>
         <div className='form-group'>
-          <select name='status' value={status} onChange={(e) => onChange(e)}>
+          <select name='status' value={status} disabled>
             <option value='0'>* Parinkite statusą</option>
             <option value='Paruoštas'>Paruoštas</option>
             <option value='Neparuoštas'>Neparuoštas</option>
@@ -121,7 +94,7 @@ const AddHardware = ({ addHardware, history }) => {
             placeholder='Vieta'
             name='location'
             value={location}
-            onChange={(e) => onChange(e)}
+            disabled
           />
           <small className='form-text'>Dabartinė įrangos buvimo vieta</small>
         </div>
@@ -131,43 +104,93 @@ const AddHardware = ({ addHardware, history }) => {
             placeholder='Kaina'
             name='cost'
             value={cost}
-            onChange={(e) => onChange(e)}
+            disabled
           />
         </div>
-        <input type='submit' class='btn btn-primary my-1' />
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Kam Priskirtas'
+            name='assignedTo'
+            value={assignedTo}
+            disabled
+          />
+        </div>
         {/* FIX THIS */}
-        {/* <div className='my-2'>
+        <div className='my-2'>
           <button
-            onClick={() => togglePasswordChange(!displayPasswordChange)}
+            // onClick={() => toggleAdditionalData(!displayAdditionalData)}
             type='button'
             className='btn btn-light'
           >
-            Keisti slaptažodį
+            Peržiūrėti detalesnius duomenis
           </button>
         </div>
-        {displayPasswordChange && (
-          <Fragment>
-            <div className='form-group'>
-              <input type='text' placeholder='Slaptažodis' name='password' />
-              <small className='form-text'></small>
-            </div>
-            <div className='form-group'>
-              <input
-                type='text'
-                placeholder='Pakartokite Slaptažodį'
-                name='password2'
-              />
-              <small className='form-text'></small>
-            </div>
-          </Fragment>
-        )} */}
+        {/* {displayAdditionalData && ( */}
+        <Fragment>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Tiekėjas'
+              name='supplier'
+              value={supplier}
+              disabled
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Garantija'
+              name='warranty'
+              value={warranty}
+              disabled
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Nuomos galiojimo pabaiga'
+              name='leaseExpDate'
+              value={leaseExpDate}
+              disabled
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Nuomos galiojimo pabaiga'
+              name='expectedCheckInDate'
+              value={expectedCheckInDate}
+              disabled
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Nuomos galiojimo pabaiga'
+              name='checkOutDate'
+              value={checkOutDate}
+              disabled
+            />
+          </div>
+          <div className='form-group'>
+            <input
+              type='text'
+              placeholder='Nuomos galiojimo pabaiga'
+              name='checkInDate'
+              value={checkInDate}
+              disabled
+            />
+          </div>
+        </Fragment>
+        {/* <input type='submit' class='btn btn-primary my-1' /> */}
       </form>
-    </div>
+    </Fragment>
   );
 };
 
-AddHardware.propTypes = {
-  addHardware: PropTypes.func.isRequired
+HardwareItem.propTypes = {
+  hardware: PropTypes.object.isRequired
 };
 
-export default connect(null, { addHardware })(AddHardware);
+export default HardwareItem;

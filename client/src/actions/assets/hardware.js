@@ -7,6 +7,7 @@ import {
   CLEAR_HARDWARE,
   CLEAR_HARDWARES,
   HARDWARE_ERROR,
+  DELETE_HARDWARE,
   ADD_HARDWARE
 } from '../constants';
 
@@ -56,5 +57,77 @@ export const addHardware = (formData) => async (dispatch) => {
       type: HARDWARE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
+  }
+};
+
+export const editHardware = (formData, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post(`/api/hardware/edit/${id}`, formData, config);
+    dispatch({
+      type: GET_HARDWARE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Įrangos duomenys atnaujinti!', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: HARDWARE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+}; //history - redirect
+
+export const getHardware = (id) => async (dispatch) => {
+  dispatch({
+    type: CLEAR_HARDWARE
+  });
+  try {
+    const res = await axios.get(`/api/hardware/${id}`);
+
+    dispatch({
+      type: GET_HARDWARE,
+      payload: res.data
+    });
+  } catch (err) {
+    if (err.response) {
+      dispatch({
+        type: HARDWARE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    } else {
+      console.error(err);
+    }
+  }
+};
+
+export const deleteHardware = (id) => async (dispatch) => {
+  if (window.confirm('Tikrai?')) {
+    try {
+      await axios.delete(`/api/hardware/${id}`);
+
+      dispatch({
+        type: DELETE_HARDWARE,
+        payload: id
+      });
+
+      dispatch(setAlert('Įranga pašalinta', 'success'));
+    } catch (err) {
+      dispatch({
+        type: HARDWARE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
   }
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
@@ -15,10 +16,14 @@ const Landing = ({ isAuthenticated }) => {
           <p className='lead'>Valdykite savo įmonės IT turtą!</p>
           <div className='buttons'>
             <Link to='/user-login' className='btn btn-light'>
-              Darbuotojo prisijungimas
+              <Button size='large' variant='contained' color='primary'>
+                Darbuotojo prisijungimas
+              </Button>
             </Link>
             <Link to='/admin-login' className='btn btn-light'>
-              Administratoriaus prisijungimas
+              <Button size='large' variant='contained' color='primary'>
+                Administratoriaus prisijungimas
+              </Button>
             </Link>
           </div>
         </div>

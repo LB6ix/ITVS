@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 import {
   Paper,
@@ -10,22 +10,22 @@ import {
   TablePagination,
   makeStyles,
   TableSortLabel
-} from "@material-ui/core";
+} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    marginTop: theme.spacing(3),
-    "& thead th": {
-      fontWeight: "600",
-      color: "#212121",
+    marginTop: theme.spacing(2),
+    '& thead th': {
+      fontWeight: '500',
+      color: '#212121',
       backgroundColor: theme.palette.primary.light
     },
-    "& tbody td": {
-      fontWeight: "300"
+    '& tbody td': {
+      fontWeight: '300'
     },
-    "& tbody td:hover": {
-      backgroundColor: "#fffbf2",
-      cursor: "pointer"
+    '& tbody td:hover': {
+      backgroundColor: '#fffbf2',
+      cursor: 'pointer'
     }
   }
 }));
@@ -45,8 +45,8 @@ export default function Tables(records, headerCells) {
 
   const TableHeader = (props) => {
     const handleSortRequest = (cellId) => {
-      const isAsc = orderBy === cellId && order === "asc";
-      setOrder(isAsc ? "desc" : "asc");
+      const isAsc = orderBy === cellId && order === 'asc';
+      setOrder(isAsc ? 'desc' : 'asc');
       setOrderBy(cellId);
     };
     return (
@@ -62,12 +62,12 @@ export default function Tables(records, headerCells) {
               ) : (
                 <TableSortLabel
                   active={orderBy === headerCell.id}
-                  direction={orderBy === headerCell.id ? order : "asc"}
+                  direction={orderBy === headerCell.id ? order : 'asc'}
                   onClick={() => {
                     handleSortRequest(headerCell.id);
                   }}
                 >
-                  {headerCell.label}{" "}
+                  {headerCell.label}{' '}
                 </TableSortLabel>
               )}
             </TableCell>
@@ -113,7 +113,7 @@ export default function Tables(records, headerCells) {
   }
 
   function getComparator(order, orderBy) {
-    return order === "desc"
+    return order === 'desc'
       ? (a, b) => descendingComparator(a, b, orderBy)
       : (a, b) => -descendingComparator(a, b, orderBy);
   }

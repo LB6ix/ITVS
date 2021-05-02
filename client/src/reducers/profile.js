@@ -4,7 +4,8 @@ import {
   PROFILE_ERROR,
   CLEAR_PROFILE,
   CLEAR_PROFILES,
-  UPDATE_PROFILE
+  UPDATE_PROFILE,
+  ACCOUNT_DELETED
 } from '../actions/constants';
 
 const initialState = {
@@ -49,6 +50,14 @@ export default function (state = initialState, action) {
         ...state,
         profile: null,
         profiles: [],
+        loading: false
+      };
+    case ACCOUNT_DELETED:
+      return {
+        ...state,
+        profiles: state.profiles.filter(
+          (profile) => profile.user._id !== payload
+        ),
         loading: false
       };
     default:

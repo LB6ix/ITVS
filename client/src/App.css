@@ -13,7 +13,7 @@
 }
 
 body {
-  font-family: "Roboto", "Raleway", sans-serif;
+  font-family: 'Roboto', 'Raleway', sans-serif;
   font-size: 1rem;
   line-height: 1.6;
   background-color: #fff;
@@ -35,7 +35,7 @@ img {
 
 /* Utilities */
 .container {
-  max-width: 75%;
+  max-width: 85%;
   margin: auto;
   overflow: hidden;
   padding: 0 2rem;
@@ -190,6 +190,9 @@ img {
   color: #fff;
 }
 
+.tableActions {
+  display: inline-block;
+}
 .btn-success,
 .bg-success,
 .badge-success,
@@ -247,10 +250,10 @@ img {
   color: #888;
 }
 
-.form input[type="text"],
-.form input[type="email"],
-.form input[type="password"],
-.form input[type="date"],
+.form input[type='text'],
+.form input[type='email'],
+.form input[type='password'],
+.form input[type='date'],
 .form select,
 .form textarea {
   display: block;
@@ -260,7 +263,7 @@ img {
   border: 1px solid #ccc;
 }
 
-.form input[type="submit"],
+.form input[type='submit'],
 button {
   font: inherit;
 }
@@ -315,7 +318,7 @@ button {
 /* Landing Page */
 .landing {
   position: relative;
-  background: url("../src/img/showcase.jpg") no-repeat center center/cover;
+  background: url('../src/img/showcase.jpg') no-repeat center center/cover;
   height: 100vh;
 }
 

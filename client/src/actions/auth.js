@@ -207,7 +207,7 @@ export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_HARDWARE });
   dispatch({ type: CLEAR_HARDWARES });
   dispatch({ type: CLEAR_SOFTWARE });
-  dispatch({ type: CLEAR_SOFTWARE });
+  dispatch({ type: CLEAR_SOFTWARES });
   dispatch({ type: CLEAR_PROFILES });
   dispatch({ type: CLEAR_POSTS });
   dispatch({ type: LOGOUT });

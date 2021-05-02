@@ -15,6 +15,7 @@ import Profiles from './components/profiles/Profiles';
 import Profile from './components/profiles/Profile';
 import Posts from './components/posts/Posts';
 import Hardwares from './components/hardware/Hardwares';
+import Hardware from './components/hardware/Hardware';
 import Softwares from './components/software/Softwares';
 import Post from './components/posts/Post';
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
@@ -27,6 +28,7 @@ import { loadUser, loadAdmin } from './actions/auth';
 import setAuthToken from './utility/setAuthToken';
 import { check } from 'express-validator';
 import AddHardware from './components/hardware/AddHardware';
+import EditHardware from './components/hardware/EditHardware';
 // import { stringify } from 'uuid';
 
 if (localStorage.token) {
@@ -78,10 +80,16 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
               <PrivateRoute exact path='/posts' component={Posts} />
               <PrivateRoute exact path='/posts/:id' component={Post} />
               <PrivateRoute exact path='/hardwares' component={Hardwares} />
+              <PrivateRoute exact path='/hardwares/:id' component={Hardware} />
               <PrivateRoute
                 exact
                 path='/hardwares/add-hardware'
                 component={AddHardware}
+              />
+              <PrivateRoute
+                exact
+                path='/hardwares/edit/:id'
+                component={EditHardware}
               />
               <PrivateRoute exact path='/softwares' component={Softwares} />
               {/* <PrivateRoute

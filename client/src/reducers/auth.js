@@ -67,10 +67,13 @@ function authReducer(state = initialState, action) {
         loading: false,
         user: null
       };
-    case ACCOUNT_DELETED:
-      return { ...state };
-
-    case CREATE_USER_FAIL:
+      // case ACCOUNT_DELETED:
+      //   return {
+      //     ...state,
+      //     profiles: state.profiles.filter((profile) => profile._id !== payload),
+      //     loading: false
+      //   };
+      // case CREATE_USER_FAIL:
       return {
         ...state,
         loading: false

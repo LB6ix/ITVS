@@ -27,6 +27,14 @@ const CreateUser = ({ setAlert, createuser }) => {
     } else {
       createuser({ firstname, lastname, email, role, password });
       setAlert('Naudotojas sėkmingai sukurtas!', 'success');
+      setFormData({
+        firstname: '',
+        lastname: '',
+        email: '',
+        role: '',
+        password: '',
+        password2: ''
+      });
       //fix
     }
   };
