@@ -5,6 +5,7 @@ import {
   CLEAR_SOFTWARE,
   CLEAR_SOFTWARES,
   SOFTWARE_ERROR,
+  DELETE_SOFTWARE,
   ADD_SOFTWARE
 } from '../../actions/constants';
 
@@ -25,11 +26,30 @@ function postReducer(state = initialState, action) {
         softwares: payload,
         loading: false
       };
-
+    case CLEAR_SOFTWARE:
+      return {
+        ...state,
+        software: null,
+        loading: false
+      };
+    case GET_SOFTWARE:
+      return {
+        ...state,
+        softwares: payload,
+        loading: false
+      };
     case ADD_SOFTWARE:
       return {
         ...state,
         softwares: [payload, ...state.softwares],
+        loading: false
+      };
+    case DELETE_SOFTWARE:
+      return {
+        ...state,
+        softwares: state.softwares.filter(
+          (software) => software._id !== payload
+        ),
         loading: false
       };
     case SOFTWARE_ERROR:

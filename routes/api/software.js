@@ -40,7 +40,8 @@ router.post(
       totalAmount,
       //   availAmount,
       assignedTo,
-      cost
+      cost,
+      supplier
     } = req.body;
 
     try {
@@ -60,7 +61,8 @@ router.post(
         totalAmount,
         // availAmount,
         assignedTo,
-        cost
+        cost,
+        supplier
       });
 
       await software.save();
@@ -108,11 +110,73 @@ router.delete('/:id', authAdmin, async (req, res) => {
   }
 });
 
+router.post(
+  '/edit/:id',
+  [
+    authAdmin,
+    [
+      check('name', 'Įrašykite pavadinimą').not().isEmpty(),
+      check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
+      check('model', 'Įrašykite modelį').not().isEmpty(),
+      check('category', 'Įrašykite katogeriją').not().isEmpty()
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const {
+      license,
+      key,
+      expDate,
+      manufacturer,
+      totalAmount,
+      //   availAmount,
+      assignedTo,
+      cost,
+      supplier
+    } = req.body;
+
+    const softwareFields = {};
+    softwareFields.license = license;
+    softwareFields.key = key;
+    softwareFields.expDate = expDate;
+    softwareFields.manufacturer = manufacturer;
+    softwareFields.totalAmount = totalAmount;
+    softwareFields.assignedTo = assignedTo;
+    softwareFields.cost = cost;
+    softwareFields.supplier = supplier;
+
+    try {
+      let software = await Software.findOne({
+        _id: req.params.id
+      });
+      if (software) {
+        software = await Software.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: softwareFields },
+          { new: true }
+        );
+        return res.json(software);
+      }
+      // }
+      // software = software.updateOne({ _id: req.params.id }, softwareFields);
+      software = new Software(softwareFields);
+
+      await software.save();
+      res.json(software);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server error');
+    }
+  }
+);
+
 //checkin route
 
 //checkout route
-
-//add comment route
 
 //software by assinged user route
 

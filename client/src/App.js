@@ -28,6 +28,7 @@ import { loadUser, loadAdmin } from './actions/auth';
 import setAuthToken from './utility/setAuthToken';
 import { check } from 'express-validator';
 import AddHardware from './components/hardware/AddHardware';
+import AddSoftware from './components/software/AddSoftware';
 import EditHardware from './components/hardware/EditHardware';
 // import { stringify } from 'uuid';
 
@@ -92,11 +93,11 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
                 component={EditHardware}
               />
               <PrivateRoute exact path='/softwares' component={Softwares} />
-              {/* <PrivateRoute
+              <PrivateRoute
                 exact
                 path='/softwares/add-software'
                 component={AddSoftware}
-              /> */}
+              />
             </Switch>
           </section>
         </Fragment>

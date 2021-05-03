@@ -6,23 +6,27 @@ import { addSoftware } from '../../actions/assets/software';
 
 const AddSoftware = ({ addSoftware, history }) => {
   const [formData, setFormData] = useState({
-    name: '',
-    serialNumber: '',
-    model: '',
-    category: '',
-    status: '',
-    location: '',
-    cost: ''
+    license: '',
+    key: '',
+    expDate: '',
+    manufacturer: '',
+    totalAmount: '',
+    //   availAmount: '',
+    assignedTo: '',
+    cost: '',
+    supplier: ''
   });
 
   const {
-    name,
-    serialNumber,
-    model,
-    category,
-    status,
-    location,
-    cost
+    license,
+    key,
+    expDate,
+    manufacturer,
+    totalAmount,
+    //   availAmount,
+    assignedTo,
+    cost,
+    supplier
   } = formData;
 
   const onChange = (e) =>
@@ -42,9 +46,9 @@ const AddSoftware = ({ addSoftware, history }) => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Pavadinimas'
-            name='name'
-            value={name}
+            placeholder='Licencija'
+            name='license'
+            value={license}
             onChange={(e) => onChange(e)}
           />
           <small className='form-text'>Pavadinimas turi būti unikalus!</small>
@@ -52,25 +56,45 @@ const AddSoftware = ({ addSoftware, history }) => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Serijinis Numeris'
-            name='serialNumber'
-            value={serialNumber}
+            placeholder='Licencijos raktas'
+            name='key'
+            value={key}
             onChange={(e) => onChange(e)}
           />
         </div>
         <div className='form-group'>
           <input
+            type='Date'
+            placeholder='Galiojimo data'
+            name='expDate'
+            value={expDate}
+            onChange={(e) => onChange(e)} //FIXXXXXXXXX
+          />
+        </div>
+        <div className='form-group'>
+          <input
             type='text'
-            placeholder='Modelis'
-            name='model'
-            value={model}
+            placeholder='Leidėjas'
+            name='manufacturer'
+            value={manufacturer}
+            onChange={(e) => onChange(e)} //FIXXXXXXXXX
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='number'
+            placeholder='Turimas licencijų kiekis'
+            name='totalAmount'
+            value={totalAmount}
+            min='1'
+            max='100'
             onChange={(e) => onChange(e)}
           />
         </div>
         <div className='form-group'>
           <select
-            name='category'
-            value={category}
+            name='assignedTo'
+            value={assignedTo}
             onChange={(e) => onChange(e)}
           >
             <option value='0'>* Parinkite įrangos kategoriją</option>
@@ -88,29 +112,18 @@ const AddSoftware = ({ addSoftware, history }) => {
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Vieta'
-            name='status'
-            value={status}
-            onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>Dabartinė įrangos buvimo vieta</small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Vieta'
-            name='location'
-            value={location}
-            onChange={(e) => onChange(e)}
-          />
-          <small className='form-text'>Dabartinė įrangos buvimo vieta</small>
-        </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Vieta'
+            placeholder='Kaina'
             name='cost'
             value={cost}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Tiekėjas'
+            name='supplier'
+            value={supplier}
             onChange={(e) => onChange(e)}
           />
         </div>

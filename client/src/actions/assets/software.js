@@ -7,6 +7,7 @@ import {
   CLEAR_SOFTWARE,
   CLEAR_SOFTWARES,
   SOFTWARE_ERROR,
+  DELETE_SOFTWARE,
   ADD_SOFTWARE
 } from '../constants';
 
@@ -52,9 +53,85 @@ export const addSoftware = (formData) => async (dispatch) => {
 
     dispatch(setAlert('Programinė įranga pridėta', 'success'));
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: SOFTWARE_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
     });
+  }
+};
+
+export const editSoftware = (formData, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post(`/api/software/edit/${id}`, formData, config);
+    dispatch({
+      type: GET_SOFTWARE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Įrangos duomenys atnaujinti!', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: SOFTWARE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+export const getSoftware = (id) => async (dispatch) => {
+  dispatch({
+    type: CLEAR_SOFTWARE
+  });
+  try {
+    const res = await axios.get(`/api/software/${id}`);
+
+    dispatch({
+      type: GET_SOFTWARE,
+      payload: res.data
+    });
+  } catch (err) {
+    if (err.response) {
+      dispatch({
+        type: SOFTWARE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    } else {
+      console.error(err);
+    }
+  }
+};
+
+export const deleteSoftware = (id) => async (dispatch) => {
+  if (window.confirm('Tikrai?')) {
+    try {
+      await axios.delete(`/api/software/${id}`);
+
+      dispatch({
+        type: DELETE_SOFTWARE,
+        payload: id
+      });
+
+      dispatch(setAlert('Įranga pašalinta', 'success'));
+    } catch (err) {
+      dispatch({
+        type: SOFTWARE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    }
   }
 };

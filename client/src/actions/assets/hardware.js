@@ -101,6 +101,10 @@ export const getHardware = (id) => async (dispatch) => {
       payload: res.data
     });
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
     if (err.response) {
       dispatch({
         type: HARDWARE_ERROR,
