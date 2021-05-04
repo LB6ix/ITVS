@@ -195,7 +195,7 @@ const EditHardware = ({
         </div>
         <input type='submit' class='btn btn-primary my-1' />
 
-        <Link to='/hardwares' className='btn btn-light'>
+        <Link to='/hardware' className='btn btn-light'>
           Grįžti į aparatinės įrangos sąrašą
         </Link>
         {/* FIX THIS */}

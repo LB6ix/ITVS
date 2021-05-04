@@ -31,10 +31,10 @@ const Navbar = ({
         <Link to='/posts'>Prašymai</Link>
       </li>
       <li>
-        <Link to='/hardwares'>Aparatinė Įranga</Link>
+        <Link to='/hardware'>Aparatinė Įranga</Link>
       </li>
       <li>
-        <Link to='/softwares'>Programinė Įranga</Link>
+        <Link to='/software'>Programinė Įranga</Link>
       </li>
       <li>
         <a onClick={logout} href='#!'>

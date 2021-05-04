@@ -80,22 +80,23 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
               />
               <PrivateRoute exact path='/posts' component={Posts} />
               <PrivateRoute exact path='/posts/:id' component={Post} />
-              <PrivateRoute exact path='/hardwares' component={Hardwares} />
-              <PrivateRoute exact path='/hardwares/:id' component={Hardware} />
+              <PrivateRoute exact path='/hardware' component={Hardwares} />
               <PrivateRoute
                 exact
-                path='/hardwares/add-hardware'
+                path='/hardware/add-hardware'
                 component={AddHardware}
               />
+              <PrivateRoute exact path='/hardware/:id' component={Hardware} />
               <PrivateRoute
                 exact
-                path='/hardwares/edit/:id'
+                path='/hardware/edit/:id'
                 component={EditHardware}
               />
-              <PrivateRoute exact path='/softwares' component={Softwares} />
+
+              <PrivateRoute exact path='/software' component={Softwares} />
               <PrivateRoute
                 exact
-                path='/softwares/add-software'
+                path='/software/add-software'
                 component={AddSoftware}
               />
             </Switch>

@@ -67,7 +67,7 @@ const Softwares = ({
   ) : (
     <Fragment>
       <h3 className='MuiTypography-h3'>Programinės įrangos sąrašas</h3>
-      <Link to={`/softwares/add-software`} className='btn btn-primary'>
+      <Link to={`/software/add-software`} className='btn btn-primary'>
         Pridėti naują įrangą
       </Link>
       {/* <table className='table'> */}
@@ -86,7 +86,7 @@ const Softwares = ({
               <TableCell>{sw.supplier}</TableCell>
               <TableCell>{formatDate(sw.date)}</TableCell>
               <TableCell>
-                <Link to={`/softwares/${sw._id}`}>
+                <Link to={`/software/${sw._id}`}>
                   <IconButton
                     className='tableActions'
                     style={{ display: 'inline' }}

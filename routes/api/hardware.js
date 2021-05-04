@@ -17,7 +17,8 @@ router.post(
       check('name', 'Įrašykite pavadinimą').not().isEmpty(),
       check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
       check('model', 'Įrašykite modelį').not().isEmpty(),
-      check('category', 'Įrašykite katogeriją').not().isEmpty()
+      check('category', 'Įrašykite katogeriją').not().isEmpty(),
+      check('status', 'Įrašykite katogeriją').not().isEmpty()
     ]
   ],
   async (req, res) => {
@@ -86,7 +87,8 @@ router.post(
       check('name', 'Įrašykite pavadinimą').not().isEmpty(),
       check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
       check('model', 'Įrašykite modelį').not().isEmpty(),
-      check('category', 'Įrašykite katogeriją').not().isEmpty()
+      check('category', 'Įrašykite katogeriją').not().isEmpty(),
+      check('status', 'Nurodykite statusą').not().isEmpty()
     ]
   ],
   async (req, res) => {

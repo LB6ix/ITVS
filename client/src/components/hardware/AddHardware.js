@@ -38,6 +38,9 @@ const AddHardware = ({ addHardware, history }) => {
   const onSubmit = (e) => {
     e.preventDefault();
     addHardware(formData);
+    setTimeout(() => {
+      history.push('/hardware');
+    }, 1000);
   };
 
   return (

@@ -68,7 +68,7 @@ const Hardwares = ({
   ) : (
     <Fragment>
       <h3 className='MuiTypography-h3'>Aparatinės įrangos sąrašas</h3>
-      <Link to={`/hardwares/add-hardware`} className='btn btn-primary'>
+      <Link to={`/hardware/add-hardware`} className='btn btn-primary'>
         Pridėti naują įrangą
       </Link>
       {/* <Toolbar>DO SEARCH</Toolbar> */}
@@ -86,7 +86,7 @@ const Hardwares = ({
               <TableCell>{hw.assignedTo}</TableCell>{' '}
               <TableCell>
                 {
-                  <Link to={`/hardwares/${hw._id}`}>
+                  <Link to={`/hardware/${hw._id}`}>
                     <Button size='small' variant='contained' color='primary'>
                       Priskirti
                     </Button>
@@ -95,7 +95,7 @@ const Hardwares = ({
               </TableCell>
               <TableCell>
                 {
-                  <Link to={`/hardwares/${hw._id}`}>
+                  <Link to={`/hardware/${hw._id}`}>
                     <Button size='small' variant='contained' color='primary'>
                       Atsiimti
                     </Button>
@@ -111,7 +111,7 @@ const Hardwares = ({
                     Peržiūrėti
                   </Button>
                 </Link> */}
-                <Link to={`/hardwares/${hw._id}`}>
+                <Link to={`/hardware/${hw._id}`}>
                   <IconButton
                     className='tableActions'
                     style={{ display: 'inline' }}

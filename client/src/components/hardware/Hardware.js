@@ -19,11 +19,11 @@ const Hardware = ({ getHardware, hardware: { hardware }, match }) => {
         <Loading />
       ) : (
         <Fragment>
-          <Link to='/hardwares' className='btn btn-light'>
+          <Link to='/hardware' className='btn btn-light'>
             Grįžti į aparatinės įrangos sąrašą
           </Link>
           <Link
-            to={`/hardwares/edit/${match.params.id}`}
+            to={`/hardware/edit/${match.params.id}`}
             className='btn btn-dark'
           >
             Keisti duomenis
