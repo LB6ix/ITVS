@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addHardware } from '../../actions/assets/hardware';
+import { Button } from '@material-ui/core';
 
 const AddHardware = ({ addHardware, history }) => {
   const [formData, setFormData] = useState({
@@ -134,6 +135,33 @@ const AddHardware = ({ addHardware, history }) => {
             placeholder='Kaina'
             name='cost'
             value={cost}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Tiekėjas'
+            name='supplier'
+            value={supplier}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Garantija'
+            name='warranty'
+            value={warranty}
+            onChange={(e) => onChange(e)}
+          />
+        </div>
+        <div className='form-group'>
+          <input
+            type='text'
+            placeholder='Nuomos galiojimo pabaiga'
+            name='leaseExpDate'
+            value={leaseExpDate}
             onChange={(e) => onChange(e)}
           />
         </div>

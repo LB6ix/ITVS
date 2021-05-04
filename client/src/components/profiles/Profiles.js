@@ -2,21 +2,10 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
-import ProfileItem from './ProfileItem';
 import { getProfiles, deleteAccount } from '../../actions/profile';
-import profile from '../../reducers/profile';
 import { Link } from 'react-router-dom';
 import Tables from '../tables/Tables';
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableCell,
-  TablePagination,
-  TableRow,
-  Toolbar
-} from '@material-ui/core';
+import { TableBody, TableCell, TableRow } from '@material-ui/core';
 
 const Profiles = ({
   getProfiles,

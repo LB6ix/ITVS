@@ -4,7 +4,10 @@ const { check, validationResult } = require('express-validator');
 const { authUser, authAdmin } = require('../../middleware/auth');
 
 const Software = require('../../models/Software');
-let currentDate = new Date().toISOString();
+let currentDate = new Date();
+const offset = currentDate.getTimezoneOffset();
+currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
+//currentDate.toISOString().split('T')[0];
 
 //@route  POST api/software/add-software
 //@desc   Test route
@@ -15,11 +18,14 @@ router.post(
     authAdmin,
     [
       check('license', 'Įrašykite licencijos pavadinimą').not().isEmpty(),
-      check('key', 'Įrašykite produkto raktą').not().isEmpty(),
-      check('expDate', 'Įrašykite tinkamą galiojimo datą')
+      check('key', 'Įrašykite licencijos raktą').not().isEmpty(),
+      check(
+        'expDate',
+        'Įrašykite tinkamą galiojimo datą, kuri būtų vėlesnė nei šiandienos'
+      )
         .not()
         .isEmpty()
-        .isAfter(currentDate),
+        .isAfter(currentDate.toISOString().split('T')[0]),
       check('totalAmount', 'Įveskite tinkamą bendrą kiekį')
         .not()
         .isEmpty()
@@ -64,7 +70,6 @@ router.post(
         cost,
         supplier
       });
-
       await software.save();
       res.json(software);
     } catch (err) {
@@ -85,6 +90,26 @@ router.get('/', authAdmin, async (req, res) => {
   } catch (err) {
     console.error(err.message);
     res.status(500).status('Server Error');
+  }
+});
+
+//@route  GET api/software/:id
+//@desc   Get software by id
+//@access Authenticated(admin only)
+
+router.get('/:id', authAdmin, async (req, res) => {
+  try {
+    const software = await Software.findById(req.params.id);
+
+    if (!software) {
+      return res.status(404).json({ msg: 'Programinė įranga nerasta' });
+    }
+    res.json(software);
+  } catch (err) {
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Programinė įranga nerasta' });
+    }
+    res.status(500).send('Server Error');
   }
 });
 
@@ -115,10 +140,19 @@ router.post(
   [
     authAdmin,
     [
-      check('name', 'Įrašykite pavadinimą').not().isEmpty(),
-      check('serialNumber', 'Įrašykite serijinį numerį').not().isEmpty(),
-      check('model', 'Įrašykite modelį').not().isEmpty(),
-      check('category', 'Įrašykite katogeriją').not().isEmpty()
+      check('license', 'Įrašykite licencijos pavadinimą').not().isEmpty(),
+      check('key', 'Įrašykite licencijos raktą').not().isEmpty(),
+      check(
+        'expDate',
+        'Įrašykite tinkamą galiojimo datą, kuri būtų vėlesnė nei šiandienos'
+      )
+        .not()
+        .isEmpty()
+        .isAfter(currentDate),
+      check('totalAmount', 'Įveskite tinkamą bendrą kiekį')
+        .not()
+        .isEmpty()
+        .isInt({ min: 1, max: 100 })
     ]
   ],
   async (req, res) => {

@@ -5,7 +5,6 @@ import PostItem from './PostItem';
 import CreatePost from './CreatePost';
 import { getPosts, getUserPosts } from '../../actions/post';
 import Loading from '../layout/Loading';
-import profile from '../../reducers/profile';
 import { Link } from 'react-router-dom';
 
 const Posts = ({
@@ -18,12 +17,8 @@ const Posts = ({
   isAdmin
 }) => {
   useEffect(() => {
-    {
-      isAdmin && getPosts();
-    }
-    {
-      !loading && isAuthenticated && !isAdmin && getUserPosts();
-    }
+    isAdmin && getPosts();
+    !loading && isAuthenticated && !isAdmin && getUserPosts();
   }, [getPosts, getUserPosts]);
 
   return loading ? (

@@ -2,10 +2,9 @@ import axios from 'axios';
 import { setAlert } from '../alert';
 import {
   GET_HARDWARES,
-  GET_USER_HARDWARES,
+  //GET_USER_HARDWARES,
   GET_HARDWARE,
   CLEAR_HARDWARE,
-  CLEAR_HARDWARES,
   HARDWARE_ERROR,
   DELETE_HARDWARE,
   ADD_HARDWARE

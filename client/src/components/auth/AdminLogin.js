@@ -20,9 +20,7 @@ const AdminLogin = ({ adminLogin, isAuthenticated, history }) => {
     e.preventDefault();
     adminLogin({ email, password });
     setTimeout(() => {
-      {
-        history.push('/main');
-      }
+      history.push('/main');
     }, 1000);
   };
 

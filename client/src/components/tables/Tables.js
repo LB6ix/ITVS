@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 
 import {
-  Paper,
   Table,
-  TableBody,
   TableHead,
   TableCell,
   TableRow,
@@ -33,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Tables(records, headerCells) {
   const classes = useStyles();
 
-  const pages = [5, 10];
+  const pages = [10, 15, 25];
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(pages[page]);
   const [order, setOrder] = useState();

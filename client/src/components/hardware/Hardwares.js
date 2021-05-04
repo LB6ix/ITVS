@@ -5,21 +5,11 @@ import { getHardwares, deleteHardware } from '../../actions/assets/hardware';
 import Loading from '../layout/Loading';
 import Tables from '../tables/Tables';
 import { Link } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
+//import formatDate from '../../utility/formatDate';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableCell,
-  TablePagination,
-  TableRow,
-  Toolbar,
-  Button
-} from '@material-ui/core';
+import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 
 const Hardwares = ({
   getHardwares,
@@ -68,9 +58,13 @@ const Hardwares = ({
   ) : (
     <Fragment>
       <h3 className='MuiTypography-h3'>Aparatinės įrangos sąrašas</h3>
-      <Link to={`/hardware/add-hardware`} className='btn btn-primary'>
-        Pridėti naują įrangą
+
+      <Link to={`/hardware/add-hardware`}>
+        <Button size='large' variant='contained' color='primary'>
+          Pridėti naują įrangą
+        </Button>
       </Link>
+
       {/* <Toolbar>DO SEARCH</Toolbar> */}
       <TableContainer>
         <TableHeader />

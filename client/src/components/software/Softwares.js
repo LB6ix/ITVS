@@ -9,19 +9,11 @@ import Tables from '../tables/Tables';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {
-  Paper,
-  Table,
-  TableBody,
-  TableHead,
-  TableCell,
-  TablePagination,
-  TableRow,
-  Toolbar,
-  Button
-} from '@material-ui/core';
+import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 const Softwares = ({
   getSoftwares,
+  deleteSoftware,
+
   software: { softwares, loading },
   isAuthenticated,
   isAdmin
@@ -37,16 +29,16 @@ const Softwares = ({
   }, [getSoftwares]);
 
   const headerCells = [
-    { id: 'license', label: 'Licencija' },
+    { id: 'license', label: 'Licencija', disableSorting: true },
     { id: 'key', label: 'Raktas', disableSorting: true },
-    { id: 'expDate', label: 'Galiojimo data' },
-    { id: 'manufacturer', label: 'Leidėjas' },
-    { id: 'totalAmount', label: 'Kiekis' },
+    { id: 'expDate', label: 'Galiojimo data', disableSorting: true },
+    { id: 'manufacturer', label: 'Leidėjas', disableSorting: true },
+    { id: 'totalAmount', label: 'Kiekis', disableSorting: true },
     { id: 'assignedTo', label: 'Kam priskirta', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
-    { id: 'date', label: 'Data' },
-    { id: 'veiksmai', label: 'Veiksmai', disableSorting: true }
+    { id: 'date', label: 'Data', disableSorting: true },
+    { id: 'Veiksmai', label: 'Veiksmai', disableSorting: true }
   ];
 
   const {
@@ -55,20 +47,17 @@ const Softwares = ({
     TablePaginationKomp,
     recordsAfterPagingAndSorting
   } = Tables(softwares, headerCells);
-  // const hardwarelist = hardwares.map((hw) => (
-  //   <td key={hw._id}>
-  //     <td>{hw.name}</td>
-  //     <td>{hw.model}</td>
-  //     <td>{hw.category}</td>
-  //   </td>
-  // ));
+
   return loading ? (
     <Loading />
   ) : (
     <Fragment>
       <h3 className='MuiTypography-h3'>Programinės įrangos sąrašas</h3>
-      <Link to={`/software/add-software`} className='btn btn-primary'>
-        Pridėti naują įrangą
+
+      <Link to={`/software/add-software`}>
+        <Button size='large' variant='contained' color='primary'>
+          Pridėti naują įrangą
+        </Button>
       </Link>
       {/* <table className='table'> */}
       <TableContainer>
@@ -97,6 +86,7 @@ const Softwares = ({
                 <IconButton
                   style={{ display: 'inline' }}
                   className='tableActions'
+                  color='secondary'
                   aria-label='delete'
                   onClick={() => deleteSoftware(sw._id)}
                 >
@@ -116,7 +106,7 @@ Softwares.propTypes = {
   isAdmin: PropTypes.bool,
   getSoftwares: PropTypes.func.isRequired,
   deleteSoftware: PropTypes.func.isRequired,
-  //   getUserHardwares: PropTypes.func.isRequired,
+  //   getUserSoftwares: PropTypes.func.isRequired,
   software: PropTypes.object.isRequired
 };
 

@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { createuser } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router';
 
 const CreateUser = ({ setAlert, createuser }) => {
   const [formData, setFormData] = useState({

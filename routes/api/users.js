@@ -7,6 +7,7 @@ const bcrypt = require('bcryptjs');
 const config = require('config');
 
 const User = require('../../models/User');
+const Profile = require('../../models/Profile');
 const { authUser, authAdmin } = require('../../middleware/auth');
 
 //@route  POST api/users
@@ -88,5 +89,15 @@ router.post(
     }
   }
 );
+
+router.get('/', authAdmin, async (req, res) => {
+  try {
+    const users = await User.find().populate('user', ['email']);
+    res.json(users);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).status('Server Error');
+  }
+});
 
 module.exports = router;

@@ -2,10 +2,10 @@ import axios from 'axios';
 import { setAlert } from '../alert';
 import {
   GET_SOFTWARES,
-  GET_USER_SOFTWARES,
+  //GET_USER_SOFTWARES,
   GET_SOFTWARE,
   CLEAR_SOFTWARE,
-  CLEAR_SOFTWARES,
+  //CLEAR_SOFTWARES,
   SOFTWARE_ERROR,
   DELETE_SOFTWARE,
   ADD_SOFTWARE

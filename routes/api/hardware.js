@@ -322,8 +322,11 @@ router.get('/assigned-hardware/:id', [authUser], async (req, res) => {
 });
 
 //checkout route'as
+// @route    POST api/hardware/:id/checkout/:user_id
+// @desc     Checkout
+// @access   Authenticated (admin only)
 router.post(
-  '/:id/checkout/:user_id',
+  '/:id/checkout/',
   [
     authAdmin,
     [
@@ -338,12 +341,18 @@ router.post(
     }
 
     try {
-      const user = await User.findById(req.params.user_id).select('-password');
-
-      const { assignedTo, checkOutDate, expectedCheckInDate } = req.body;
+      const {
+        status,
+        assigned,
+        assignedTo,
+        checkOutDate,
+        expectedCheckInDate
+      } = req.body;
 
       const hardwareFields = {};
-      hardwareFields.assignedTo = req.params.user_id;
+      hardwareFields.status = 'Priskirtas';
+      hardwareFields.assigned = true;
+      hardwareFields.assignedTo = assignedTo;
       hardwareFields.checkOutDate = checkOutDate;
       hardwareFields.expectedCheckInDate = expectedCheckInDate;
 
@@ -371,5 +380,59 @@ router.post(
 );
 
 //checkin route
+// @route    POST api/hardware/:id/checkin/:user_id
+// @desc     Checkin
+// @access   Authenticated (admin only)
+
+router.post(
+  '/:id/checkin/',
+  authAdmin,
+  check('status', 'Privaloma nurodyti statusą').not().isEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    let currentDate = new Date();
+    try {
+      const {
+        status,
+        assigned,
+        assignedTo,
+        checkInDate,
+        expectedCheckInDate,
+        checkOutDate
+      } = req.body;
+
+      const hardwareFields = {};
+      hardwareFields.status = req.body.status;
+      hardwareFields.assigned = false;
+      hardwareFields.assignedTo = null;
+      hardwareFields.checkInDate = currentDate;
+      hardwareFields.expectedCheckInDate = '';
+      hardwareFields.checkOutDate = '';
+
+      let hardware = await Hardware.findOne({
+        _id: req.params.id
+      });
+      if (hardware) {
+        hardware = await Hardware.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: hardwareFields },
+          { new: true }
+        );
+        return res.json(hardware);
+      }
+
+      hardware = new Hardware(hardwareFields);
+
+      await hardware.save();
+      res.json(hardware);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
 
 module.exports = router;

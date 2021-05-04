@@ -14,10 +14,10 @@ const CreatePost = ({ addPost, history }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  const onSubmit = (e) => {
-    e.preventDefault();
-    addPost(formData);
-  };
+  // const onSubmit = (e) => {
+  //   e.preventDefault();
+  //   addPost(formData);
+  // };
 
   return (
     <div className='post-form'>

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createProfile } from '../../actions/profile';
 import { withRouter } from 'react-router-dom';
-import { Grid, makeStyles } from '@material-ui/core';
 
 const CreateProfile = ({ createProfile, history }) => {
   const [formData, setFormData] = useState({

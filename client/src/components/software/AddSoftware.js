@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSoftware } from '../../actions/assets/software';
+import TextField from '@material-ui/core/TextField';
 
 const AddSoftware = ({ addSoftware, history }) => {
   const [formData, setFormData] = useState({
@@ -61,9 +62,18 @@ const AddSoftware = ({ addSoftware, history }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
+        {/* // <div className='form-group'>
+        //   <input
+        //     type='date'
+        //     placeholder='Galiojimo data'
+        //     name='expDate'
+        //     value={expDate}
+        //     onChange={(e) => onChange(e)} //FIXXXXXXXXX
+        //   />
+        // </div> */}
         <div className='form-group'>
           <input
-            type='Date'
+            type='date'
             placeholder='Galiojimo data'
             name='expDate'
             value={expDate}

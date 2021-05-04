@@ -2,8 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { editHardware, getHardware } from '../../actions/assets/hardware';
-import { withRouter } from 'react-router-dom';
-import { Button } from '@material-ui/core';
+//import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
 const EditHardware = ({

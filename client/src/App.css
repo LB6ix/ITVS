@@ -25,6 +25,10 @@ a {
   text-decoration: none;
 }
 
+/* testing */
+
+/* testoing */
+
 ul {
   list-style: none;
 }
@@ -35,10 +39,12 @@ img {
 
 /* Utilities */
 .container {
-  max-width: 85%;
+  flex-wrap: nowrap;
+  position: inherit;
+  left: '0px';
   margin: auto;
-  overflow: hidden;
-  padding: 0 2rem;
+  /* overflow: hidden; */
+  /* padding: 0 2rem; */
   margin-top: 3rem;
   margin-bottom: 3 rem;
 }
