@@ -90,12 +90,78 @@ export const editHardware = (formData, id) => async (dispatch) => {
       payload: { msg: err.response.statusText, status: err.response.status }
     });
   }
-}; //history - redirect
+};
+
+export const checkOutHardware = (formData, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post(
+      `/api/hardware/${id}/checkout`,
+      formData,
+      config
+    );
+    dispatch({
+      type: GET_HARDWARE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Įranga priskirta!', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: HARDWARE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+export const checkInHardware = (formData, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post(
+      `/api/hardware/${id}/checkin`,
+      formData,
+      config
+    );
+    dispatch({
+      type: GET_HARDWARE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Įranga atsiimta!', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: HARDWARE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
 
 export const getHardware = (id) => async (dispatch) => {
-  dispatch({
-    type: CLEAR_HARDWARE
-  });
+  // // dispatch({
+  // //   type: CLEAR_HARDWARE
+  // });
   try {
     const res = await axios.get(`/api/hardware/${id}`);
 

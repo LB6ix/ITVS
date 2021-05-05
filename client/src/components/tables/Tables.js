@@ -12,15 +12,13 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(3),
     '& thead th': {
-      margin: '40%',
       fontWeight: '500',
       color: '#212121',
       backgroundColor: theme.palette.primary.light
     },
     '& tbody td': {
-      width: '50%',
       fontWeight: '300'
     },
     '& tbody td:hover': {
@@ -67,7 +65,7 @@ export default function Tables(records, headerCells) {
                     handleSortRequest(headerCell.id);
                   }}
                 >
-                  {headerCell.label}{' '}
+                  {headerCell.label}
                 </TableSortLabel>
               )}
             </TableCell>

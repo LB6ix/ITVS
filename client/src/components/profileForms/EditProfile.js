@@ -143,7 +143,7 @@ const EditProfile = ({
               <input
                 type='text'
                 placeholder='Pakartokite Slaptažodį'
-                name='passwordč'
+                name='password2'
               />
               <small className='form-text'></small>
             </div>

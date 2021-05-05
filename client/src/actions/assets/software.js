@@ -135,3 +135,36 @@ export const deleteSoftware = (id) => async (dispatch) => {
     }
   }
 };
+
+export const checkOutSoftware = (formData, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post(
+      `/api/software/${id}/checkout`,
+      formData,
+      config
+    );
+    dispatch({
+      type: GET_SOFTWARE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Įranga priskirta!', 'success'));
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: SOFTWARE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};

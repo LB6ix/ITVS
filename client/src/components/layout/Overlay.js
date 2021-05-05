@@ -111,7 +111,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const PersistentDrawerLeft = ({
+const Overlay = ({
   auth: { isAuthenticated, isAdmin, loading, user },
   logout
 }) => {
@@ -341,7 +341,7 @@ const PersistentDrawerLeft = ({
   );
 };
 
-PersistentDrawerLeft.propTypes = {
+Overlay.propTypes = {
   logout: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
@@ -350,7 +350,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logout })(PersistentDrawerLeft);
+export default connect(mapStateToProps, { logout })(Overlay);
 
 //  <Fragment>{getLinks(isAuthenticated, isAdmin)}</Fragment>
 

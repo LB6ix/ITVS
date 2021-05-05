@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Navbar from './components/layout/Navbar';
-import PersistentDrawerLeft from './components/layout/Sidebar';
+
+import Overlay from './components/layout/Overlay';
 import Landing from './components/layout/Landing';
 import CreateUser from './components/auth/CreateUser';
 import UserLogin from './components/auth/UserLogin';
@@ -19,7 +19,7 @@ import Hardware from './components/hardware/Hardware';
 import Software from './components/software/Software';
 import Softwares from './components/software/Softwares';
 import Post from './components/posts/Post';
-import AppBar from './components/layout/AppBar';
+
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 // import auth from './reducers/auth';
 import './App.css';
@@ -34,13 +34,15 @@ import EditHardware from './components/hardware/EditHardware';
 import EditSoftware from './components/software/EditSoftware';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
+import CheckOutHardware from './components/hardware/CheckOutHardware';
+import CheckInHardware from './components/hardware/CheckInHardware';
 // import { stringify } from 'uuid';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 //testingas
-store.dispatch(loadUser());
+store.dispatch(loadAdmin());
 //store.dispatch(loadAdmin());
 
 // {
@@ -52,7 +54,7 @@ store.dispatch(loadUser());
 
 const App = ({ loading, isAuthenticated, isAdmin }) => {
   useEffect(() => {
-    store.dispatch(loadUser());
+    store.dispatch(loadAdmin());
     // checkAdmin();
   }, []); //componentdidmount, runs once
   return (
@@ -62,8 +64,7 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
           {/* <Navbar /> */}
 
           <Route exact path='/' component={Landing} />
-          <PersistentDrawerLeft />
-          {/* <AppBar /> */}
+          <Overlay />
           <Alert />
           <Container maxWidth='lg'>
             <Switch>
@@ -109,6 +110,16 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
                 exact
                 path='/software/edit/:id'
                 component={EditSoftware}
+              />
+              <PrivateRoute
+                exact
+                path='/hardware/:id/checkout'
+                component={CheckOutHardware}
+              />
+              <PrivateRoute
+                exact
+                path='/hardware/:id/checkin'
+                component={CheckInHardware}
               />
               {/* Route render={() => <h3>not here</h3>} */}
             </Switch>

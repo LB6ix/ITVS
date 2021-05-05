@@ -1,25 +1,12 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import formatDate from '../../utility/formatDate';
+import { Button } from '@material-ui/core';
 
-const HardwareItem = ({
-  hardware: {
-    name,
-    serialNumber,
-    manufacturer,
-    model,
-    category,
-    status,
-    assignedTo,
-    location,
-    expectedCheckInDate,
-    checkOutDate,
-    checkInDate,
-    cost,
-    supplier,
-    warranty,
-    leaseExpDate
-  }
-}) => {
+const HardwareItem = ({ hardware }) => {
+  const [displayPasswordChange, togglePasswordChange] = useState(false);
+
   return (
     <Fragment>
       <h1 className='large text-primary'>Įrangos duomenys</h1>
@@ -29,7 +16,7 @@ const HardwareItem = ({
             type='text'
             placeholder='Pavadinimas'
             name='name'
-            value={name}
+            value={hardware[0].name}
             disabled
           />
         </div>
@@ -38,7 +25,7 @@ const HardwareItem = ({
             type='text'
             placeholder='Serijinis numeris'
             name='serialNumber'
-            value={serialNumber}
+            value={hardware[0].serialNumber}
             disabled
           />
         </div>
@@ -47,7 +34,7 @@ const HardwareItem = ({
             type='text'
             placeholder='Gamintojas'
             name='manufacturer'
-            value={manufacturer}
+            value={hardware[0].manufacturer}
             disabled
           />
         </div>
@@ -56,12 +43,12 @@ const HardwareItem = ({
             type='text'
             placeholder='Modelis'
             name='model'
-            value={model}
+            value={hardware[0].model}
             disabled
           />
         </div>
         <div className='form-group'>
-          <select name='category' value={category} disabled>
+          <select name='category' value={hardware[0].category} disabled>
             <option value='0'>* Parinkite įrangos kategoriją</option>
             <option value='Kompiuteriai'>Kompiuteriai</option>
             <option value='Telefonai'>Telefonai</option>
@@ -75,7 +62,7 @@ const HardwareItem = ({
           </select>
         </div>
         <div className='form-group'>
-          <select name='status' value={status} disabled>
+          <select name='status' value={hardware[0].status} disabled>
             <option value='0'>* Parinkite statusą</option>
             <option value='Paruoštas'>Paruoštas</option>
             <option value='Neparuoštas'>Neparuoštas</option>
@@ -92,7 +79,7 @@ const HardwareItem = ({
             type='text'
             placeholder='Vieta'
             name='location'
-            value={location}
+            value={hardware[0].location}
             disabled
           />
           <small className='form-text'>Dabartinė įrangos buvimo vieta</small>
@@ -102,7 +89,7 @@ const HardwareItem = ({
             type='text'
             placeholder='Kaina'
             name='cost'
-            value={cost}
+            value={hardware[0].cost}
             disabled
           />
         </div>
@@ -111,78 +98,77 @@ const HardwareItem = ({
             type='text'
             placeholder='Kam Priskirtas'
             name='assignedTo'
-            value={assignedTo}
+            value={hardware[0].assignedTo}
             disabled
           />
         </div>
         {/* FIX THIS */}
-        <div className='my-2'>
-          <button
-            // onClick={() => toggleAdditionalData(!displayAdditionalData)}
-            type='button'
-            className='btn btn-light'
-          >
-            Peržiūrėti detalesnius duomenis
-          </button>
-        </div>
-        {/* {displayAdditionalData && ( */}
-        <Fragment>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Tiekėjas'
-              name='supplier'
-              value={supplier}
-              disabled
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Garantija'
-              name='warranty'
-              value={warranty}
-              disabled
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Nuomos galiojimo pabaiga'
-              name='leaseExpDate'
-              value={leaseExpDate}
-              disabled
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Nuomos galiojimo pabaiga'
-              name='expectedCheckInDate'
-              value={expectedCheckInDate}
-              disabled
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Nuomos galiojimo pabaiga'
-              name='checkOutDate'
-              value={checkOutDate}
-              disabled
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='text'
-              placeholder='Nuomos galiojimo pabaiga'
-              name='checkInDate'
-              value={checkInDate}
-              disabled
-            />
-          </div>
-        </Fragment>
-        {/* <input type='submit' class='btn btn-primary my-1' /> */}
+
+        <Button
+          onClick={() => togglePasswordChange(!displayPasswordChange)}
+          type='button'
+          variant='contained'
+          color='primary'
+        >
+          Peržiūrėti detalesnius duomenis
+        </Button>
+
+        {displayPasswordChange && (
+          <Fragment>
+            <div className='form-group'>
+              <input
+                type='text'
+                placeholder='Tiekėjas'
+                name='supplier'
+                value={hardware[0].supplier}
+                disabled
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='text'
+                placeholder='Garantija'
+                name='warranty'
+                value={hardware[0].warranty}
+                disabled
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='text'
+                placeholder='Nuomos galiojimo pabaiga'
+                name='leaseExpDate'
+                value={hardware[0].leaseExpDate}
+                disabled
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='text'
+                placeholder='Tikėtina grąžinimo data'
+                name='expectedCheckInDate'
+                value={formatDate(hardware[0].expectedCheckInDate)}
+                disabled
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='text'
+                placeholder='Priskyrimo data'
+                name='checkOutDate'
+                value={formatDate(hardware[0].checkOutDate)}
+              />
+            </div>
+            <div className='form-group'>
+              <input
+                type='text'
+                placeholder='Atsiėmimo data'
+                name='checkInDate'
+                value={formatDate(hardware[0].checkInDate)}
+              />
+            </div>
+          </Fragment>
+        )}
       </form>
     </Fragment>
   );

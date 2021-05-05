@@ -11,6 +11,7 @@ import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
+import CheckOutHardware from './CheckOutHardware';
 const Hardwares = ({
   getHardwares,
   deleteHardware,
@@ -81,8 +82,13 @@ const Hardwares = ({
               <Fragment>
                 {hw.assigned === false ? (
                   <TableCell>
-                    <Link to={`/hardware/${hw._id}`}>
-                      <Button size='small' variant='contained' color='primary'>
+                    <Link to={`/hardware/${hw._id}/checkout`} setOpen={true}>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        color='primary'
+                        form='my-form-id'
+                      >
                         Priskirti
                       </Button>
                     </Link>
@@ -90,11 +96,11 @@ const Hardwares = ({
                 ) : (
                   <Fragment>
                     <TableCell>
-                      <Link to={`/hardware/${hw._id}`}>
+                      <Link to={`/hardware/${hw._id}/checkin`}>
                         <Button
                           size='small'
                           variant='contained'
-                          color='primary'
+                          color='secondary'
                         >
                           Atsiimti
                         </Button>
@@ -120,6 +126,7 @@ const Hardwares = ({
                 <Link to={`/hardware/${hw._id}`}>
                   <IconButton
                     className='tableActions'
+                    color='primary'
                     style={{ display: 'inline-block' }}
                   >
                     <VisibilityIcon fontSize='small' />
@@ -129,6 +136,7 @@ const Hardwares = ({
                   style={{ display: 'inline-block' }}
                   className='tableActions'
                   aria-label='delete'
+                  color='secondary'
                   onClick={() => deleteHardware(hw._id)}
                 >
                   <DeleteIcon fontSize='small' />

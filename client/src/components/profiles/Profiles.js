@@ -6,6 +6,8 @@ import { getProfiles, deleteAccount } from '../../actions/profile';
 import { Link } from 'react-router-dom';
 import Tables from '../tables/Tables';
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const Profiles = ({
   getProfiles,
@@ -80,13 +82,17 @@ const Profiles = ({
                   <TableCell>{prf.location}</TableCell>
                   <TableCell>{prf.phoneNumber}</TableCell>
                   <TableCell>
-                    <button
+                    <IconButton
+                      style={{ display: 'inline-block' }}
+                      className='tableActions'
+                      aria-label='delete'
+                      variant='contained'
+                      color='secondary'
+                      size='medium'
                       onClick={() => deleteAccount(prf.user._id)}
-                      type='button'
-                      className='btn btn-danger'
                     >
-                      <i className='fas fa-times' />
-                    </button>
+                      <DeleteIcon fontSize='small' />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

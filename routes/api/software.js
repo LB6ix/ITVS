@@ -212,6 +212,59 @@ router.post(
 
 //checkout route
 
+router.post(
+  '/:id/checkout/',
+  [
+    authAdmin,
+    [
+      check('assignedTo', 'Privaloma nurodyti').not().isEmpty(),
+      check(
+        'checkOutDate',
+        'Įrašykite tinkamą galiojimo datą, kuri būtų vėlesnė nei šiandienos'
+      )
+        .not()
+        .isEmpty()
+        .isAfter(currentDate.toISOString().split('T')[0])
+    ]
+  ],
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    try {
+      const { status, assigned, assignedTo, checkOutDate } = req.body;
+
+      const softwareFields = {};
+      softwareFields.status = 'Priskirtas';
+      softwareFields.assigned = true;
+      softwareFields.assignedTo = assignedTo;
+      softwareFields.checkOutDate = checkOutDate;
+
+      let software = await Software.findOne({
+        _id: req.params.id
+      });
+      if (software) {
+        software = await Software.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: softwareFields },
+          { new: true }
+        );
+        return res.json(software);
+      }
+
+      software = new Software(softwareFields);
+
+      await software.save();
+      res.json(software);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 //software by assinged user route
 
 //software by id route

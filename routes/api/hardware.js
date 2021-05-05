@@ -198,19 +198,57 @@ router.get('/', authAdmin, async (req, res) => {
 //@desc   Get hardware by id
 //@access Authenticated(admin only)
 
+//$match: { _id: ObjectId('560c24b853b558856ef193a3') }
+
 router.get('/:id', authAdmin, async (req, res) => {
   try {
     const hardware = await Hardware.findById(req.params.id);
+    var ObjectID = require('mongodb').ObjectID;
+    await Hardware.aggregate([
+      {
+        $match: {
+          _id: ObjectID(req.params.id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'assignedTo',
+          foreignField: '_id',
+          as: 'hardwares'
+        }
+      },
+      { $unwind: { path: '$hardwares' } },
+      {
+        $project: {
+          name: 1,
+          serialNumber: 1,
+          model: 1,
+          manufacturer: 1,
+          category: 1,
+          status: 1,
+          assigned: 1,
+          assignedTo: '$hardwares.email',
+          cost: 1,
+          supplier: 1,
+          date: 1,
+          location: 1,
+          expectedCheckInDate: 1,
+          checkOutDate: 1,
+          checkInDate: 1
+        }
+      }
+    ]).then((hardware) => res.json(hardware));
 
-    if (!hardware) {
-      return res.status(404).json({ msg: 'Įranga nerasta' });
-    }
-    res.json(hardware);
+    // if (!hardware) {
+    //   return res.status(404).json({ msg: 'Įranga nerasta' });
+    // }
+    // res.json(hardware);
   } catch (err) {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Įranga nerasta' });
     }
-    res.status(500).send('Server Error');
+    res.status(500).send('Server XD Error');
   }
 });
 

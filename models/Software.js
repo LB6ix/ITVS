@@ -31,6 +31,9 @@ const SoftwareSchema = new mongoose.Schema({
   supplier: {
     type: String
   },
+  checkOutDate: {
+    type: Date
+  },
   date: {
     type: Date,
     default: Date.now
