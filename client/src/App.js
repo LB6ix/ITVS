@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Navbar from './components/layout/Navbar';
-import Sidebar from './components/layout/Sidebar';
+import PersistentDrawerLeft from './components/layout/Sidebar';
 import Landing from './components/layout/Landing';
 import CreateUser from './components/auth/CreateUser';
 import UserLogin from './components/auth/UserLogin';
@@ -32,13 +32,15 @@ import AddHardware from './components/hardware/AddHardware';
 import AddSoftware from './components/software/AddSoftware';
 import EditHardware from './components/hardware/EditHardware';
 import EditSoftware from './components/software/EditSoftware';
+import Container from '@material-ui/core/Container';
+import Typography from '@material-ui/core/Typography';
 // import { stringify } from 'uuid';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 //testingas
-store.dispatch(loadAdmin());
+store.dispatch(loadUser());
 //store.dispatch(loadAdmin());
 
 // {
@@ -50,7 +52,7 @@ store.dispatch(loadAdmin());
 
 const App = ({ loading, isAuthenticated, isAdmin }) => {
   useEffect(() => {
-    store.dispatch(loadAdmin());
+    store.dispatch(loadUser());
     // checkAdmin();
   }, []); //componentdidmount, runs once
   return (
@@ -58,51 +60,59 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
       <Router>
         <Fragment>
           {/* <Navbar /> */}
-          <AppBar />
+
           <Route exact path='/' component={Landing} />
+          <PersistentDrawerLeft />
+          {/* <AppBar /> */}
           <Alert />
-          <Switch>
-            <Route exact path='/user-login' component={UserLogin} />
-            <Route exact path='/admin-login' component={AdminLogin} />
-            <PrivateRoute exact path='/create-user' component={CreateUser} />
-            <PrivateRoute exact path='/user-list' component={Profiles} />
-            <PrivateRoute exact path='/profile/:id' component={Profile} />
-            <PrivateRoute exact path='/main' component={MainPage} />
-            {/* <PrivateRoute exact path='/userposts/:id' component={Posts} /> */}
-            <PrivateRoute
-              exact
-              path='/create-profile'
-              component={CreateProfile}
-            />
-            <PrivateRoute exact path='/edit-profile' component={EditProfile} />
-            <PrivateRoute exact path='/posts' component={Posts} />
-            <PrivateRoute exact path='/posts/:id' component={Post} />
-            <PrivateRoute exact path='/hardware' component={Hardwares} />
-            <PrivateRoute exact path='/software' component={Softwares} />
-            <PrivateRoute
-              exact
-              path='/hardware/add-hardware'
-              component={AddHardware}
-            />
-            <PrivateRoute
-              exact
-              path='/software/add-software'
-              component={AddSoftware}
-            />
-            <PrivateRoute exact path='/hardware/:id' component={Hardware} />
-            <PrivateRoute exact path='/software/:id' component={Software} />
-            <PrivateRoute
-              exact
-              path='/hardware/edit/:id'
-              component={EditHardware}
-            />
-            <PrivateRoute
-              exact
-              path='/software/edit/:id'
-              component={EditSoftware}
-            />
-            {/* Route render={() => <h3>not here</h3>} */}
-          </Switch>
+          <Container maxWidth='lg'>
+            <Switch>
+              <Route exact path='/user-login' component={UserLogin} />
+              <Route exact path='/admin-login' component={AdminLogin} />
+              <PrivateRoute exact path='/create-user' component={CreateUser} />
+              <PrivateRoute exact path='/user-list' component={Profiles} />
+              <PrivateRoute exact path='/profile/:id' component={Profile} />
+              <PrivateRoute exact path='/main' component={MainPage} />
+              {/* <PrivateRoute exact path='/userposts/:id' component={Posts} /> */}
+              <PrivateRoute
+                exact
+                path='/create-profile'
+                component={CreateProfile}
+              />
+              <PrivateRoute
+                exact
+                path='/edit-profile'
+                component={EditProfile}
+              />
+              <PrivateRoute exact path='/posts' component={Posts} />
+              <PrivateRoute exact path='/posts/:id' component={Post} />
+              <PrivateRoute exact path='/hardware' component={Hardwares} />
+              <PrivateRoute exact path='/software' component={Softwares} />
+              <PrivateRoute
+                exact
+                path='/hardware/add-hardware'
+                component={AddHardware}
+              />
+              <PrivateRoute
+                exact
+                path='/software/add-software'
+                component={AddSoftware}
+              />
+              <PrivateRoute exact path='/hardware/:id' component={Hardware} />
+              <PrivateRoute exact path='/software/:id' component={Software} />
+              <PrivateRoute
+                exact
+                path='/hardware/edit/:id'
+                component={EditHardware}
+              />
+              <PrivateRoute
+                exact
+                path='/software/edit/:id'
+                component={EditSoftware}
+              />
+              {/* Route render={() => <h3>not here</h3>} */}
+            </Switch>
+          </Container>
         </Fragment>
       </Router>
     </Provider>

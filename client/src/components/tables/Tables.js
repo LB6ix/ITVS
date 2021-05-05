@@ -12,13 +12,15 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   table: {
-    marginTop: theme.spacing(2),
+    marginTop: theme.spacing(4),
     '& thead th': {
+      margin: '40%',
       fontWeight: '500',
       color: '#212121',
       backgroundColor: theme.palette.primary.light
     },
     '& tbody td': {
+      width: '50%',
       fontWeight: '300'
     },
     '& tbody td:hover': {

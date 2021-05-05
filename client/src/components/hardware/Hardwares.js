@@ -10,7 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
-
+import formatDate from '../../utility/formatDate';
 const Hardwares = ({
   getHardwares,
   deleteHardware,
@@ -37,10 +37,10 @@ const Hardwares = ({
     { id: 'category', label: 'Kategorija' },
     { id: 'status', label: 'Statusas' },
     { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
-    { id: 'CheckOut', label: 'Priskirti', disableSorting: true },
-    { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
+    { id: 'CheckInOut', label: 'Priskirti/Atsiimti', disableSorting: true },
+    // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
-    // { id: 'date', label: 'Įkėlimo data' },
+    { id: 'date', label: 'Data' },
     { id: 'Veiksmai', label: 'Veiksmai' }
   ];
 
@@ -77,44 +77,56 @@ const Hardwares = ({
               <TableCell>{hw.manufacturer}</TableCell>
               <TableCell>{hw.category}</TableCell>
               <TableCell>{hw.status}</TableCell>
-              <TableCell>{hw.assignedTo}</TableCell>{' '}
+              <TableCell>{hw.assignedTo}</TableCell>
+              <Fragment>
+                {hw.assigned === false ? (
+                  <TableCell>
+                    <Link to={`/hardware/${hw._id}`}>
+                      <Button size='small' variant='contained' color='primary'>
+                        Priskirti
+                      </Button>
+                    </Link>
+                  </TableCell>
+                ) : (
+                  <Fragment>
+                    <TableCell>
+                      <Link to={`/hardware/${hw._id}`}>
+                        <Button
+                          size='small'
+                          variant='contained'
+                          color='primary'
+                        >
+                          Atsiimti
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  </Fragment>
+                )}
+              </Fragment>
+              <TableCell>{hw.cost}€</TableCell>
+              <Fragment>
+                {hw.assigned === false ? (
+                  <TableCell>Įkėlimo: {formatDate(hw.date)}</TableCell>
+                ) : (
+                  <Fragment>
+                    <TableCell>
+                      Grąžinimo: {formatDate(hw.expectedCheckInDate)}
+                    </TableCell>
+                  </Fragment>
+                )}
+              </Fragment>
+
               <TableCell>
-                {
-                  <Link to={`/hardware/${hw._id}`}>
-                    <Button size='small' variant='contained' color='primary'>
-                      Priskirti
-                    </Button>
-                  </Link>
-                }
-              </TableCell>
-              <TableCell>
-                {
-                  <Link to={`/hardware/${hw._id}`}>
-                    <Button size='small' variant='contained' color='primary'>
-                      Atsiimti
-                    </Button>
-                  </Link>
-                }
-              </TableCell>
-              {/* <TableCell>{sw.assignedTo}</TableCell> */}
-              <TableCell>{hw.cost}</TableCell>
-              {/* <TableCell>{formatDate(hw.date)}</TableCell> */}
-              <TableCell>
-                {/* <Link to={`/hardwares/${hw._id}`}>
-                  <Button size='small' variant='contained' color='primary'>
-                    Peržiūrėti
-                  </Button>
-                </Link> */}
                 <Link to={`/hardware/${hw._id}`}>
                   <IconButton
                     className='tableActions'
-                    style={{ display: 'inline' }}
+                    style={{ display: 'inline-block' }}
                   >
                     <VisibilityIcon fontSize='small' />
                   </IconButton>
                 </Link>
                 <IconButton
-                  style={{ display: 'inline' }}
+                  style={{ display: 'inline-block' }}
                   className='tableActions'
                   aria-label='delete'
                   onClick={() => deleteHardware(hw._id)}

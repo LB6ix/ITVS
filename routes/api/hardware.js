@@ -176,9 +176,13 @@ router.get('/', authAdmin, async (req, res) => {
           manufacturer: 1,
           category: 1,
           status: 1,
+          assigned: 1,
           assignedTo: '$hardwares.email',
           cost: 1,
-          date: 1
+          supplier: 1,
+          date: 1,
+          expectedCheckInDate: 1,
+          checkOutDate: 1
         }
       }
     ]).then((hardwares) => res.json(hardwares));
