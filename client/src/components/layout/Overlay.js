@@ -217,6 +217,17 @@ const Overlay = ({
               </ListItemIcon>
               <ListItemText primary='Pranešimai' />
             </ListItem>
+            <ListItem
+              button
+              component={Link}
+              to='/hardware'
+              className={classes.nested}
+            >
+              <ListItemIcon>
+                <ImportantDevicesIcon />
+              </ListItemIcon>
+              <ListItemText primary='Aparatinė įranga' />
+            </ListItem>
             <ListItem button onClick={logout}>
               <ListItemIcon>
                 <ExitToAppIcon color='secondary' />

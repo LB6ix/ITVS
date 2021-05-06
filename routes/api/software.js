@@ -97,7 +97,7 @@ router.get('/', authAdmin, async (req, res) => {
 //@desc   Get software by id
 //@access Authenticated(admin only)
 
-router.get('/:id', authAdmin, async (req, res) => {
+router.get('single/:id', authAdmin, async (req, res) => {
   try {
     const software = await Software.findById(req.params.id);
 

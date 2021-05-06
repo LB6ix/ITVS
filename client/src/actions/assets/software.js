@@ -98,7 +98,7 @@ export const getSoftware = (id) => async (dispatch) => {
     type: CLEAR_SOFTWARE
   });
   try {
-    const res = await axios.get(`/api/software/${id}`);
+    const res = await axios.get(`/api/software/single/${id}`);
 
     dispatch({
       type: GET_SOFTWARE,

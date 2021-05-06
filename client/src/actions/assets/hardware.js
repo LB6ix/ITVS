@@ -2,7 +2,7 @@ import axios from 'axios';
 import { setAlert } from '../alert';
 import {
   GET_HARDWARES,
-  //GET_USER_HARDWARES,
+  GET_USER_HARDWARES,
   GET_HARDWARE,
   CLEAR_HARDWARE,
   HARDWARE_ERROR,
@@ -163,7 +163,7 @@ export const getHardware = (id) => async (dispatch) => {
   // //   type: CLEAR_HARDWARE
   // });
   try {
-    const res = await axios.get(`/api/hardware/${id}`);
+    const res = await axios.get(`/api/hardware/single/${id}`);
 
     dispatch({
       type: GET_HARDWARE,
@@ -174,6 +174,26 @@ export const getHardware = (id) => async (dispatch) => {
     if (errors) {
       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
     }
+    if (err.response) {
+      dispatch({
+        type: HARDWARE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    } else {
+      console.error(err);
+    }
+  }
+};
+
+export const getUserHardwares = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/hardware/${id}`);
+
+    dispatch({
+      type: GET_USER_HARDWARES,
+      payload: res.data
+    });
+  } catch (err) {
     if (err.response) {
       dispatch({
         type: HARDWARE_ERROR,

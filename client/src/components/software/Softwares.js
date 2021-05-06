@@ -75,7 +75,7 @@ const Softwares = ({
               <TableCell>{sw.supplier}</TableCell>
               <TableCell>{formatDate(sw.date)}</TableCell>
               <TableCell>
-                <Link to={`/software/${sw._id}`}>
+                <Link to={`/software/single/${sw._id}`}>
                   <IconButton
                     className='tableActions'
                     style={{ display: 'inline' }}

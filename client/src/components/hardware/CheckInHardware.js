@@ -62,8 +62,8 @@ const CheckInHardware = ({
     //{ id: 'CheckInOut', label: 'Priskirti/Atsiimti', disableSorting: true },
     // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
-    { id: 'date', label: 'Data' },
-    { id: 'Veiksmai', label: 'Veiksmai' }
+    { id: 'date', label: 'Įkėlimo Data' },
+    { id: 'checkOutDate', label: 'Priskyrimo data' }
   ];
 
   const {
@@ -79,6 +79,14 @@ const CheckInHardware = ({
         <Button variant='contained' color='primary' onClick={handleClickOpen}>
           Atsiimti turtą iš naudotojo
         </Button>
+        <div>
+          <h3
+            className='MuiTypography-h3-primary'
+            style={{ marginTop: '15px' }}
+          >
+            Ar tikrai norite atsiimti turtą iš {hardware[0].assignedTo}?
+          </h3>
+        </div>
         <Dialog
           open={open}
           onClose={handleClose}
@@ -96,15 +104,12 @@ const CheckInHardware = ({
                 onSubmit={(e) => onSubmit(e)}
               >
                 <div className='form-group'>
-                  <select required name='assignedTo' value={assignedTo}>
-                    {profile.user.email}
+                  <input
+                    required
+                    name='assignedTo'
+                    value={assignedTo}
                     disabled
-                    {profile.map((prf) => (
-                      <option key={profile._id} value={prf.user._id}>
-                        {prf.user.email}
-                      </option>
-                    ))}
-                  </select>
+                  ></input>
                   <small className='form-text'>
                     Naudotojas, kuriam priskiriamas turtas
                   </small>
@@ -155,14 +160,17 @@ const CheckInHardware = ({
           <TableContainer>
             <TableHeader />
             <TableBody>
-              <TableRow key={hardware._id}>
-                <TableCell>{hardware.name}</TableCell>
-                <TableCell>{hardware.serialNumber}</TableCell>
-                <TableCell>{hardware.model}</TableCell>
-                <TableCell>{hardware.manufacturer}</TableCell>
-                <TableCell>{hardware.category}</TableCell>
-                <TableCell>{hardware.status}</TableCell>
-                <TableCell>{hardware.assignedTo}</TableCell>
+              <TableRow key={hardware[0]._id}>
+                <TableCell>{hardware[0].name}</TableCell>
+                <TableCell>{hardware[0].serialNumber}</TableCell>
+                <TableCell>{hardware[0].model}</TableCell>
+                <TableCell>{hardware[0].manufacturer}</TableCell>
+                <TableCell>{hardware[0].category}</TableCell>
+                <TableCell>{hardware[0].status}</TableCell>
+                <TableCell>{hardware[0].assignedTo}</TableCell>
+                <TableCell>{hardware[0].cost}</TableCell>
+                <TableCell>{formatDate(hardware[0].date)}</TableCell>
+                <TableCell>{formatDate(hardware[0].checkOutDate)}</TableCell>
               </TableRow>
             </TableBody>
           </TableContainer>

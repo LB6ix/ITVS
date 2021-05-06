@@ -1,6 +1,6 @@
 import {
   GET_HARDWARES,
-  //GET_USER_HARDWARES,
+  GET_USER_HARDWARES,
   GET_HARDWARE,
   CLEAR_HARDWARE,
   //CLEAR_HARDWARES,
@@ -22,6 +22,7 @@ function postReducer(state = initialState, action) {
 
   switch (type) {
     case GET_HARDWARES:
+    case GET_USER_HARDWARES:
       return {
         ...state,
         hardwares: payload,

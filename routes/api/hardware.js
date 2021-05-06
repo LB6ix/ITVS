@@ -194,13 +194,13 @@ router.get('/', authAdmin, async (req, res) => {
   }
 });
 
-//@route  GET api/hardware/:id
+//@route  GET api/hardware/single/:id
 //@desc   Get hardware by id
 //@access Authenticated(admin only)
 
 //$match: { _id: ObjectId('560c24b853b558856ef193a3') }
 
-router.get('/:id', authAdmin, async (req, res) => {
+router.get('/single/:id', authAdmin, async (req, res) => {
   try {
     const hardware = await Hardware.findById(req.params.id);
     var ObjectID = require('mongodb').ObjectID;
@@ -342,7 +342,7 @@ router.delete('/comment/:id/:comment_id', authAdmin, async (req, res) => {
   }
 });
 
-router.get('/assigned-hardware/:id', [authUser], async (req, res) => {
+router.get('/:id', authUser, async (req, res) => {
   try {
     //const user = await User.findById(req.user.id).select('-password');
     const hardwares = await Hardware.find({ assignedTo: req.user.id })

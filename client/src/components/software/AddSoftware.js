@@ -101,24 +101,6 @@ const AddSoftware = ({ addSoftware, history }) => {
           />
         </div>
         <div className='form-group'>
-          <select
-            name='assignedTo'
-            value={assignedTo}
-            onChange={(e) => onChange(e)}
-          >
-            <option value='0'>* Parinkite įrangos kategoriją</option>
-            <option value='Kompiuteriai'>Kompiuteriai</option>
-            <option value='Telefonai'>Telefonai</option>
-            <option value='Monitoriai'>Monitoriai</option>
-            <option value='Periferija'>Periferija</option>
-            <option value='Tinklo įranga'>Tinklo įranga</option>
-            <option value='Planšetės'>Planšetės</option>
-            <option value='Spausdintuvai'>Spausdintuvai</option>
-            <option value='Serveriai'>Serveriai</option>
-          </select>
-          <small className='form-text'>FIXXXXXXXXXXX</small>
-        </div>
-        <div className='form-group'>
           <input
             type='text'
             placeholder='Kaina'

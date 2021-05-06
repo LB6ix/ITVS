@@ -99,8 +99,16 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
                 path='/software/add-software'
                 component={AddSoftware}
               />
-              <PrivateRoute exact path='/hardware/:id' component={Hardware} />
-              <PrivateRoute exact path='/software/:id' component={Software} />
+              <PrivateRoute
+                exact
+                path='/hardware/single/:id'
+                component={Hardware}
+              />
+              <PrivateRoute
+                exact
+                path='/software/single/:id'
+                component={Software}
+              />
               <PrivateRoute
                 exact
                 path='/hardware/edit/:id'

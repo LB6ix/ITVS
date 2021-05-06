@@ -32,6 +32,18 @@ const HardwareItem = ({ hardware }) => {
         <div className='form-group'>
           <input
             type='text'
+            placeholder='Kam Priskirtas'
+            name='assignedTo'
+            value={hardware[0].assignedTo}
+            disabled
+          />
+          <small className='form-text'>
+            Naudotojas, kuriam priskirtas turtas
+          </small>
+        </div>
+        <div className='form-group'>
+          <input
+            type='text'
             placeholder='Gamintojas'
             name='manufacturer'
             value={hardware[0].manufacturer}
@@ -93,15 +105,7 @@ const HardwareItem = ({ hardware }) => {
             disabled
           />
         </div>
-        <div className='form-group'>
-          <input
-            type='text'
-            placeholder='Kam Priskirtas'
-            name='assignedTo'
-            value={hardware[0].assignedTo}
-            disabled
-          />
-        </div>
+
         {/* FIX THIS */}
 
         <Button
