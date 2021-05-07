@@ -13,9 +13,29 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
+import ErrorIcon from '@material-ui/icons/Error';
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Button,
+  makeStyles
+} from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
 import CheckOutHardware from './CheckOutHardware';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%'
+  },
+  row: {
+    background: '#ffa726'
+  },
+  row2: {
+    background: '#ebe6f0'
+  }
+}));
+
 const Hardwares = ({
   getHardwares,
   deleteHardware,
@@ -30,6 +50,8 @@ const Hardwares = ({
     isAdmin && getHardwares();
     !loading && isAuthenticated && !isAdmin && getUserHardwares();
   }, [getHardwares, getUserHardwares]);
+
+  const classes = useStyles();
 
   let headerCells = [];
   {
@@ -94,124 +116,140 @@ const Hardwares = ({
     recordsAfterPagingAndSorting
   } = Tables(hardwares, headerCells);
 
-  return loading ? (
-    <Loading />
-  ) : (
+  return (
     <Fragment>
-      <h3 className='MuiTypography-h3'>Aparatinės įrangos sąrašas</h3>
-
-      {showActions && (
+      {hardwares === [] ? (
+        <Loading />
+      ) : (
         <Fragment>
-          {!loading && isAuthenticated && isAdmin && (
-            <div>
-              <Link to={`/hardware/add-hardware`}>
-                <Button size='large' variant='contained' color='primary'>
-                  Pridėti naują įrangą
-                </Button>
-              </Link>
-              <TableContainer>
-                <TableHeader />
-                <TableBody>
-                  {recordsAfterPagingAndSorting().map((hw) => (
-                    <TableRow key={hardwares._id}>
-                      <TableCell>{hw.name}</TableCell>
-                      <TableCell>{hw.serialNumber}</TableCell>
-                      <TableCell>{hw.model}</TableCell>
-                      <TableCell>{hw.manufacturer}</TableCell>
-                      <TableCell>{hw.category}</TableCell>
-                      <TableCell>{hw.status}</TableCell>
-                      <TableCell>{hw.assignedTo}</TableCell>
-                      <Fragment>
-                        {hw.assigned === false ? (
-                          <TableCell>
-                            <Link
-                              to={`/hardware/${hw._id}/checkout`}
-                              setOpen={true}
-                            >
-                              <Button
-                                size='small'
-                                variant='contained'
-                                color='primary'
-                                form='my-form-id'
-                              >
-                                Priskirti
-                              </Button>
-                            </Link>
-                          </TableCell>
-                        ) : (
-                          <Fragment>
-                            <TableCell>
-                              <Link to={`/hardware/${hw._id}/checkin`}>
-                                <Button
-                                  size='small'
-                                  variant='contained'
-                                  color='secondary'
-                                >
-                                  Atsiimti
-                                </Button>
-                              </Link>
-                            </TableCell>
-                          </Fragment>
-                        )}
-                      </Fragment>
-                      <TableCell>{hw.cost}€</TableCell>
-                      <Fragment>
-                        {hw.assigned === false ? (
-                          <TableCell>Įkėlimo: {formatDate(hw.date)}</TableCell>
-                        ) : (
-                          <Fragment>
-                            <TableCell>
-                              Grąžinimo: {formatDate(hw.expectedCheckInDate)}
-                            </TableCell>
-                          </Fragment>
-                        )}
-                      </Fragment>
+          <h3 className='MuiTypography-h3'>Aparatinės įrangos sąrašas</h3>
 
-                      <TableCell>
-                        <Link to={`/hardware/single/${hw._id}`}>
-                          <IconButton
-                            className='tableActions'
-                            color='primary'
-                            style={{ display: 'inline-block' }}
-                          >
-                            <VisibilityIcon fontSize='small' />
-                          </IconButton>
-                        </Link>
-                        <IconButton
-                          style={{ display: 'inline-block' }}
-                          className='tableActions'
-                          aria-label='delete'
-                          color='secondary'
-                          onClick={() => deleteHardware(hw._id)}
-                        >
-                          <DeleteIcon fontSize='small' />
-                        </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </TableContainer>
-              <TablePaginationKomp />
-            </div>
-          )}
-          {!loading && isAuthenticated && !isAdmin && (
+          {showActions && (
             <Fragment>
-              <TableContainer>
-                <TableHeader />
-                <TableBody>
-                  {recordsAfterPagingAndSorting().map((hw) => (
-                    <TableRow key={hardwares._id}>
-                      <TableCell>{hw.name}</TableCell>
-                      <TableCell>{hw.serialNumber}</TableCell>
-                      <TableCell>{hw.model}</TableCell>
-                      <TableCell>{hw.manufacturer}</TableCell>
-                      <TableCell>{hw.category}</TableCell>
-                      <TableCell>{formatDate(hw.date)}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </TableContainer>
-              <TablePaginationKomp />
+              {!loading && isAuthenticated && isAdmin && (
+                <div>
+                  <Link to={`/hardware/add-hardware`}>
+                    <Button size='large' variant='contained' color='primary'>
+                      Pridėti naują įrangą
+                    </Button>
+                  </Link>
+                  <TableContainer>
+                    <TableHeader />
+                    <TableBody>
+                      {recordsAfterPagingAndSorting().map((hw) => (
+                        <TableRow
+                          key={hardwares._id}
+                          className={
+                            hw.status === 'Remontas'
+                              ? classes.row
+                              : classes.row2
+                          }
+                        >
+                          <TableCell>{hw.name}</TableCell>
+                          <TableCell>{hw.serialNumber}</TableCell>
+                          <TableCell>{hw.model}</TableCell>
+                          <TableCell>{hw.manufacturer}</TableCell>
+                          <TableCell>{hw.category}</TableCell>
+                          <TableCell>{hw.status}</TableCell>
+                          <TableCell>{hw.assignedTo}</TableCell>
+
+                          <Fragment>
+                            {hw.status === 'Remontas' ? (
+                              <TableCell>Reikia pakeisti statusą!</TableCell>
+                            ) : (
+                              <Fragment>
+                                {hw.assigned === false ? (
+                                  <TableCell>
+                                    <Link to={`/hardware/${hw._id}/checkout`}>
+                                      <Button
+                                        size='small'
+                                        variant='contained'
+                                        color='primary'
+                                      >
+                                        Priskirti
+                                      </Button>
+                                    </Link>
+                                  </TableCell>
+                                ) : (
+                                  <Fragment>
+                                    <TableCell>
+                                      <Link to={`/hardware/${hw._id}/checkin`}>
+                                        <Button
+                                          size='small'
+                                          variant='contained'
+                                          color='secondary'
+                                        >
+                                          Atsiimti
+                                        </Button>
+                                      </Link>
+                                    </TableCell>
+                                  </Fragment>
+                                )}
+                              </Fragment>
+                            )}
+                            <TableCell>{hw.cost}€</TableCell>
+                            <Fragment>
+                              {hw.assigned === false ? (
+                                <TableCell>
+                                  Įkėlimo: {formatDate(hw.date)}
+                                </TableCell>
+                              ) : (
+                                <Fragment>
+                                  <TableCell>
+                                    Grąžinimo:{' '}
+                                    {formatDate(hw.expectedCheckInDate)}
+                                  </TableCell>
+                                </Fragment>
+                              )}
+                            </Fragment>
+                          </Fragment>
+                          <TableCell>
+                            <Link to={`/hardware/single/${hw._id}`}>
+                              <IconButton
+                                className='tableActions'
+                                color='primary'
+                                style={{ display: 'inline' }}
+                              >
+                                <VisibilityIcon fontSize='small' />
+                              </IconButton>
+                            </Link>
+                            <IconButton
+                              style={{ display: 'inline' }}
+                              className='tableActions'
+                              aria-label='delete'
+                              color='secondary'
+                              onClick={() => deleteHardware(hw._id)}
+                            >
+                              <DeleteIcon fontSize='small' />
+                            </IconButton>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </TableContainer>
+                  <TablePaginationKomp />
+                </div>
+              )}
+              {!loading && isAuthenticated && !isAdmin && (
+                <Fragment>
+                  <TableContainer>
+                    <TableHeader />
+                    <TableBody>
+                      {recordsAfterPagingAndSorting().map((hw) => (
+                        <TableRow key={hardwares._id}>
+                          <TableCell>{hw.name}</TableCell>
+                          <TableCell>{hw.serialNumber}</TableCell>
+                          <TableCell>{hw.model}</TableCell>
+                          <TableCell>{hw.manufacturer}</TableCell>
+                          <TableCell>{hw.category}</TableCell>
+                          <TableCell>{formatDate(hw.date)}</TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </TableContainer>
+                  <TablePaginationKomp />
+                </Fragment>
+              )}
             </Fragment>
           )}
         </Fragment>

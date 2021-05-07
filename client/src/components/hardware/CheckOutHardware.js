@@ -13,13 +13,15 @@ import { Link } from 'react-router-dom';
 //import formatDate from '../../utility/formatDate';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
+import Loading from '../layout/Loading';
 
 const CheckOutHardware = ({
   getProfiles,
-  profile: { profiles, loading },
+  profile: { profiles },
   getHardware,
-  hardware: { hardware },
+  hardware: { hardware, loading },
   checkOutHardware,
+  history,
   match
 }) => {
   const [formData, setFormData] = useState({
@@ -41,7 +43,10 @@ const CheckOutHardware = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    checkOutHardware(formData, match.params.id);
+    setTimeout(() => {
+      checkOutHardware(formData, match.params.id);
+      history.push('/hardware');
+    }, 1000);
   };
 
   const handleClickOpen = () => {
@@ -59,12 +64,10 @@ const CheckOutHardware = ({
     { id: 'manufacturer', label: 'Gamintojas' },
     { id: 'category', label: 'Kategorija' },
     { id: 'status', label: 'Statusas' },
-    { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
-    { id: 'CheckInOut', label: 'Priskirti/Atsiimti', disableSorting: true },
+
     // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
-    { id: 'date', label: 'Data' },
-    { id: 'Veiksmai', label: 'Veiksmai' }
+    { id: 'date', label: 'Data' }
   ];
 
   const {
@@ -76,95 +79,116 @@ const CheckOutHardware = ({
 
   return (
     <Fragment>
-      <div>
-        <Button variant='contained' color='primary' onClick={handleClickOpen}>
-          Priskirti turtą naudotojui
-        </Button>
-        <Dialog
-          open={open}
-          onClose={handleClose}
-          aria-labelledby='form-dialog-title'
-        >
-          <DialogTitle id='form-dialog-title'>
-            Priskirti aparatinę įranga
-          </DialogTitle>
-          <DialogContent>
-            <DialogContentText>Priskirkite turtą</DialogContentText>
-            <Fragment>
-              <form
-                id='my-form-id'
-                className='form'
-                onSubmit={(e) => onSubmit(e)}
-              >
-                <div className='form-group'>
-                  <select
-                    required
-                    name='assignedTo'
-                    value={assignedTo}
-                    onChange={(e) => onChange(e)}
-                  >
-                    {profiles.map((prf) => (
-                      <option key={profiles._id} value={prf.user._id}>
-                        {prf.user.email}
-                      </option>
-                    ))}
-                  </select>
-                  <small className='form-text'>
-                    Naudotojas, kuriam priskiriamas turtas
-                  </small>
-                </div>
-                <div className='form-group'>
-                  <input
-                    type='date'
-                    selected={Date.now()}
-                    name='checkOutDate'
-                    value={checkOutDate}
-                    onChange={(e) => onChange(e)}
-                  />
-                  <small className='form-text'>Priskyrimo data</small>
-                </div>
-                <div className='form-group'>
-                  <input
-                    type='date'
-                    placeholder=''
-                    name='expectedCheckInDate'
-                    value={expectedCheckInDate}
-                    onChange={(e) => onChange(e)}
-                  />
-                  <small className='form-text'>Tikėtina grąžinimo data</small>
-                </div>
-                <input type='submit' onClick={handleClose} Priskirti />
-              </form>
-            </Fragment>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color='primary'>
-              Atšaukti
-            </Button>
-            {/* <Button onClick={handleClose} color='primary'> */}
-
-            {/* </Button> */}
-          </DialogActions>
-        </Dialog>
-      </div>
-      <div>
+      {hardware === null ? (
+        <Loading />
+      ) : (
         <Fragment>
-          <TableContainer>
-            <TableHeader />
-            <TableBody>
-              <TableRow key={hardware._id}>
-                <TableCell>{hardware.name}</TableCell>
-                <TableCell>{hardware.serialNumber}</TableCell>
-                <TableCell>{hardware.model}</TableCell>
-                <TableCell>{hardware.manufacturer}</TableCell>
-                <TableCell>{hardware.category}</TableCell>
-                <TableCell>{hardware.status}</TableCell>
-                <TableCell>{hardware.assignedTo}</TableCell>
-              </TableRow>
-            </TableBody>
-          </TableContainer>
+          <div>
+            <Button
+              variant='contained'
+              color='primary'
+              onClick={handleClickOpen}
+            >
+              Priskirti turtą naudotojui
+            </Button>
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby='form-dialog-title'
+            >
+              <DialogTitle id='form-dialog-title'>
+                Priskirti aparatinę įranga
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText>Priskirkite turtą</DialogContentText>
+                <Fragment>
+                  <form
+                    id='my-form-id'
+                    className='form'
+                    onSubmit={(e) => onSubmit(e)}
+                  >
+                    <div className='form-group'>
+                      <select
+                        required
+                        name='assignedTo'
+                        value={assignedTo}
+                        onChange={(e) => onChange(e)}
+                      >
+                        {profiles.map((prf) => (
+                          <option key={profiles._id} value={prf.user._id}>
+                            {prf.user.email}
+                          </option>
+                        ))}
+                      </select>
+                      <small className='form-text'>
+                        Naudotojas, kuriam priskiriamas turtas
+                      </small>
+                    </div>
+                    <div className='form-group'>
+                      <input
+                        type='date'
+                        selected={Date.now()}
+                        name='checkOutDate'
+                        value={checkOutDate}
+                        onChange={(e) => onChange(e)}
+                      />
+                      <small className='form-text'>Priskyrimo data</small>
+                    </div>
+                    <div className='form-group'>
+                      <input
+                        type='date'
+                        placeholder=''
+                        name='expectedCheckInDate'
+                        value={expectedCheckInDate}
+                        onChange={(e) => onChange(e)}
+                      />
+                      <small className='form-text'>
+                        Tikėtina grąžinimo data
+                      </small>
+                    </div>
+                    <Button
+                      color='primary'
+                      type='submit'
+                      variant='contained'
+                      onClick={handleClose}
+                      color='primary'
+                    >
+                      Priskirti
+                    </Button>
+                  </form>
+                </Fragment>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose} color='primary'>
+                  Atšaukti
+                </Button>
+                {/* <Button onClick={handleClose} color='primary'> */}
+
+                {/* </Button> */}
+              </DialogActions>
+            </Dialog>
+          </div>
+          <div>
+            <Fragment>
+              <TableContainer>
+                <TableHeader />
+                <TableBody>
+                  <TableRow key={hardware[0]._id}>
+                    <TableCell>{hardware[0].name}</TableCell>
+                    <TableCell>{hardware[0].serialNumber}</TableCell>
+                    <TableCell>{hardware[0].model}</TableCell>
+                    <TableCell>{hardware[0].manufacturer}</TableCell>
+                    <TableCell>{hardware[0].category}</TableCell>
+                    <TableCell>{hardware[0].status}</TableCell>
+                    <TableCell>{hardware[0].cost}</TableCell>
+                    <TableCell>{formatDate(hardware[0].date)}</TableCell>
+                  </TableRow>
+                </TableBody>
+              </TableContainer>
+            </Fragment>
+          </div>
         </Fragment>
-      </div>
+      )}
     </Fragment>
   );
 };

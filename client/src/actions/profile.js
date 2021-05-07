@@ -77,7 +77,7 @@ export const createProfile = (formData, history, edit = false) => async (
     });
 
     dispatch(
-      setAlert(edit ? 'Profilis atnaujintas!' : 'Profilis sukurtas!', 'success')
+      setAlert(edit ? 'Profilis Atnaujintas' : 'Profilis sukurtas', 'success')
     );
 
     if (!edit) {

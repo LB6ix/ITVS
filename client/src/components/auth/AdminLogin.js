@@ -3,6 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { adminLogin } from '../../actions/auth';
+import { Button } from '@material-ui/core';
 // import Sidebar from '../layout/Sidebar';
 
 const AdminLogin = ({ adminLogin, isAuthenticated, history }) => {
@@ -64,7 +65,14 @@ const AdminLogin = ({ adminLogin, isAuthenticated, history }) => {
             minLength='6'
           />
         </div>
-        <input type='submit' className='btn btn-primary' value='Prisijungti' />
+        <Button
+          color='primary'
+          variant='contained'
+          type='submit'
+          value='Prisijungti'
+        >
+          Prisijungti
+        </Button>
       </form>
     </Fragment>
   );

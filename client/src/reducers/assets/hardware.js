@@ -3,11 +3,13 @@ import {
   GET_USER_HARDWARES,
   GET_HARDWARE,
   CLEAR_HARDWARE,
-  //CLEAR_HARDWARES,
+  CLEAR_HARDWARES,
   HARDWARE_ERROR,
   //UPDATE_HARDWARE,
   DELETE_HARDWARE,
-  ADD_HARDWARE
+  ADD_HARDWARE,
+  HARDWARE_CHECKEDIN,
+  HARDWARE_CHECKEDOUT
 } from '../../actions/constants';
 
 const initialState = {
@@ -21,6 +23,18 @@ function postReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case CLEAR_HARDWARE:
+      return {
+        ...state,
+        hardware: null,
+        loading: false
+      };
+    case CLEAR_HARDWARES:
+      return {
+        ...state,
+        hardwares: [],
+        loading: false
+      };
     case GET_HARDWARES:
     case GET_USER_HARDWARES:
       return {

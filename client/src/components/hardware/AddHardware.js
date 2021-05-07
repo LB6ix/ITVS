@@ -17,7 +17,10 @@ const AddHardware = ({ addHardware, history }) => {
     cost: '',
     supplier: '',
     warranty: '',
-    leaseExpDate: ''
+    leaseExpDate: '',
+    checkInDate: null,
+    expectedCheckInDate: null,
+    checkOutdate: null
   });
 
   const {
@@ -32,7 +35,10 @@ const AddHardware = ({ addHardware, history }) => {
     cost,
     supplier,
     warranty,
-    leaseExpDate
+    leaseExpDate,
+    checkInDate,
+    expectedCheckInDate,
+    checkOutdate
   } = formData;
 
   const onChange = (e) =>
@@ -101,7 +107,7 @@ const AddHardware = ({ addHardware, history }) => {
             <option value='Monitoriai'>Monitoriai</option>
             <option value='Periferija'>Periferija</option>
             <option value='Tinklo įranga'>Tinklo įranga</option>
-            <option value='Vaizdo įranga'>Tinklo įranga</option>
+            <option value='Vaizdo įranga'>Vaizdo įranga</option>
             <option value='Planšetės'>Planšetės</option>
             <option value='Spausdintuvai'>Spausdintuvai</option>
             <option value='Serveriai'>Serveriai</option>
@@ -113,7 +119,6 @@ const AddHardware = ({ addHardware, history }) => {
             <option value='0'>* Parinkite statusą</option>
             <option value='Paruoštas'>Paruoštas</option>
             <option value='Neparuoštas'>Neparuoštas</option>
-            <option value='Priskirtas'>Priskirtas</option>
             <option value='Remontas'>Remontas</option>
             <option value='Išpirktas'>Išpirktas</option>
             <option value='Archyvuotas'>Archyvuotas</option>
@@ -160,7 +165,7 @@ const AddHardware = ({ addHardware, history }) => {
         </div>
         <div className='form-group'>
           <input
-            type='text'
+            type='Date'
             placeholder='Nuomos galiojimo pabaiga'
             name='leaseExpDate'
             value={leaseExpDate}

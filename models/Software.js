@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const SoftwareSchema = new mongoose.Schema({
   license: {
@@ -19,11 +20,19 @@ const SoftwareSchema = new mongoose.Schema({
   totalAmount: {
     type: Number
   },
+  status: {
+    type: String
+  },
   //   availAmount: {
   //     type: Number,
   //   },
   assignedTo: {
-    type: String
+    type: Schema.Types.ObjectId,
+    ref: 'users'
+  },
+  assigned: {
+    type: Boolean,
+    default: false
   },
   cost: {
     type: String
@@ -32,6 +41,9 @@ const SoftwareSchema = new mongoose.Schema({
     type: String
   },
   checkOutDate: {
+    type: Date
+  },
+  checkInDate: {
     type: Date
   },
   date: {

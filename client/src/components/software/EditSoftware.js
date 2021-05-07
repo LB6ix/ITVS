@@ -17,6 +17,7 @@ const EditSoftware = ({
     key: '',
     expDate: '',
     manufacturer: '',
+    status: '',
     totalAmount: '',
     //   availAmount: '',
     assignedTo: '',
@@ -33,6 +34,7 @@ const EditSoftware = ({
       expDate: loading || !software.expDate ? '' : software.expDate,
       manufacturer:
         loading || !software.manufacturer ? '' : software.manufacturer,
+      status: loading || !software.status ? '' : software.status,
       totalAmount: loading || !software.totalAmount ? '' : software.totalAmount,
       assignedTo: loading || !software.assignedTo ? '' : software.assignedTo,
       cost: loading || !software.cost ? '' : software.cost,
@@ -45,6 +47,7 @@ const EditSoftware = ({
     key,
     expDate,
     manufacturer,
+    status,
     totalAmount,
     //   availAmount,
     assignedTo,
@@ -106,6 +109,15 @@ const EditSoftware = ({
           />
         </div>
         <div className='form-group'>
+          <select name='status' value={status} onChange={(e) => onChange(e)}>
+            <option value='0'>* Parinkite statusą</option>
+            <option value='Neaktyvi'>Neaktyvi</option>
+            <option value='Aktyvi'>Aktyvi</option>
+            <option value='Baigusi galioti'>Baigusi galioti</option>
+            <option value='Kita'>Kita</option>
+          </select>
+        </div>
+        <div className='form-group'>
           <input
             type='number'
             placeholder='Turimų licencijų kiekis'
@@ -119,6 +131,7 @@ const EditSoftware = ({
             type='text'
             placeholder='Vieta'
             name='assignedTo'
+            disabled
             value={assignedTo}
             onChange={(e) => onChange(e)}
           />

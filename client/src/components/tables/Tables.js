@@ -12,9 +12,13 @@ import {
 
 const useStyles = makeStyles((theme) => ({
   table: {
+    width: '100%',
     marginTop: theme.spacing(3),
     '& thead th': {
-      fontWeight: '500',
+      borderBottom: '2px solid black',
+
+      height: '80px',
+      fontSize: '1rem',
       color: '#212121',
       backgroundColor: theme.palette.primary.light
     },

@@ -1,10 +1,10 @@
-import React, { useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import Loading from "../layout/Loading";
-import MainActions from "../mainpage/MainActions";
-import { getCurrentProfile } from "../../actions/profile";
+import React, { useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Loading from '../layout/Loading';
+import MainActions from '../mainpage/MainActions';
+import { getCurrentProfile } from '../../actions/profile';
 
 const MainPage = ({
   getCurrentProfile,
@@ -15,7 +15,7 @@ const MainPage = ({
     getCurrentProfile();
   }, [getCurrentProfile]);
 
-  return loading ? (
+  return profile === null ? (
     <Loading />
   ) : (
     <Fragment>
@@ -32,7 +32,7 @@ const MainPage = ({
           <p>
             Jūs nesate užpildę asmeninės informacijos, prašome tai padaryti kuo
             greičiau!
-          </p>{" "}
+          </p>{' '}
           <Link to='/create-profile' className='btn btn-primary my-1'>
             Susikurti profilį
           </Link>

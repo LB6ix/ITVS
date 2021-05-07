@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const MainActions = () => {
   return (
-    <div class='dash-buttons'>
+    <div>
       <Link to='/edit-profile' class='btn btn-light'>
         <Button size='large' variant='contained' color='primary'>
           Keisti profilį

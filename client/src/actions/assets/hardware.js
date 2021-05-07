@@ -5,6 +5,7 @@ import {
   GET_USER_HARDWARES,
   GET_HARDWARE,
   CLEAR_HARDWARE,
+  CLEAR_HARDWARES,
   HARDWARE_ERROR,
   DELETE_HARDWARE,
   ADD_HARDWARE
@@ -12,6 +13,9 @@ import {
 
 export const getHardwares = () => async (dispatch) => {
   try {
+    dispatch({
+      type: CLEAR_HARDWARE
+    });
     const res = await axios.get('/api/hardware');
 
     dispatch({
@@ -44,6 +48,7 @@ export const addHardware = (formData) => async (dispatch) => {
     );
     if (!res) {
       throw new Error('Bloga užklausa į serverį');
+      return;
     }
     dispatch({
       type: ADD_HARDWARE,
@@ -94,6 +99,9 @@ export const editHardware = (formData, id) => async (dispatch) => {
 
 export const checkOutHardware = (formData, id) => async (dispatch) => {
   try {
+    dispatch({
+      type: CLEAR_HARDWARES
+    });
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -111,6 +119,9 @@ export const checkOutHardware = (formData, id) => async (dispatch) => {
     });
 
     dispatch(setAlert('Įranga priskirta!', 'success'));
+    dispatch({
+      type: CLEAR_HARDWARE
+    });
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -126,6 +137,9 @@ export const checkOutHardware = (formData, id) => async (dispatch) => {
 };
 
 export const checkInHardware = (formData, id) => async (dispatch) => {
+  dispatch({
+    type: CLEAR_HARDWARES
+  });
   try {
     const config = {
       headers: {
@@ -140,10 +154,14 @@ export const checkInHardware = (formData, id) => async (dispatch) => {
     );
     dispatch({
       type: GET_HARDWARE,
+
       payload: res.data
     });
 
     dispatch(setAlert('Įranga atsiimta!', 'success'));
+    dispatch({
+      type: CLEAR_HARDWARE
+    });
   } catch (err) {
     const errors = err.response.data.errors;
 

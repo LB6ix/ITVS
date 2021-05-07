@@ -29,6 +29,11 @@ const CreatePost = ({ addPost, history }) => {
         onSubmit={(e) => {
           e.preventDefault();
           addPost({ text, category });
+          setFormData({
+            text: '',
+            category: ''
+          });
+
           //   setText('');
         }}
       >

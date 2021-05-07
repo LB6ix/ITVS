@@ -161,6 +161,7 @@ const HardwareItem = ({ hardware }) => {
                 placeholder='Priskyrimo data'
                 name='checkOutDate'
                 value={formatDate(hardware[0].checkOutDate)}
+                disabled
               />
             </div>
             <div className='form-group'>
@@ -169,6 +170,7 @@ const HardwareItem = ({ hardware }) => {
                 placeholder='Atsiėmimo data'
                 name='checkInDate'
                 value={formatDate(hardware[0].checkInDate)}
+                disabled
               />
             </div>
           </Fragment>

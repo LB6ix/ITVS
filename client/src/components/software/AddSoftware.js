@@ -10,9 +10,10 @@ const AddSoftware = ({ addSoftware, history }) => {
     key: '',
     expDate: '',
     manufacturer: '',
+    status: '',
     totalAmount: '',
     //   availAmount: '',
-    assignedTo: '',
+    assignedTo: null,
     cost: '',
     supplier: ''
   });
@@ -22,6 +23,7 @@ const AddSoftware = ({ addSoftware, history }) => {
     key,
     expDate,
     manufacturer,
+    status,
     totalAmount,
     //   availAmount,
     assignedTo,
@@ -34,7 +36,11 @@ const AddSoftware = ({ addSoftware, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     addSoftware(formData);
+    setTimeout(() => {
+      history.push('/software');
+    }, 1000);
   };
 
   return (
@@ -88,6 +94,15 @@ const AddSoftware = ({ addSoftware, history }) => {
             value={manufacturer}
             onChange={(e) => onChange(e)} //FIXXXXXXXXX
           />
+        </div>
+        <div className='form-group'>
+          <select name='status' value={status} onChange={(e) => onChange(e)}>
+            <option value='0'>* Parinkite statusą</option>
+            <option value='Neaktyvi'>Neaktyvi</option>
+            <option value='Aktyvi'>Aktyvi</option>
+            <option value='Baigusi galioti'>Baigusi galioti</option>
+            <option value='Kita'>Kita</option>
+          </select>
         </div>
         <div className='form-group'>
           <input

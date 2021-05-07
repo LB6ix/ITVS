@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setAlert } from '../../actions/alert';
 import { createuser } from '../../actions/auth';
 import PropTypes from 'prop-types';
+import { Button } from '@material-ui/core';
 
 const CreateUser = ({ setAlert, createuser }) => {
   const [formData, setFormData] = useState({
@@ -117,7 +118,15 @@ const CreateUser = ({ setAlert, createuser }) => {
             minLength='6'
           />
         </div>
-        <input type='submit' className='btn btn-primary' value='Patvirtinti' />
+
+        <Button
+          color='primary'
+          variant='contained'
+          type='submit'
+          value='Prisijungti'
+        >
+          Patvirtinti
+        </Button>
       </form>
     </Fragment>
   );

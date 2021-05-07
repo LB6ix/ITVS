@@ -19,6 +19,7 @@ import Hardware from './components/hardware/Hardware';
 import Software from './components/software/Software';
 import Softwares from './components/software/Softwares';
 import Post from './components/posts/Post';
+import { makeStyles } from '@material-ui/core/styles';
 
 // import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
 // import auth from './reducers/auth';
@@ -45,18 +46,25 @@ if (localStorage.token) {
 store.dispatch(loadAdmin());
 //store.dispatch(loadAdmin());
 
-// {
-//   !loading && isAdmin && store.dispatch(loadAdmin());
-// }
-// {
-//   !loading && isAuthenticated && !isAdmin && store.dispatch(loadUser());
-// }
+const useStyles = makeStyles((theme) => ({
+  MuiContainerroot: {
+    width: '100%',
+    display: 'block',
+    boxSizing: 'border-box',
+    marginLeft: '12%',
+    marginRight: '12%',
+    paddingLeft: '16px',
+    paddingRight: '16px'
+  }
+}));
 
 const App = ({ loading, isAuthenticated, isAdmin }) => {
   useEffect(() => {
     store.dispatch(loadAdmin());
     // checkAdmin();
   }, []); //componentdidmount, runs once
+
+  const classes = useStyles();
   return (
     <Provider store={store}>
       <Router>
@@ -66,7 +74,7 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
           <Route exact path='/' component={Landing} />
           <Overlay />
           <Alert />
-          <Container maxWidth='lg'>
+          <Container className={classes.MuiContainerroot}>
             <Switch>
               <Route exact path='/user-login' component={UserLogin} />
               <Route exact path='/admin-login' component={AdminLogin} />

@@ -104,7 +104,6 @@ router.post(
       model,
       category,
       status,
-      assigned,
       assignedTo,
       location,
       supplier,
@@ -132,6 +131,9 @@ router.post(
         _id: req.params.id
       });
       if (hardware) {
+        {
+          delete hardwareFields.assignedTo;
+        }
         hardware = await Hardware.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: hardwareFields },
@@ -145,6 +147,7 @@ router.post(
 
       await hardware.save();
       res.json(hardware);
+      hardwareFields.assignedTo = assignedTo;
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
@@ -218,7 +221,7 @@ router.get('/single/:id', authAdmin, async (req, res) => {
           as: 'hardwares'
         }
       },
-      { $unwind: { path: '$hardwares' } },
+      { $unwind: { path: '$hardwares', preserveNullAndEmptyArrays: true } },
       {
         $project: {
           name: 1,
@@ -422,7 +425,7 @@ router.post(
 );
 
 //checkin route
-// @route    POST api/hardware/:id/checkin/:user_id
+// @route    POST api/hardware/:id/checkin/
 // @desc     Checkin
 // @access   Authenticated (admin only)
 

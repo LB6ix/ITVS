@@ -24,6 +24,16 @@ const HardwareSchema = new mongoose.Schema({
   },
   status: {
     type: String, //get enum going
+    enum: [
+      'Paruoštas',
+      'Neparuoštas',
+      'Priskirtas',
+      'Remontas',
+      'Išpirktas',
+      'Archyvuotas',
+      'Dingęs',
+      'Kita'
+    ],
     default: 'Nepriskirtas'
   },
   assignedTo: {
@@ -44,8 +54,7 @@ const HardwareSchema = new mongoose.Schema({
     type: Date
   },
   checkInDate: {
-    type: Date,
-    default: Date.now
+    type: Date
   },
   cost: {
     type: String

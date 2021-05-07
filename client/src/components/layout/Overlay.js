@@ -166,7 +166,7 @@ const Overlay = ({
               edge='end'
               aria-label='main page'
               aria-haspopup='true'
-              color='inherit'
+              color='#ffffff'
             >
               <HomeIcon />
             </IconButton>
@@ -177,7 +177,7 @@ const Overlay = ({
               edge='end'
               aria-label='logout'
               aria-haspopup='true'
-              color='inherit'
+              color='secondary'
             >
               <ExitToAppIcon color='secondary' />
             </IconButton>

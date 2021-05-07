@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getSoftwares, deleteSoftware } from '../../actions/assets/software';
 import Loading from '../layout/Loading';
-import { Link } from 'react-router-dom';
+import { Link, Switch } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Tables from '../tables/Tables';
 import IconButton from '@material-ui/core/IconButton';
@@ -29,12 +29,14 @@ const Softwares = ({
   }, [getSoftwares]);
 
   const headerCells = [
-    { id: 'license', label: 'Licencija', disableSorting: true },
+    { id: 'license', label: 'Licencija' },
     { id: 'key', label: 'Raktas', disableSorting: true },
     { id: 'expDate', label: 'Galiojimo data', disableSorting: true },
-    { id: 'manufacturer', label: 'Leidėjas', disableSorting: true },
+    { id: 'manufacturer', label: 'Leidėjas' },
+    { id: 'status', label: 'Statusas' },
     { id: 'totalAmount', label: 'Kiekis', disableSorting: true },
     { id: 'assignedTo', label: 'Kam priskirta', disableSorting: true },
+    { id: 'CheckInOout', label: 'Priskirti/Atsiimti', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
     { id: 'date', label: 'Data', disableSorting: true },
@@ -69,9 +71,45 @@ const Softwares = ({
               <TableCell>{sw.key}</TableCell>
               <TableCell>{formatDate(sw.expDate)}</TableCell>
               <TableCell>{sw.manufacturer}</TableCell>
+              <TableCell>{sw.status}</TableCell>
               <TableCell>{sw.totalAmount}</TableCell>
               <TableCell>{sw.assignedTo}</TableCell>
-              <TableCell>{sw.cost}</TableCell>
+
+              {sw.status === 'Baigusi galioti' ? (
+                <TableCell>Licencija baigė galioti!</TableCell>
+              ) : (
+                <Fragment>
+                  {sw.assigned === false ? (
+                    <TableCell>
+                      <Link to={`/software/${sw._id}/checkout`}>
+                        <Button
+                          size='small'
+                          variant='contained'
+                          color='primary'
+                        >
+                          Priskirti
+                        </Button>
+                      </Link>
+                    </TableCell>
+                  ) : (
+                    <Fragment>
+                      <TableCell>
+                        <Link to={`/software/${sw._id}/checkin`}>
+                          <Button
+                            size='small'
+                            variant='contained'
+                            color='secondary'
+                          >
+                            Atsiimti
+                          </Button>
+                        </Link>
+                      </TableCell>
+                    </Fragment>
+                  )}
+                </Fragment>
+              )}
+
+              <TableCell>{sw.cost}€</TableCell>
               <TableCell>{sw.supplier}</TableCell>
               <TableCell>{formatDate(sw.date)}</TableCell>
               <TableCell>

@@ -43,6 +43,7 @@ router.post(
       key,
       expDate,
       manufacturer,
+      status,
       totalAmount,
       //   availAmount,
       assignedTo,
@@ -64,6 +65,7 @@ router.post(
         key,
         expDate,
         manufacturer,
+        status,
         totalAmount,
         // availAmount,
         assignedTo,
@@ -82,29 +84,85 @@ router.post(
 //@route  GET api/software
 //@desc   Get all software assets
 //@access Private
-
 router.get('/', authAdmin, async (req, res) => {
   try {
-    const softwarelist = await Software.find().sort({ expDate: 1 });
-    res.json(softwarelist);
+    await Software.aggregate([
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'assignedTo',
+          foreignField: '_id',
+          as: 'softwares'
+        }
+      },
+      { $unwind: { path: '$softwares', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          license: 1,
+          key: 1,
+          expDate: 1,
+          manufacturer: 1,
+          totalAmount: 1,
+          status: 1,
+          assigned: 1,
+          assignedTo: '$softwares.email',
+          cost: 1,
+          supplier: 1,
+          date: 1,
+          checkOutDate: 1,
+          checkInDate: 1
+        }
+      }
+    ]).then((softwares) => res.json(softwares));
+    // const softwarelist = await software.find();
+    //console.log(softwares);
   } catch (err) {
     console.error(err.message);
     res.status(500).status('Server Error');
   }
 });
 
-//@route  GET api/software/:id
+//@route  GET api/software/single/:id
 //@desc   Get software by id
 //@access Authenticated(admin only)
 
-router.get('single/:id', authAdmin, async (req, res) => {
+router.get('/single/:id', authAdmin, async (req, res) => {
   try {
     const software = await Software.findById(req.params.id);
-
-    if (!software) {
-      return res.status(404).json({ msg: 'Programinė įranga nerasta' });
-    }
-    res.json(software);
+    var ObjectID = require('mongodb').ObjectID;
+    await Software.aggregate([
+      {
+        $match: {
+          _id: ObjectID(req.params.id)
+        }
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'assignedTo',
+          foreignField: '_id',
+          as: 'software'
+        }
+      },
+      { $unwind: { path: '$software', preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          license: 1,
+          key: 1,
+          expDate: 1,
+          manufacturer: 1,
+          totalAmount: 1,
+          status: 1,
+          assigned: 1,
+          assignedTo: '$software.email',
+          cost: 1,
+          supplier: 1,
+          date: 1,
+          checkOutDate: 1,
+          checkInDate: 1
+        }
+      }
+    ]).then((software) => res.json(software));
   } catch (err) {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Programinė įranga nerasta' });
@@ -178,6 +236,7 @@ router.post(
     softwareFields.key = key;
     softwareFields.expDate = expDate;
     softwareFields.manufacturer = manufacturer;
+    softwareFields.status = status;
     softwareFields.totalAmount = totalAmount;
     softwareFields.assignedTo = assignedTo;
     softwareFields.cost = cost;
@@ -210,6 +269,49 @@ router.post(
 
 //checkin route
 
+router.post(
+  '/:id/checkin/',
+  authAdmin,
+  check('status', 'Privaloma nurodyti statusą').not().isEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    let currentDate = new Date();
+    try {
+      const { status, assigned, assignedTo, checkOutDate } = req.body;
+
+      const softwareFields = {};
+      softwareFields.status = req.body.status;
+      softwareFields.assigned = false;
+      softwareFields.assignedTo = null;
+      softwareFields.checkInDate = currentDate;
+      softwareFields.checkOutDate = '';
+
+      let software = await Software.findOne({
+        _id: req.params.id
+      });
+      if (software) {
+        software = await Software.findByIdAndUpdate(
+          { _id: req.params.id },
+          { $set: softwareFields },
+          { new: true }
+        );
+        return res.json(software);
+      }
+
+      software = new Software(softwareFields);
+
+      await software.save();
+      res.json(software);
+    } catch (err) {
+      console.error(err.message);
+      res.status(500).send('Server Error');
+    }
+  }
+);
+
 //checkout route
 
 router.post(
@@ -237,7 +339,7 @@ router.post(
       const { status, assigned, assignedTo, checkOutDate } = req.body;
 
       const softwareFields = {};
-      softwareFields.status = 'Priskirtas';
+      softwareFields.status = 'Neaktyvi';
       softwareFields.assigned = true;
       softwareFields.assignedTo = assignedTo;
       softwareFields.checkOutDate = checkOutDate;
@@ -265,7 +367,27 @@ router.post(
   }
 );
 
-//software by assinged user route
+//software by assigned user route
+router.get('/:id', authUser, async (req, res) => {
+  try {
+    //const user = await User.findById(req.user.id).select('-password');
+    const softwares = await Software.find({ assignedTo: req.user.id })
+      .sort({
+        date: -1
+      })
+      .lean();
+
+    if (!softwares) {
+      return res.status(404).json({ msg: 'Priskirtos įrangos nerasta' });
+    }
+    res.json(softwares);
+  } catch (err) {
+    if (err.kind === 'ObjectId') {
+      return res.status(404).json({ msg: 'Priskirtos įrangos nerasta' });
+    }
+    res.status(500).send('Server Error');
+  }
+});
 
 //software by id route
 
