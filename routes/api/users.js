@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('config');
 const logger = require('../api/logger');
+const sendEmail = require('../../utility/sendEmail');
 
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
@@ -65,6 +66,28 @@ router.post(
       const salt = await bcrypt.genSalt(10);
 
       user.password = await bcrypt.hash(password, salt);
+
+      const loginNuoroda = `http://localhost:3000/user-login`;
+
+      const notification = `
+      <h1>ITVS administratorius jums sukūrė paskyrą</h1>
+      <p> ITVS administratorius jums sukūrė paskyrą IT turto valdymo sistemoje. </p>
+      <p> Prašome jūsų, prisijungus prie sistemos, kuo greičiau susikurti profilį</p>
+      <p> Prisijungimo nuoroda: ${loginNuoroda} </p>
+      `;
+
+      try {
+        await sendEmail({
+          to: user.email,
+          subject: 'ITVS jums sukurta paskyra',
+          text: notification
+        });
+
+        res.status(200).json;
+      } catch (error) {
+        console.error(error.message);
+        res.status(500).send('Siuntimo klaida');
+      }
 
       await user.save();
       logger.NaudotojoSukūrimas(

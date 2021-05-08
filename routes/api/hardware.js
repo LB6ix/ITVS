@@ -3,6 +3,7 @@ const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { authUser, authAdmin } = require('../../middleware/auth');
 const logger = require('../api/logger');
+const sendEmail = require('../../utility/sendEmail');
 
 const Hardware = require('../../models/Hardware');
 
@@ -411,11 +412,29 @@ router.post(
         _id: req.params.id
       });
       if (hardware) {
+        const notification = `
+    <h1>ITVS administratorius jums priskyrė IT turtą</h1>
+    <p> Jums yra priskirtas: ${hardware.name} pavadinimas, ${hardware.manufacturer} ${hardware.model} modelio aparatinė įranga </p>
+    <p> Prašome jūsų, sistemoje, pranešimų skiltyje, suderinti su administratoriumi įrangos atsiėmimo laiką</p>
+    `;
+
         hardware = await Hardware.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: hardwareFields },
           { new: true }
         );
+        try {
+          await sendEmail({
+            to: usercheck.email,
+            subject: 'ITVS jums priskirtas turtas',
+            text: notification
+          });
+
+          res.status(200).json;
+        } catch (error) {
+          console.error(err.message);
+          res.status(500).send('Siuntimo klaida');
+        }
         logger.TurtoPriskyrimas(
           `Priskirtas turtas ${hardware.name} naudotojui: ${usercheck.email}`
         );
@@ -469,12 +488,29 @@ router.post(
         _id: req.params.id
       });
       if (hardware) {
+        const notification = `
+        <h1>ITVS administratorius iš jūsų atsiėmė IT turtą</h1>
+        <p> Jums buvo priskirtas: ${hardware.name} pavadinimo, ${hardware.manufacturer} ${hardware.model} modelio aparatinė įranga. IT administratorius šią įrangą nuo jūsų atsiėmė. </p>
+        <p> Prašome jūsų, sistemoje, pranešimų skiltyje, suderinti su administratoriumi įrangos grąžinimą</p>
+        `;
         usercheck = await User.findById(hardware.assignedTo);
         hardware = await Hardware.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: hardwareFields },
           { new: true }
         );
+        try {
+          await sendEmail({
+            to: usercheck.email,
+            subject: 'ITVS iš jūsų atsiimtas turtas',
+            text: notification
+          });
+
+          res.status(200).json;
+        } catch (error) {
+          console.error(err.message);
+          res.status(500).send('Siuntimo klaida');
+        }
         logger.TurtoAtsiėmimas(
           `Turtas ${hardware.name} atsiimtas iš naudotojo: ${usercheck.email}`
         );
