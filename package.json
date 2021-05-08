@@ -24,7 +24,8 @@
     "request": "^2.88.2",
     "uuid": "^8.3.2",
     "winston": "^3.3.3",
-    "winston-mongodb": "^5.0.7"
+    "winston-mongodb": "^5.0.7",
+    "xlsx": "^0.16.9"
   },
   "devDependencies": {
     "concurrently": "^6.0.2",

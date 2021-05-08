@@ -2,10 +2,16 @@ const express = require('express');
 const router = express.Router();
 const config = require('config');
 const db = config.get('mongoURI');
+const exportLogsToExcel = require('../../utility/exportService');
+const path = require('path');
 
 const { authAdmin } = require('../../middleware/auth');
 
 const Log = require('../../models/Logs');
+const workSheetColumnNames = ['Įvykio Laikas', 'Tipas', 'Įvykio aprašymas'];
+
+const workSheetNames = 'Logs';
+const filePath = './outputFiles/ITVS.xlsx';
 
 router.get('/', [authAdmin], async (req, res) => {
   try {
@@ -24,6 +30,17 @@ router.get('/', [authAdmin], async (req, res) => {
         }
       }
     ]).then((logs) => res.json(logs));
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
+router.get('/excel', [authAdmin], async (req, res) => {
+  try {
+    const logs = await Log.find().sort({ date: -1 });
+    exportLogsToExcel(logs, workSheetColumnNames, workSheetNames, filePath);
+    res.status(200).send('Successful Export');
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
