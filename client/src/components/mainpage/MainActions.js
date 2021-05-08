@@ -5,13 +5,18 @@ import { Button } from '@material-ui/core';
 const MainActions = () => {
   return (
     <div>
-      <Link to='/edit-profile' class='btn btn-light'>
-        <Button size='large' variant='contained' color='primary'>
+      <Link to='/edit-profile'>
+        <Button
+          size='large'
+          variant='contained'
+          color='secondary'
+          style={{ marginRight: '10px' }}
+        >
           Keisti profilį
         </Button>
       </Link>
-      <Link to='/posts' class='btn btn-light'>
-        <Button size='large' variant='contained' color='primary'>
+      <Link to='/posts'>
+        <Button size='large' variant='contained' color='secondary'>
           Sukurti pranešimą
         </Button>
       </Link>

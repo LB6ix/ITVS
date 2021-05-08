@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { editHardware, getHardware } from '../../actions/assets/hardware';
 //import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
+
 import Loading from '../layout/Loading';
+import { Button } from '@material-ui/core';
 
 const EditHardware = ({
   hardware: { hardware, loading },
@@ -118,6 +119,9 @@ const EditHardware = ({
                 value={serialNumber}
                 onChange={(e) => onChange(e)}
               />
+              <small className='form-text'>
+                Serijinį numerį privaloma nurodyti!
+              </small>
             </div>
             <div className='form-group'>
               <input
@@ -214,20 +218,32 @@ const EditHardware = ({
                 onChange={(e) => onChange(e)}
               />
             </div>
-            <input type='submit' class='btn btn-primary my-1' />
+            <Button
+              size='large'
+              color='secondary'
+              variant='contained'
+              type='submit'
+              value='submit'
+              style={{ marginRight: '10px' }}
+            >
+              Patvirtinti
+            </Button>
 
-            <Link to='/hardware' className='btn btn-light'>
-              Grįžti į aparatinės įrangos sąrašą
+            <Link to={`/hardware`}>
+              <Button size='large' variant='contained' color='primary'>
+                Grįžti į sąrašą
+              </Button>
             </Link>
             {/* FIX THIS */}
             <div className='my-2'>
-              <button
+              <Button
                 onClick={() => toggleAdditionalData(!displayAdditionalData)}
                 type='button'
-                className='btn btn-light'
+                variant='contained'
+                color='primary'
               >
                 Peržiūrėti detalesnius duomenis
-              </button>
+              </Button>
             </div>
             {displayAdditionalData && (
               <Fragment>
@@ -239,6 +255,7 @@ const EditHardware = ({
                     value={supplier}
                     onChange={(e) => onChange(e)}
                   />
+                  <small className='form-text'>Tiekėjas</small>
                 </div>
                 <div className='form-group'>
                   <input
@@ -258,12 +275,12 @@ const EditHardware = ({
                     onChange={(e) => onChange(e)}
                   />
                 </div>
-                <div className='form-group'>
+                {/* <div className='form-group'>
                   <input
                     type='text'
                     placeholder='Tikėtina grąžinimo data'
                     name='expectedCheckInDate'
-                    value={formatDate(expectedCheckInDate)}
+                    value={formatDate(hardware[0].expectedCheckInDate)}
                     disabled
                   />
                 </div>
@@ -272,7 +289,7 @@ const EditHardware = ({
                     type='text'
                     placeholder='Priskyrimo data'
                     name='checkOutDate'
-                    value={formatDate(checkOutDate)}
+                    value={formatDate(hardware[0].checkOutDate)}
                     disabled
                   />
                 </div>
@@ -281,10 +298,10 @@ const EditHardware = ({
                     type='text'
                     placeholder='Atsiėmimo data'
                     name='checkInDate'
-                    value={formatDate(checkInDate)}
+                    value={formatDate(hardware[0].checkInDate)}
                     disabled
                   />
-                </div>
+                </div> */}
               </Fragment>
             )}
             {/* <input type='submit' class='btn btn-primary my-1' /> */}

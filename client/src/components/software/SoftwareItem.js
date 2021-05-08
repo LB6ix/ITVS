@@ -45,6 +45,7 @@ const SoftwareItem = ({ software }) => {
             value={formatDate(software[0].expDate)}
             disabled
           />
+          <small className='form-text'>Licencijos galiojimo data</small>
         </div>
         <div className='form-group'>
           <input

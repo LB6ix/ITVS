@@ -8,6 +8,7 @@ import CommentItem from '../hardware/hardwareComments/CommentItem';
 import HardwareItem from '../hardware/HardwareItem';
 // import ProfileAbout from './ProfileAbout';
 import { getHardware } from '../../actions/assets/hardware';
+import { Button } from '@material-ui/core';
 
 const Hardware = ({ getHardware, hardware: { hardware }, match }) => {
   useEffect(() => {
@@ -20,15 +21,23 @@ const Hardware = ({ getHardware, hardware: { hardware }, match }) => {
         <Loading />
       ) : (
         <Fragment>
-          <Link to='/hardware' className='btn btn-light'>
-            Grįžti į aparatinės įrangos sąrašą
+          <Link to={`/hardware`}>
+            <Button size='large' variant='contained' color='primary'>
+              Grįžti į sąrašą
+            </Button>
           </Link>
-          <Link
-            to={`/hardware/edit/${match.params.id}`}
-            className='btn btn-dark'
-          >
-            Keisti duomenis
+
+          <Link to={`/hardware/edit/${match.params.id}`}>
+            <Button
+              size='large'
+              variant='contained'
+              color='secondary'
+              style={{ marginLeft: '10px' }}
+            >
+              Keisti įrangos duomenis
+            </Button>
           </Link>
+
           <div className='profile-grid my-1'>
             <HardwareItem hardware={hardware} />
             <CreateComment hardwareId={hardware[0]._id} />

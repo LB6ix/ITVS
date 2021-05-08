@@ -4,6 +4,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import formatDate from '../../utils/formatDate';
 import { deleteComment } from '../../actions/post';
+import formatDate from '../../utility/formatDate';
+import { Button } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const CommentItem = ({
   postId,
@@ -25,13 +29,17 @@ const CommentItem = ({
       <p className='my-1'>{text}</p>
       <p className='post-date'>Pateikimo data: {date}</p>
       {!auth.loading && auth.user.role === 'admin' && (
-        <button
-          onClick={(e) => deleteComment(postId, _id)}
-          type='button'
-          className='btn btn-danger'
+        <IconButton
+          style={{ display: 'inline-block' }}
+          className='tableActions'
+          aria-label='delete'
+          variant='contained'
+          color='secondary'
+          size='large'
+          onClick={() => deleteComment(postId, _id)}
         >
-          <i className='fas fa-times' />
-        </button>
+          <DeleteIcon fontSize='small' />
+        </IconButton>
       )}
     </div>
   </div>

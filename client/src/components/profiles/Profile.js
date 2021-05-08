@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
-
+import { Button } from '@material-ui/core';
 // import ProfileTop from './ProfileTop';
 import ProfileView from './ProfileView';
 // import ProfileAbout from './ProfileAbout';
@@ -20,14 +20,23 @@ const Profile = ({ getProfileById, profile: { profile }, auth, match }) => {
         <Loading />
       ) : (
         <Fragment>
-          <Link to='/user-list' className='btn btn-light'>
-            Grįžti į naudotojų sąrašą
+          <Link to={`/user-list`}>
+            <Button size='large' variant='contained' color='primary'>
+              Grįžti į naudotojų sąrašą
+            </Button>
           </Link>
           {auth.isAuthenticated &&
             auth.loading === false &&
             auth.user._id === profile.user._id && (
-              <Link to='/edit-profile' className='btn btn-dark'>
-                Keisti profilio duomenis
+              <Link to={`/edit-profile`}>
+                <Button
+                  size='large'
+                  variant='contained'
+                  color='secondary'
+                  style={{ marginLeft: '10px' }}
+                >
+                  Keisti profilio duomenis
+                </Button>
               </Link>
             )}
           <div className='profile-grid my-1'>

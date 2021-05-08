@@ -122,7 +122,7 @@ const Hardwares = ({
         <Loading />
       ) : (
         <Fragment>
-          <h3 className='MuiTypography-h3'>Aparatinės įrangos sąrašas</h3>
+          <h1 className='large text'>Aparatinės įrangos sąrašas</h1>
 
           {showActions && (
             <Fragment>

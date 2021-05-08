@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { editSoftware, getSoftware } from '../../actions/assets/software';
 //import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
+
+import { Button } from '@material-ui/core';
 
 const EditSoftware = ({
   software: { software, loading },
@@ -131,7 +132,7 @@ const EditSoftware = ({
         <div className='form-group'>
           <input
             type='text'
-            placeholder='Vieta'
+            placeholder='Kam Priskirta'
             name='assignedTo'
             disabled
             value={assignedTo}
@@ -159,10 +160,21 @@ const EditSoftware = ({
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input type='submit' class='btn btn-primary my-1' />
+        <Button
+          size='large'
+          color='secondary'
+          variant='contained'
+          type='submit'
+          value='submit'
+          style={{ marginRight: '10px' }}
+        >
+          Patvirtinti
+        </Button>
 
-        <Link to='/software' className='btn btn-light'>
-          Grįžti į programinės įrangos sąrašą
+        <Link to={`/software`}>
+          <Button size='large' variant='contained' color='primary'>
+            Grįžti į sąrašą
+          </Button>
         </Link>
         {/* FIX THIS */}
       </form>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
+import { Button } from '@material-ui/core';
 
 import SoftwareItem from '../software/SoftwareItem';
 // import ProfileAbout from './ProfileAbout';
@@ -19,14 +20,21 @@ const Software = ({ getSoftware, software: { software }, match }) => {
         <Loading />
       ) : (
         <Fragment>
-          <Link to='/software' className='btn btn-light'>
-            Grįžti į programinės įrangos sąrašą
+          <Link to={`/software`}>
+            <Button size='large' variant='contained' color='primary'>
+              Grįžti į sąšąra
+            </Button>
           </Link>
-          <Link
-            to={`/software/edit/${match.params.id}`}
-            className='btn btn-dark'
-          >
-            Keisti duomenis
+
+          <Link to={`/software/edit/${match.params.id}`}>
+            <Button
+              size='large'
+              variant='contained'
+              color='secondary'
+              style={{ marginLeft: '10px' }}
+            >
+              Keisti įrangos duomenis
+            </Button>
           </Link>
           <div className='profile-grid my-1'>
             <SoftwareItem software={software} />

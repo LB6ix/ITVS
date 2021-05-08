@@ -117,14 +117,11 @@ router.delete('/:id', [authUser, authAdmin], async (req, res) => {
       return res.status(404).json({ msg: 'Prašymas nerastas' });
     }
 
-    //check user
-    // todo - admin delete
     if (req.user.role !== 'admin') {
       return res.status(401).json({ msg: 'Not authorized' });
     }
-    //} else if (req.user.role === 'admin') {
+
     await post.remove();
-    //}
     res.json({ msg: 'Prašymas ištrintas' });
   } catch (err) {
     if (err.kind === 'ObjectId') {
@@ -161,7 +158,7 @@ router.post(
         user: req.user.id
       };
 
-      post.comments.unshift(newComment); //komentarai nuo viršau į apačią makes sense
+      post.comments.unshift(newComment);
 
       await post.save();
 

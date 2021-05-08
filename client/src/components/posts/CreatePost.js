@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addPost } from '../../actions/post';
-
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 const CreatePost = ({ addPost, history }) => {
   const [formData, setFormData] = useState({
     text: '',
@@ -60,9 +61,23 @@ const CreatePost = ({ addPost, history }) => {
             <option value='IT prašymas'>IT prašymas</option>
             <option value='Konsultacija'>Konsultacija</option>
           </select>
-          <small className='form-text'>FIXXXXXXXXXXX</small>
+          <small className='form-text'>Parinkite prašymo kategoriją</small>
         </div>
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
+        <Button
+          size='large'
+          color='secondary'
+          variant='contained'
+          type='submit'
+          value='submit'
+          style={{ marginRight: '10px' }}
+        >
+          Pateikti
+        </Button>
+        <Link to={`/hardware`}>
+          <Button size='large' variant='contained' color='primary'>
+            Grįžti į pagrindinį puslapį
+          </Button>
+        </Link>
       </form>
     </div>
   );

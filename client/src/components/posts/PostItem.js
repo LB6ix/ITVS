@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletePost } from '../../actions/post';
+import { Button } from '@material-ui/core';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const PostItem = ({
   deletePost,
@@ -34,27 +37,36 @@ const PostItem = ({
     <div>
       <p className='my-1'>{text}</p>
       <p className='post-date'>Prašymo data: {date}</p>
-      <p>Kategorija: {category} </p>
+      <div className='bg-category p'>
+        <h4 style={{ width: '200px' }}>Kategorija: {category} </h4>
+      </div>
+
       {/* fix */}
 
       {showActions && (
         <Fragment>
           {!auth.loading && auth.isAuthenticated && (
-            <Link to={`/posts/${_id}`} className='btn btn-primary'>
-              Pastabos{' '}
-              {comments.length > 0 && (
-                <span className='comment-count'>{comments.length}</span>
-              )}
+            <Link to={`/posts/${_id}`}>
+              <Button size='small' variant='contained' color='primary'>
+                Pastabos{'   '}
+                {comments.length > 0 && (
+                  <span className='comment-count'>({comments.length})</span>
+                )}
+              </Button>
             </Link>
           )}
           {!auth.loading && auth.isAdmin && (
-            <button
+            <IconButton
+              style={{ display: 'inline-block' }}
+              className='tableActions'
+              aria-label='delete'
+              variant='contained'
+              color='secondary'
+              size='medium'
               onClick={() => deletePost(_id)}
-              type='button'
-              className='btn btn-danger'
             >
-              <i className='fas fa-times' />
-            </button>
+              <DeleteIcon fontSize='small' />
+            </IconButton>
           )}
         </Fragment>
       )}

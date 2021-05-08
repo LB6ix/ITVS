@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addComment } from '../../actions/post';
+import { Button } from '@material-ui/core';
 
 const CreateComment = ({ postId, addComment }) => {
   const [text, setText] = useState('');
@@ -28,7 +29,16 @@ const CreateComment = ({ postId, addComment }) => {
           onChange={(e) => setText(e.target.value)}
           required
         />
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
+        <Button
+          size='large'
+          color='secondary'
+          variant='contained'
+          type='submit'
+          value='submit'
+          style={{ marginTop: '10px' }}
+        >
+          Pateikti
+        </Button>
       </form>
     </div>
   );

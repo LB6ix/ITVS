@@ -48,13 +48,16 @@ const HardwareSchema = new mongoose.Schema({
     type: String
   },
   expectedCheckInDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   checkOutDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   checkInDate: {
-    type: Date
+    type: Date,
+    default: null
   },
   cost: {
     type: String

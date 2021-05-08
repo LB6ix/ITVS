@@ -9,7 +9,34 @@ import Tables from '../tables/Tables';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
+import {
+  TableBody,
+  TableCell,
+  TableRow,
+  Button,
+  makeStyles
+} from '@material-ui/core';
+let currentDate = new Date();
+const offset = currentDate.getTimezoneOffset();
+currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
+currentDate.setDate(currentDate.getDate() - 1);
+currentDate = currentDate.toISOString().split('T')[0];
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%'
+  },
+  row: {
+    background: '#ff0009'
+  },
+  row2: {
+    background: '#ebe6f0'
+  },
+  row3: {
+    background: '#006622'
+  }
+}));
+
 const Softwares = ({
   getSoftwares,
   deleteSoftware,
@@ -27,7 +54,7 @@ const Softwares = ({
     // }
     getSoftwares();
   }, [getSoftwares]);
-
+  const classes = useStyles();
   const headerCells = [
     { id: 'license', label: 'Licencija' },
     { id: 'key', label: 'Raktas', disableSorting: true },
@@ -55,7 +82,7 @@ const Softwares = ({
     <Loading />
   ) : (
     <Fragment>
-      <h3 className='MuiTypography-h3'>Programinės įrangos sąrašas</h3>
+      <h1 className='large text'>Programinės įrangos sąrašas</h1>
 
       <Link to={`/software/add-software`}>
         <Button size='large' variant='contained' color='primary'>
@@ -67,12 +94,28 @@ const Softwares = ({
         <TableHeader />
         <TableBody>
           {recordsAfterPagingAndSorting().map((sw) => (
-            <TableRow key={softwares._id}>
+            <TableRow
+              key={softwares._id}
+              className={sw.expDate < currentDate ? classes.row : classes.row2}
+              {...(sw.expDate < currentDate
+                ? (sw.status = 'Negaliojanti')
+                : (sw.status = sw.status))}
+            >
               <TableCell>{sw.license}</TableCell>
               <TableCell>{sw.key}</TableCell>
               <TableCell>{formatDate(sw.expDate)}</TableCell>
               <TableCell>{sw.manufacturer}</TableCell>
-              <TableCell>{sw.status}</TableCell>
+              <TableCell
+                className={
+                  sw.status === 'Aktyvi'
+                    ? classes.row3
+                    : sw.status === 'Negaliojanti'
+                    ? classes.row
+                    : classes.row2
+                }
+              >
+                {sw.status}
+              </TableCell>
               <TableCell>{sw.totalAmount}</TableCell>
               <TableCell>{sw.assigned === true ? 'Taip' : 'Ne'}</TableCell>
               <TableCell>{sw.assignedTo}</TableCell>

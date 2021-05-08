@@ -19,6 +19,7 @@ const HardwareItem = ({ hardware }) => {
             value={hardware[0].name}
             disabled
           />
+          <small className='form-text'>Įrangos pavadinimas</small>
         </div>
         <div className='form-group'>
           <input
@@ -28,6 +29,7 @@ const HardwareItem = ({ hardware }) => {
             value={hardware[0].serialNumber}
             disabled
           />
+          <small className='form-text'>Serijinis Numeris</small>
         </div>
         <div className='form-group'>
           <input
@@ -85,6 +87,7 @@ const HardwareItem = ({ hardware }) => {
             <option value='Dingęs'>Dingęs</option>
             <option value='Kita'>Kita</option>
           </select>
+          <small className='form-text'>Įrangos statusas</small>
         </div>
         <div className='form-group'>
           <input
@@ -113,6 +116,7 @@ const HardwareItem = ({ hardware }) => {
           type='button'
           variant='contained'
           color='primary'
+          style={{ marginBottom: '10px' }}
         >
           Peržiūrėti detalesnius duomenis
         </Button>
@@ -127,6 +131,7 @@ const HardwareItem = ({ hardware }) => {
                 value={hardware[0].supplier}
                 disabled
               />
+              <small className='form-text'>Tiekėjas</small>
             </div>
             <div className='form-group'>
               <input
@@ -154,6 +159,7 @@ const HardwareItem = ({ hardware }) => {
                 value={formatDate(hardware[0].expectedCheckInDate)}
                 disabled
               />
+              <small className='form-text'>Tikėtina atsiėmimo data</small>
             </div>
             <div className='form-group'>
               <input
@@ -163,6 +169,7 @@ const HardwareItem = ({ hardware }) => {
                 value={formatDate(hardware[0].checkOutDate)}
                 disabled
               />
+              <small className='form-text'>Priskyrimo data</small>
             </div>
             <div className='form-group'>
               <input
@@ -172,6 +179,7 @@ const HardwareItem = ({ hardware }) => {
                 value={formatDate(hardware[0].checkInDate)}
                 disabled
               />
+              <small className='form-text'>Atsiėmimo data</small>
             </div>
           </Fragment>
         )}

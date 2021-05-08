@@ -1,19 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  checkInSoftware,
-  getSoftware,
-  getSoftwares
-} from '../../actions/assets/software';
-import { getProfiles } from '../../actions/profile';
+import { checkInSoftware, getSoftware } from '../../actions/assets/software';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tables from '../tables/Tables';
-import { Link } from 'react-router-dom';
+
 //import formatDate from '../../utility/formatDate';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
@@ -71,10 +67,7 @@ const CheckInSoftware = ({
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
     { id: 'date', label: 'Data', disableSorting: true }
   ];
-  const { TableContainer, TableHeader, TablePaginationKomp } = Tables(
-    software,
-    headerCells
-  );
+  const { TableContainer, TableHeader } = Tables(software, headerCells);
 
   return (
     <Fragment>

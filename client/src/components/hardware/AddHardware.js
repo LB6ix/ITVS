@@ -18,9 +18,9 @@ const AddHardware = ({ addHardware, history }) => {
     supplier: '',
     warranty: '',
     leaseExpDate: '',
+    checkOutdate: null,
     checkInDate: null,
-    expectedCheckInDate: null,
-    checkOutdate: null
+    expectedCheckInDate: null
   });
 
   const {

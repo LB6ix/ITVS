@@ -6,6 +6,7 @@ import CreatePost from './CreatePost';
 import { getPosts, getUserPosts } from '../../actions/post';
 import Loading from '../layout/Loading';
 import { Link } from 'react-router-dom';
+import { Button } from '@material-ui/core';
 
 const Posts = ({
   getPosts,
@@ -29,10 +30,7 @@ const Posts = ({
         <Fragment>
           {profile !== null ? (
             <div>
-              <h1 className='large text-primary'>Prašymai</h1>
-              <p className='lead'>
-                <i className='fas fa-user' /> Pateikite prašymą
-              </p>
+              <h1 className='large text'>Prašymai</h1>
               <CreatePost />
             </div>
           ) : (
@@ -41,8 +39,10 @@ const Posts = ({
                 Jūs nesate užpildę asmeninės informacijos, prašome tai padaryti
                 kuo greičiau!
               </p>{' '}
-              <Link to='/create-profile' className='btn btn-primary my-1'>
-                Susikurti profilį
+              <Link to={`/create-profile`}>
+                <Button size='large' variant='contained' color='primary'>
+                  Susikurti profilį
+                </Button>
               </Link>
             </Fragment>
           )}

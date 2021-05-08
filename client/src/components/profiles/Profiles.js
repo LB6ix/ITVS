@@ -45,10 +45,7 @@ const Profiles = ({
         <Loading />
       ) : (
         <Fragment>
-          <h1 className='large text-primary'>Naudotojų sąrašas</h1>
-          <p className='lead'>
-            <i className='fab fa-connectdevelop' /> Testing
-          </p>
+          <h1 className='large text'>Naudotojų sąrašas</h1>
           {/* <tr>
               {profiles.length > 0 ? (
                 profiles.map((profile) => (

@@ -42,7 +42,10 @@ router.post(
       supplier,
       cost,
       warranty,
-      leaseExpDate
+      leaseExpDate,
+      checkOutDate,
+      expectedCheckInDate,
+      checkInDate
     } = req.body;
     try {
       let hardware = await Hardware.findOne({ name });
@@ -65,7 +68,10 @@ router.post(
         supplier,
         cost,
         warranty,
-        leaseExpDate
+        leaseExpDate,
+        checkOutDate,
+        expectedCheckInDate,
+        checkInDate
       });
 
       await hardware.save();
@@ -189,6 +195,7 @@ router.get('/', authAdmin, async (req, res) => {
           date: 1,
           expectedCheckInDate: 1,
           checkOutDate: 1,
+          checkInDate: 1,
           comments: 1
         }
       }
@@ -272,7 +279,6 @@ router.delete('/:id', authAdmin, async (req, res) => {
       return res.status(404).json({ msg: 'Apratinė įranga nerasta' });
     }
     await hardware.remove();
-    logger.log('info', `I6rtintas turtas naudotojui: asd`);
     res.json({ msg: 'Apratinės įrangos įrašas ištrintas' });
   } catch (err) {
     if (err.kind === 'ObjectId') {
@@ -331,11 +337,11 @@ router.delete('/comment/:id/:comment_id', authAdmin, async (req, res) => {
       return res.status(404).json({ msg: 'Pastabos nėra' });
     }
 
-    if (req.user.role === 'admin') {
-      if (comment.user.toString() !== req.user.id) {
-        return res.status(401).json({ msg: 'Neautorizuotas veiksmas' });
-      }
-    }
+    // if (req.user.role === 'admin') {
+    //   if (comment.user.toString() !== req.user.id) {
+    //     return res.status(401).json({ msg: 'Neautorizuotas veiksmas' });
+    //   }
+    // }
 
     hardware.comments = hardware.comments.filter(
       ({ id }) => id !== req.params.comment_id

@@ -41,10 +41,10 @@ const CreateUser = ({ setAlert, createuser }) => {
 
   return (
     <Fragment>
-      <h5 className='large text-primary'>Sukurkite naują naudotoją</h5>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Užpildykite formą:
-      </p>
+      <h1 className='large text'>Sukurkite naudotoją</h1>
+      <div className='bg-primary p'>
+        <h3>Užpildykite formą</h3>
+      </div>
       <form
         className='form'
         onSubmit={(e) => onSubmit(e)}
@@ -120,7 +120,7 @@ const CreateUser = ({ setAlert, createuser }) => {
         </div>
 
         <Button
-          color='primary'
+          color='secondary'
           variant='contained'
           type='submit'
           value='Prisijungti'

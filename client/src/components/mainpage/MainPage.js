@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
 import MainActions from '../mainpage/MainActions';
 import { getCurrentProfile } from '../../actions/profile';
+import { Button } from '@material-ui/core';
 
 const MainPage = ({
   getCurrentProfile,
@@ -19,10 +20,11 @@ const MainPage = ({
     <Loading />
   ) : (
     <Fragment>
-      <h3 className='MuiTypography-h3'>Pagrindinis puslapis</h3>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Sveiki, {user && user.email}!
-      </p>
+      <h1 className='large text'>Pagrindinis puslapis</h1>
+      <div style={{ marginBottom: '20px' }}>
+        <h3 className='medium text-dark'> Sveiki, {user && user.email}!</h3>
+      </div>
+
       {!loading && profile !== null ? (
         <Fragment>
           <MainActions />
@@ -33,8 +35,10 @@ const MainPage = ({
             Jūs nesate užpildę asmeninės informacijos, prašome tai padaryti kuo
             greičiau!
           </p>{' '}
-          <Link to='/create-profile' className='btn btn-primary my-1'>
-            Susikurti profilį
+          <Link to={`/create-profile`}>
+            <Button size='large' variant='contained' color='primary'>
+              Susikurti profilį
+            </Button>
           </Link>
         </Fragment>
       )}

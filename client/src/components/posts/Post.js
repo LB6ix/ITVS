@@ -7,6 +7,7 @@ import PostItem from '../posts/PostItem';
 import CreateComment from '../comments/CreateComment';
 import CommentItem from '../comments/CommentItem';
 import { getPost } from '../../actions/post';
+import { Button } from '@material-ui/core';
 
 const Post = ({ getPost, post: { post, loading }, match }) => {
   useEffect(() => {
@@ -17,8 +18,10 @@ const Post = ({ getPost, post: { post, loading }, match }) => {
     <Loading />
   ) : (
     <Fragment>
-      <Link to='/posts' className='btn'>
-        Grįžti į prašymų sąrašą
+      <Link to={`/posts`}>
+        <Button size='large' variant='contained' color='primary'>
+          Grįžti į prašymų sąrašą
+        </Button>
       </Link>
       <PostItem post={post} showActions={false} />
       <CreateComment postId={post._id} />
