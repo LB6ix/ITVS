@@ -139,7 +139,7 @@ config/production.json
 config/default.json
 
 *.sublime*
-
+.config.env
 psd
 thumb
 sketch
