@@ -5,6 +5,7 @@ import profile from './profile';
 import post from './post';
 import hardware from './assets/hardware';
 import software from './assets/software';
+import log from './log';
 
 export default combineReducers({
   alert,
@@ -12,5 +13,6 @@ export default combineReducers({
   profile,
   post,
   hardware,
-  software
+  software,
+  log
 });

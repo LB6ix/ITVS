@@ -8,7 +8,12 @@ import {
   CLEAR_HARDWARES,
   HARDWARE_ERROR,
   DELETE_HARDWARE,
-  ADD_HARDWARE
+  ADD_HARDWARE,
+  HARDWARE_CHECKEDIN,
+  HARDWARE_CHECKEDOUT,
+  ADD_HARDWARE_NOTE,
+  REMOVE_HARDWARE_NOTE,
+  HARDWARE_NOTE_ERROR
 } from '../constants';
 
 export const getHardwares = () => async (dispatch) => {
@@ -99,9 +104,9 @@ export const editHardware = (formData, id) => async (dispatch) => {
 
 export const checkOutHardware = (formData, id) => async (dispatch) => {
   try {
-    dispatch({
-      type: CLEAR_HARDWARES
-    });
+    // dispatch({
+    //   type: CLEAR_HARDWARES
+    // });
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -114,32 +119,37 @@ export const checkOutHardware = (formData, id) => async (dispatch) => {
       config
     );
     dispatch({
-      type: GET_HARDWARE,
+      type: HARDWARE_CHECKEDOUT,
       payload: res.data
     });
-
+    // getHardwares();
     dispatch(setAlert('Įranga priskirta!', 'success'));
     dispatch({
+      // type: CLEAR_HARDWARES,
       type: CLEAR_HARDWARE
     });
   } catch (err) {
-    const errors = err.response.data.errors;
+    if (err.response) {
+      const errors = err.response.data.errors;
 
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
+
+      dispatch({
+        type: HARDWARE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
+    } else {
+      console.error(err);
     }
-
-    dispatch({
-      type: HARDWARE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
-    });
   }
 };
 
 export const checkInHardware = (formData, id) => async (dispatch) => {
-  dispatch({
-    type: CLEAR_HARDWARES
-  });
+  // dispatch({
+  //   type: CLEAR_HARDWARES
+  // });
   try {
     const config = {
       headers: {
@@ -153,13 +163,13 @@ export const checkInHardware = (formData, id) => async (dispatch) => {
       config
     );
     dispatch({
-      type: GET_HARDWARE,
+      type: HARDWARE_CHECKEDIN,
 
       payload: res.data
     });
-
     dispatch(setAlert('Įranga atsiimta!', 'success'));
     dispatch({
+      // type: CLEAR_HARDWARES,
       type: CLEAR_HARDWARE
     });
   } catch (err) {
@@ -240,5 +250,45 @@ export const deleteHardware = (id) => async (dispatch) => {
         payload: { msg: err.response.statusText, status: err.response.status }
       });
     }
+  }
+};
+
+export const addComment = (hardwareId, formData) => async (dispatch) => {
+  try {
+    const res = await axios.post(
+      `/api/hardware/comment/${hardwareId}`,
+      formData
+    );
+
+    dispatch({
+      type: ADD_HARDWARE_NOTE,
+      payload: res.data
+    });
+
+    dispatch(setAlert('Įrangos pastaba pridėta', 'success'));
+  } catch (err) {
+    dispatch({
+      type: HARDWARE_NOTE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+export const deleteComment = (hardwareId, commentId) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/hardware/comment/${hardwareId}/${commentId}`);
+
+    dispatch({
+      type: REMOVE_HARDWARE_NOTE,
+      payload: commentId
+    });
+
+    dispatch(setAlert('Įrangos pastaba ištrinta', 'success'));
+  } catch (err) {
+    console.log(err.response);
+    dispatch({
+      type: HARDWARE_NOTE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
   }
 };

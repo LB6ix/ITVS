@@ -5,7 +5,7 @@ import formatDate from '../../utility/formatDate';
 import { Button } from '@material-ui/core';
 
 const HardwareItem = ({ hardware }) => {
-  const [displayPasswordChange, togglePasswordChange] = useState(false);
+  const [displayAdditionalData, toggleAdditionalData] = useState(false);
 
   return (
     <Fragment>
@@ -109,7 +109,7 @@ const HardwareItem = ({ hardware }) => {
         {/* FIX THIS */}
 
         <Button
-          onClick={() => togglePasswordChange(!displayPasswordChange)}
+          onClick={() => toggleAdditionalData(!displayAdditionalData)}
           type='button'
           variant='contained'
           color='primary'
@@ -117,7 +117,7 @@ const HardwareItem = ({ hardware }) => {
           Peržiūrėti detalesnius duomenis
         </Button>
 
-        {displayPasswordChange && (
+        {displayAdditionalData && (
           <Fragment>
             <div className='form-group'>
               <input

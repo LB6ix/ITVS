@@ -158,7 +158,9 @@ const EditHardware = ({
 
             <Fragment>
               {assigned === true ? (
-                'Statuso keisti negalima'
+                <p style={{ fontWeight: 900 }}>
+                  Statuso keisti negalima, nes įranga yra priskirta!
+                </p>
               ) : (
                 <div className='form-group'>
                   <select

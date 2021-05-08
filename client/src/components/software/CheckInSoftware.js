@@ -1,7 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { checkOutSoftware, getSoftware } from '../../actions/assets/software';
+import {
+  checkInSoftware,
+  getSoftware,
+  getSoftwares
+} from '../../actions/assets/software';
 import { getProfiles } from '../../actions/profile';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,43 +13,38 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tables from '../tables/Tables';
-
+import { Link } from 'react-router-dom';
 //import formatDate from '../../utility/formatDate';
-
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
-const CheckOutSoftware = ({
-  getProfiles,
-  profile: { profiles, loading },
+const CheckInSoftware = ({
   getSoftware,
-  software: { software },
-  checkOutSoftware,
-  history,
-  match
+  software: { software, loading },
+  checkInSoftware,
+  match,
+  history
 }) => {
   const [formData, setFormData] = useState({
-    assignedTo: '',
-    checkOutDate: ''
+    status: '',
+    checkInDate: ''
   });
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    getProfiles();
     getSoftware(match.params.id);
-  }, [loading, getSoftware, getProfiles, match.params.id]);
+  }, [loading, getSoftware, match.params.id]);
 
-  const { assignedTo, checkOutDate, expectedCheckInDate } = formData;
+  const { checkInDate, status } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value }); //key = name, value changes state
 
   const onSubmit = (e) => {
     e.preventDefault();
-
     setTimeout(() => {
-      checkOutSoftware(formData, match.params.id);
+      checkInSoftware(formData, match.params.id);
     }, 1000);
     setTimeout(() => {
       history.push('/software');
@@ -66,6 +65,7 @@ const CheckOutSoftware = ({
     { id: 'expDate', label: 'Galiojimo data', disableSorting: true },
     { id: 'manufacturer', label: 'Leidėjas' },
     { id: 'status', label: 'Statusas' },
+    { id: 'assignedTo', label: 'Kam priskirta', disableSorting: true },
     { id: 'totalAmount', label: 'Kiekis', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
@@ -88,63 +88,90 @@ const CheckOutSoftware = ({
               color='primary'
               onClick={handleClickOpen}
             >
-              Priskirti programinę įrangą
+              Atsiimti programą iš naudotojo
             </Button>
+            <div>
+              <h3
+                className='MuiTypography-h3-primary'
+                style={{ marginTop: '15px' }}
+              >
+                {/* Ar tikrai norite atsiimti turtą iš {hardware[0].assignedTo}? */}
+              </h3>
+            </div>
             <Dialog
               open={open}
               onClose={handleClose}
               aria-labelledby='form-dialog-title'
             >
               <DialogTitle id='form-dialog-title'>
-                Programinės įrangos priskyrimas
+                Atsiimti programinę įrangą
               </DialogTitle>
               <DialogContent>
-                <DialogContentText>Priskirkite turtą</DialogContentText>
+                <DialogContentText>Atsiimti turtą</DialogContentText>
                 <Fragment>
                   <form
                     id='my-form-id'
                     className='form'
                     onSubmit={(e) => onSubmit(e)}
                   >
-                    <div className='form-group'>
-                      <select
-                        required
-                        name='assignedTo'
-                        value={assignedTo}
-                        onChange={(e) => onChange(e)}
-                      >
-                        {profiles.map((prf) => (
-                          <option key={profiles._id} value={prf.user._id}>
-                            {prf.user.email}
-                          </option>
-                        ))}
-                      </select>
-                      <small className='form-text'>
-                        Naudotojas, kuriam priskiriama programinė įranga
-                      </small>
-                    </div>
+                    {/* <div className='form-group'>
+                  <input
+                    required
+                    name='assignedTo'
+                    value={assignedTo}
+                    disabled
+                  ></input>
+                  <small className='form-text'>
+                    Naudotojas, kuriam priskiriamas turtas
+                  </small>
+                </div> */}
                     <div className='form-group'>
                       <input
                         type='date'
                         selected={Date.now()}
-                        name='checkOutDate'
-                        value={checkOutDate}
+                        name='checkInDate'
+                        value={checkInDate}
                         onChange={(e) => onChange(e)}
                       />
                       <small className='form-text'>Priskyrimo data</small>
                     </div>
-                    <input type='submit' onClick={handleClose} Priskirti />
+                    <div className='form-group'>
+                      <select
+                        name='status'
+                        value={status}
+                        onChange={(e) => onChange(e)}
+                      >
+                        <option value='0'>* Parinkite statusą</option>
+                        <option value='Neaktyvi'>Neaktyvi</option>
+                        <option value='Aktyvi'>Aktyvi</option>
+                        <option value='Negaliojanti'>Negaliojanti</option>
+                        <option value='Kita'>Kita</option>
+                      </select>
+                    </div>
+                    <DialogActions>
+                      <Button
+                        color='secondary'
+                        variant='contained'
+                        onClick={handleClose}
+                      >
+                        Atšaukti
+                      </Button>
+                      {/* <Button onClick={handleClose} color='primary'> */}
+
+                      {/* </Button> */}
+
+                      <Button
+                        color='primary'
+                        type='submit'
+                        variant='contained'
+                        onClick={handleClose}
+                      >
+                        Atsiimti
+                      </Button>
+                    </DialogActions>
                   </form>
                 </Fragment>
               </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color='primary'>
-                  Atšaukti
-                </Button>
-                {/* <Button onClick={handleClose} color='primary'> */}
-
-                {/* </Button> */}
-              </DialogActions>
             </Dialog>
           </div>
           <div>
@@ -158,6 +185,7 @@ const CheckOutSoftware = ({
                     <TableCell>{formatDate(software[0].expDate)}</TableCell>
                     <TableCell>{software[0].manufacturer}</TableCell>
                     <TableCell>{software[0].status}</TableCell>
+                    <TableCell>{software[0].assignedTo}</TableCell>
                     <TableCell>{software[0].totalAmount}</TableCell>
                     <TableCell>{software[0].cost}</TableCell>
                     <TableCell>{software[0].supplier}</TableCell>
@@ -172,22 +200,17 @@ const CheckOutSoftware = ({
     </Fragment>
   );
 };
-
-CheckOutSoftware.propTypes = {
+CheckInSoftware.propTypes = {
   getSoftware: PropTypes.func.isRequired,
-  getProfiles: PropTypes.func.isRequired,
-  checkOutSoftware: PropTypes.func.isRequired,
-  software: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  checkInSoftware: PropTypes.func.isRequired,
+  software: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  software: state.software,
-  profile: state.profile
+  software: state.software
 });
 
 export default connect(mapStateToProps, {
-  checkOutSoftware,
-  getSoftware,
-  getProfiles
-})(CheckOutSoftware);
+  checkInSoftware,
+  getSoftware
+})(CheckInSoftware);

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { authUser, authAdmin } = require('../../middleware/auth');
+const logger = require('../api/logger');
 
 const Hardware = require('../../models/Hardware');
 
@@ -146,6 +147,7 @@ router.post(
       hardware = new Hardware(hardwareFields);
 
       await hardware.save();
+      logger.log('info', `Pkaeitats turtas naudotojui: asd`);
       res.json(hardware);
       hardwareFields.assignedTo = assignedTo;
     } catch (err) {
@@ -185,7 +187,8 @@ router.get('/', authAdmin, async (req, res) => {
           supplier: 1,
           date: 1,
           expectedCheckInDate: 1,
-          checkOutDate: 1
+          checkOutDate: 1,
+          comments: 1
         }
       }
     ]).then((hardwares) => res.json(hardwares));
@@ -238,7 +241,8 @@ router.get('/single/:id', authAdmin, async (req, res) => {
           location: 1,
           expectedCheckInDate: 1,
           checkOutDate: 1,
-          checkInDate: 1
+          checkInDate: 1,
+          comments: 1
         }
       }
     ]).then((hardware) => res.json(hardware));
@@ -267,7 +271,7 @@ router.delete('/:id', authAdmin, async (req, res) => {
       return res.status(404).json({ msg: 'Apratinė įranga nerasta' });
     }
     await hardware.remove();
-
+    logger.log('info', `I6rtintas turtas naudotojui: asd`);
     res.json({ msg: 'Apratinės įrangos įrašas ištrintas' });
   } catch (err) {
     if (err.kind === 'ObjectId') {
@@ -367,7 +371,7 @@ router.get('/:id', authUser, async (req, res) => {
 });
 
 //checkout route'as
-// @route    POST api/hardware/:id/checkout/:user_id
+// @route    POST api/hardware/:id/checkout/
 // @desc     Checkout
 // @access   Authenticated (admin only)
 router.post(
@@ -401,6 +405,8 @@ router.post(
       hardwareFields.checkOutDate = checkOutDate;
       hardwareFields.expectedCheckInDate = expectedCheckInDate;
 
+      const usercheck = await User.findById(assignedTo);
+
       let hardware = await Hardware.findOne({
         _id: req.params.id
       });
@@ -410,12 +416,15 @@ router.post(
           { $set: hardwareFields },
           { new: true }
         );
+        logger.TurtoPriskyrimas(
+          `Priskirtas turtas ${hardware.name} naudotojui: ${usercheck.email}`
+        );
         return res.json(hardware);
       }
 
       hardware = new Hardware(hardwareFields);
-
       await hardware.save();
+
       res.json(hardware);
     } catch (err) {
       console.error(err.message);
@@ -448,7 +457,6 @@ router.post(
         expectedCheckInDate,
         checkOutDate
       } = req.body;
-
       const hardwareFields = {};
       hardwareFields.status = req.body.status;
       hardwareFields.assigned = false;
@@ -461,10 +469,14 @@ router.post(
         _id: req.params.id
       });
       if (hardware) {
+        usercheck = await User.findById(hardware.assignedTo);
         hardware = await Hardware.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: hardwareFields },
           { new: true }
+        );
+        logger.TurtoAtsiėmimas(
+          `Turtas ${hardware.name} atsiimtas iš naudotojo: ${usercheck.email}`
         );
         return res.json(hardware);
       }
@@ -472,6 +484,7 @@ router.post(
       hardware = new Hardware(hardwareFields);
 
       await hardware.save();
+      logger.log('info', `Atsiimtas turtas naudotojui: asd`);
       res.json(hardware);
     } catch (err) {
       console.error(err.message);

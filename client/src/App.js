@@ -14,6 +14,7 @@ import PrivateRoute from './components/routes/PrivateRoute';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profiles/Profile';
 import Posts from './components/posts/Posts';
+import Logs from './components/logs/Logs';
 import Hardwares from './components/hardware/Hardwares';
 import Hardware from './components/hardware/Hardware';
 import Software from './components/software/Software';
@@ -37,6 +38,8 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import CheckOutHardware from './components/hardware/CheckOutHardware';
 import CheckInHardware from './components/hardware/CheckInHardware';
+import CheckInSoftware from './components/software/CheckInSoftware';
+import CheckOutSoftware from './components/software/CheckOutSoftware';
 // import { stringify } from 'uuid';
 
 if (localStorage.token) {
@@ -94,6 +97,7 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
                 component={EditProfile}
               />
               <PrivateRoute exact path='/posts' component={Posts} />
+              <PrivateRoute exact path='/logs' component={Logs} />
               <PrivateRoute exact path='/posts/:id' component={Post} />
               <PrivateRoute exact path='/hardware' component={Hardwares} />
               <PrivateRoute exact path='/software' component={Softwares} />
@@ -136,6 +140,16 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
                 exact
                 path='/hardware/:id/checkin'
                 component={CheckInHardware}
+              />
+              <PrivateRoute
+                exact
+                path='/software/:id/checkout'
+                component={CheckOutSoftware}
+              />
+              <PrivateRoute
+                exact
+                path='/software/:id/checkin'
+                component={CheckInSoftware}
               />
               {/* Route render={() => <h3>not here</h3>} */}
             </Switch>

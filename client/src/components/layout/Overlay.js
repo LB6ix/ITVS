@@ -15,6 +15,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import LockIcon from '@material-ui/icons/Lock';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import SupervisorAccountIcon from '@material-ui/icons/SupervisorAccount';
 import ImportantDevicesIcon from '@material-ui/icons/ImportantDevices';
@@ -311,6 +312,12 @@ const Overlay = ({
                 <MailIcon color='primary' />
               </ListItemIcon>
               <ListItemText primary='Pranešimų valdymas' />
+            </ListItem>
+            <ListItem button component={Link} to='/logs'>
+              <ListItemIcon>
+                <LockIcon color='primary' />
+              </ListItemIcon>
+              <ListItemText primary='Įvykių žurnalas' />
             </ListItem>
             <Divider />
             <ListItem button component={Link} to='/main'>

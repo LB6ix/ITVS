@@ -5,6 +5,7 @@ const gravatar = require('gravatar');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const config = require('config');
+const logger = require('../api/logger');
 
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
@@ -66,6 +67,9 @@ router.post(
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
+      logger.NaudotojoSukūrimas(
+        `Sukurtas naujas naudotojas: ${req.body.email}`
+      );
       res.json(user);
 
       // const payload = {

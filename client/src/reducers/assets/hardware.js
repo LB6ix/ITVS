@@ -9,7 +9,10 @@ import {
   DELETE_HARDWARE,
   ADD_HARDWARE,
   HARDWARE_CHECKEDIN,
-  HARDWARE_CHECKEDOUT
+  HARDWARE_CHECKEDOUT,
+  ADD_HARDWARE_NOTE,
+  REMOVE_HARDWARE_NOTE,
+  HARDWARE_NOTE_ERROR
 } from '../../actions/constants';
 
 const initialState = {
@@ -19,7 +22,7 @@ const initialState = {
   error: {}
 };
 
-function postReducer(state = initialState, action) {
+function hardwareReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -48,6 +51,8 @@ function postReducer(state = initialState, action) {
         hardware: null,
         loading: false
       };
+    case HARDWARE_CHECKEDIN:
+    case HARDWARE_CHECKEDOUT:
     case GET_HARDWARE:
       return {
         ...state,
@@ -58,6 +63,29 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         hardwares: [payload, ...state.hardwares],
+        loading: false
+      };
+    case HARDWARE_NOTE_ERROR:
+      return {
+        ...state,
+        error: payload,
+        loading: false
+      };
+    case ADD_HARDWARE_NOTE:
+      return {
+        ...state,
+        hardware: { ...state.hardware, comments: payload },
+        loading: false
+      };
+    case REMOVE_HARDWARE_NOTE:
+      return {
+        ...state,
+        hardware: {
+          ...state.hardware,
+          comments: state.hardware.comments.filter(
+            (comment) => comment._id !== payload
+          )
+        },
         loading: false
       };
     case DELETE_HARDWARE:
@@ -79,4 +107,4 @@ function postReducer(state = initialState, action) {
   }
 }
 
-export default postReducer;
+export default hardwareReducer;

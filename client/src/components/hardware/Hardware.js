@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
-
+import CreateComment from '../hardware/hardwareComments/CreateComment';
+import CommentItem from '../hardware/hardwareComments/CommentItem';
 import HardwareItem from '../hardware/HardwareItem';
 // import ProfileAbout from './ProfileAbout';
 import { getHardware } from '../../actions/assets/hardware';
@@ -30,6 +31,16 @@ const Hardware = ({ getHardware, hardware: { hardware }, match }) => {
           </Link>
           <div className='profile-grid my-1'>
             <HardwareItem hardware={hardware} />
+            <CreateComment hardwareId={hardware[0]._id} />
+            <div className='comments'>
+              {hardware[0].comments.map((comment) => (
+                <CommentItem
+                  key={comment._id}
+                  comment={comment}
+                  hardwareId={hardware[0]._id}
+                />
+              ))}
+            </div>
           </div>
         </Fragment>
       )}

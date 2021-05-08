@@ -100,7 +100,7 @@ const AddSoftware = ({ addSoftware, history }) => {
             <option value='0'>* Parinkite statusą</option>
             <option value='Neaktyvi'>Neaktyvi</option>
             <option value='Aktyvi'>Aktyvi</option>
-            <option value='Baigusi galioti'>Baigusi galioti</option>
+            <option value='Negaliojanti'>Negaliojanti</option>
             <option value='Kita'>Kita</option>
           </select>
         </div>

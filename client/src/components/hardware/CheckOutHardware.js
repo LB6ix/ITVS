@@ -1,7 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { checkOutHardware, getHardware } from '../../actions/assets/hardware';
+import {
+  checkOutHardware,
+  getHardware,
+  getHardwares
+} from '../../actions/assets/hardware';
 import { getProfiles } from '../../actions/profile';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -9,17 +13,15 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tables from '../tables/Tables';
-import { Link } from 'react-router-dom';
-//import formatDate from '../../utility/formatDate';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
 const CheckOutHardware = ({
-  getProfiles,
-  profile: { profiles },
   getHardware,
   hardware: { hardware, loading },
+  getProfiles,
+  profile: { profiles },
   checkOutHardware,
   history,
   match
@@ -32,8 +34,8 @@ const CheckOutHardware = ({
   const [open, setOpen] = React.useState(false);
 
   useEffect(() => {
-    getProfiles();
     getHardware(match.params.id);
+    getProfiles();
   }, [loading, getHardware, getProfiles, match.params.id]);
 
   const { assignedTo, checkOutDate, expectedCheckInDate } = formData;
@@ -45,6 +47,8 @@ const CheckOutHardware = ({
     e.preventDefault();
     setTimeout(() => {
       checkOutHardware(formData, match.params.id);
+    }, 1000);
+    setTimeout(() => {
       history.push('/hardware');
     }, 1000);
   };
@@ -170,21 +174,25 @@ const CheckOutHardware = ({
           </div>
           <div>
             <Fragment>
-              <TableContainer>
-                <TableHeader />
-                <TableBody>
-                  <TableRow key={hardware[0]._id}>
-                    <TableCell>{hardware[0].name}</TableCell>
-                    <TableCell>{hardware[0].serialNumber}</TableCell>
-                    <TableCell>{hardware[0].model}</TableCell>
-                    <TableCell>{hardware[0].manufacturer}</TableCell>
-                    <TableCell>{hardware[0].category}</TableCell>
-                    <TableCell>{hardware[0].status}</TableCell>
-                    <TableCell>{hardware[0].cost}</TableCell>
-                    <TableCell>{formatDate(hardware[0].date)}</TableCell>
-                  </TableRow>
-                </TableBody>
-              </TableContainer>
+              {hardware === null ? (
+                <Loading />
+              ) : (
+                <TableContainer>
+                  <TableHeader />
+                  <TableBody>
+                    <TableRow key={hardware[0]._id}>
+                      <TableCell>{hardware[0].name}</TableCell>
+                      <TableCell>{hardware[0].serialNumber}</TableCell>
+                      <TableCell>{hardware[0].model}</TableCell>
+                      <TableCell>{hardware[0].manufacturer}</TableCell>
+                      <TableCell>{hardware[0].category}</TableCell>
+                      <TableCell>{hardware[0].status}</TableCell>
+                      <TableCell>{hardware[0].cost}</TableCell>
+                      <TableCell>{formatDate(hardware[0].date)}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </TableContainer>
+              )}
             </Fragment>
           </div>
         </Fragment>

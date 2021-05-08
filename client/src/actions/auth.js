@@ -72,7 +72,7 @@ export const createuser = ({
 
   try {
     const res = await axios.post('/api/users', body, config);
-    if (!res) {
+    if (res) {
       dispatch({ type: CREATE_USER_SUCCESS, payload: res.data });
     } else {
       dispatch({
@@ -112,7 +112,6 @@ export const userLogin = ({ email, password }) => async (dispatch) => {
     //checkAdminAuth();
 
     dispatch(loadUser());
-    // dispatch(loadAdmin());
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -141,9 +140,6 @@ export const adminLogin = ({ email, password }) => async (dispatch) => {
     const res = await axios.post('/api/auth/admin', body, config);
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 
-    //checkAdminAuth();
-
-    //dispatch(loadUser());
     dispatch(loadAdmin());
   } catch (err) {
     const errors = err.response.data.errors;

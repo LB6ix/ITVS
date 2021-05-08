@@ -29,16 +29,18 @@ const EditSoftware = ({
   useEffect(() => {
     getSoftware(match.params.id);
     setFormData({
-      license: loading || !software.license ? '' : software.license,
-      key: loading || !software.key ? '' : software.key,
-      expDate: loading || !software.expDate ? '' : software.expDate,
+      license: loading || !software[0].license ? '' : software[0].license,
+      key: loading || !software[0].key ? '' : software[0].key,
+      expDate: loading || !software[0].expDate ? '' : software[0].expDate,
       manufacturer:
-        loading || !software.manufacturer ? '' : software.manufacturer,
-      status: loading || !software.status ? '' : software.status,
-      totalAmount: loading || !software.totalAmount ? '' : software.totalAmount,
-      assignedTo: loading || !software.assignedTo ? '' : software.assignedTo,
-      cost: loading || !software.cost ? '' : software.cost,
-      supplier: loading || !software.supplier ? '' : software.supplier
+        loading || !software[0].manufacturer ? '' : software[0].manufacturer,
+      status: loading || !software[0].status ? '' : software[0].status,
+      totalAmount:
+        loading || !software[0].totalAmount ? '' : software[0].totalAmount,
+      assignedTo:
+        loading || !software[0].assignedTo ? '' : software[0].assignedTo,
+      cost: loading || !software[0].cost ? '' : software[0].cost,
+      supplier: loading || !software[0].supplier ? '' : software[0].supplier
     });
   }, [loading, getSoftware, match.params.id]);
 
@@ -113,7 +115,7 @@ const EditSoftware = ({
             <option value='0'>* Parinkite statusą</option>
             <option value='Neaktyvi'>Neaktyvi</option>
             <option value='Aktyvi'>Aktyvi</option>
-            <option value='Baigusi galioti'>Baigusi galioti</option>
+            <option value='Negaliojanti'>Negaliojanti</option>
             <option value='Kita'>Kita</option>
           </select>
         </div>

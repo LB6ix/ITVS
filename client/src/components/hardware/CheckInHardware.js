@@ -20,7 +20,6 @@ import formatDate from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
 const CheckInHardware = ({
-  getProfiles,
   getHardware,
   hardware: { hardware, loading },
   checkInHardware,
@@ -37,7 +36,7 @@ const CheckInHardware = ({
     getHardware(match.params.id);
   }, [loading, getHardware, match.params.id]);
 
-  const { assignedTo, checkInDate, status } = formData;
+  const { checkInDate, status } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value }); //key = name, value changes state
@@ -46,6 +45,8 @@ const CheckInHardware = ({
     e.preventDefault();
     setTimeout(() => {
       checkInHardware(formData, match.params.id);
+    }, 1000);
+    setTimeout(() => {
       history.push('/hardware');
     }, 1000);
   };
@@ -211,7 +212,6 @@ const CheckInHardware = ({
 };
 CheckInHardware.propTypes = {
   getHardware: PropTypes.func.isRequired,
-  getProfiles: PropTypes.func.isRequired,
   checkInHardware: PropTypes.func.isRequired,
   hardware: PropTypes.object.isRequired
 };

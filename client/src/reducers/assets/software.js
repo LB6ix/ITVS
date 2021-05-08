@@ -3,10 +3,12 @@ import {
   //GET_USER_SOFTWARES,
   GET_SOFTWARE,
   CLEAR_SOFTWARE,
-  //CLEAR_SOFTWARES,
+  CLEAR_SOFTWARES,
   SOFTWARE_ERROR,
   DELETE_SOFTWARE,
-  ADD_SOFTWARE
+  ADD_SOFTWARE,
+  SOFTWARE_CHECKEDIN,
+  SOFTWARE_CHECKEDOUT
 } from '../../actions/constants';
 
 const initialState = {
@@ -16,7 +18,7 @@ const initialState = {
   error: {}
 };
 
-function postReducer(state = initialState, action) {
+function softwareReducer(state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
@@ -26,12 +28,20 @@ function postReducer(state = initialState, action) {
         softwares: payload,
         loading: false
       };
+    case CLEAR_SOFTWARES:
+      return {
+        ...state,
+        softwares: [],
+        loading: false
+      };
     case CLEAR_SOFTWARE:
       return {
         ...state,
         software: null,
         loading: false
       };
+    case SOFTWARE_CHECKEDIN:
+    case SOFTWARE_CHECKEDOUT:
     case GET_SOFTWARE:
       return {
         ...state,
@@ -63,4 +73,4 @@ function postReducer(state = initialState, action) {
   }
 }
 
-export default postReducer;
+export default softwareReducer;

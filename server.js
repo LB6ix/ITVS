@@ -1,5 +1,6 @@
 const express = require('express');
 const connectDB = require('./config/db');
+const logger = require('./routes/api/logger');
 
 connectDB();
 
@@ -15,6 +16,7 @@ app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/hardware', require('./routes/api/hardware'));
 app.use('/api/software', require('./routes/api/software'));
 app.use('/api/profile', require('./routes/api/profile'));
+app.use('/api/logs', require('./routes/api/logs'));
 
 const PORT = process.env.PORT || 5000;
 

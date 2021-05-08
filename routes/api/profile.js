@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { authUser, authAdmin } = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
+const logger = require('../api/logger');
 
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
@@ -150,11 +151,28 @@ router.get('/user/:user_id', async (req, res) => {
 //@desc   Delete profile, user, posts
 //@access Private
 
-router.delete('/:id', [authUser, authAdmin], async (req, res) => {
+router.delete('/:id', [authAdmin], async (req, res) => {
+  const userdel = await User.findById(req.params.id);
   try {
+    logger.NaudotojoIštrynimas(`Ištrintas naudotojas: ${userdel.email}`);
     await Post.deleteMany({ user: req.params.id });
     await Profile.findOneAndRemove({ user: req.params.id });
     await User.findOneAndRemove({ _id: req.params.id });
+    await Hardware.update(
+      { assignedTo: req.params.id },
+      {
+        $set: {
+          assignedTo: null,
+          assigned: false,
+          status: 'Neparuoštas',
+          checkOutDate: null,
+          expectedCheckInDate: null,
+          checkInDate: null
+        }
+      },
+      { multi: true },
+      (err, writeResult) => {}
+    );
     res.json({ msg: 'Naudotojas pašalintas' });
   } catch (err) {
     console.error(err.message);

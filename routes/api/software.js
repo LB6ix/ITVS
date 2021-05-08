@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const { authUser, authAdmin } = require('../../middleware/auth');
+const logger = require('../api/logger');
 
 const Software = require('../../models/Software');
 let currentDate = new Date();
 const offset = currentDate.getTimezoneOffset();
 currentDate = new Date(currentDate.getTime() - offset * 60 * 1000);
+currentDate.setDate(currentDate.getDate() - 1);
 //currentDate.toISOString().split('T')[0];
 
 //@route  POST api/software/add-software
@@ -206,7 +208,7 @@ router.post(
       )
         .not()
         .isEmpty()
-        .isAfter(currentDate),
+        .isAfter(currentDate.toISOString().split('T')[0]),
       check('totalAmount', 'Įveskite tinkamą bendrą kiekį')
         .not()
         .isEmpty()
@@ -224,6 +226,7 @@ router.post(
       key,
       expDate,
       manufacturer,
+      status,
       totalAmount,
       //   availAmount,
       assignedTo,
@@ -247,6 +250,9 @@ router.post(
         _id: req.params.id
       });
       if (software) {
+        {
+          delete softwareFields.assignedTo;
+        }
         software = await Software.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: softwareFields },
@@ -260,6 +266,7 @@ router.post(
 
       await software.save();
       res.json(software);
+      softwareFields.assignedTo = assignedTo;
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');
@@ -293,10 +300,14 @@ router.post(
         _id: req.params.id
       });
       if (software) {
+        usercheck = await User.findById(software.assignedTo);
         software = await Software.findByIdAndUpdate(
           { _id: req.params.id },
           { $set: softwareFields },
           { new: true }
+        );
+        logger.TurtoAtsiėmimas(
+          `Programa ${software.name} atsiimta iš naudotojo: ${usercheck.email}`
         );
         return res.json(software);
       }
@@ -344,6 +355,8 @@ router.post(
       softwareFields.assignedTo = assignedTo;
       softwareFields.checkOutDate = checkOutDate;
 
+      const usercheck = await User.findById(assignedTo);
+
       let software = await Software.findOne({
         _id: req.params.id
       });
@@ -352,6 +365,9 @@ router.post(
           { _id: req.params.id },
           { $set: softwareFields },
           { new: true }
+        );
+        logger.TurtoPriskyrimas(
+          `Programa ${software.name} priskirta naudotojui: ${usercheck.email}`
         );
         return res.json(software);
       }

@@ -118,7 +118,7 @@ const Hardwares = ({
 
   return (
     <Fragment>
-      {hardwares === [] ? (
+      {hardwares.length === 0 ? (
         <Loading />
       ) : (
         <Fragment>

@@ -35,6 +35,7 @@ const Softwares = ({
     { id: 'manufacturer', label: 'Leidėjas' },
     { id: 'status', label: 'Statusas' },
     { id: 'totalAmount', label: 'Kiekis', disableSorting: true },
+    { id: 'assigned', label: 'Priskirta', disableSorting: true },
     { id: 'assignedTo', label: 'Kam priskirta', disableSorting: true },
     { id: 'CheckInOout', label: 'Priskirti/Atsiimti', disableSorting: true },
     { id: 'cost', label: 'Kaina', disableSorting: true },
@@ -73,9 +74,10 @@ const Softwares = ({
               <TableCell>{sw.manufacturer}</TableCell>
               <TableCell>{sw.status}</TableCell>
               <TableCell>{sw.totalAmount}</TableCell>
+              <TableCell>{sw.assigned === true ? 'Taip' : 'Ne'}</TableCell>
               <TableCell>{sw.assignedTo}</TableCell>
 
-              {sw.status === 'Baigusi galioti' ? (
+              {sw.status === 'Negaliojanti' ? (
                 <TableCell>Licencija baigė galioti!</TableCell>
               ) : (
                 <Fragment>

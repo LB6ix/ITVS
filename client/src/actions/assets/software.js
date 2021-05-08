@@ -5,7 +5,9 @@ import {
   //GET_USER_SOFTWARES,
   GET_SOFTWARE,
   CLEAR_SOFTWARE,
-  //CLEAR_SOFTWARES,
+  CLEAR_SOFTWARES,
+  SOFTWARE_CHECKEDIN,
+  SOFTWARE_CHECKEDOUT,
   SOFTWARE_ERROR,
   DELETE_SOFTWARE,
   ADD_SOFTWARE
@@ -13,6 +15,9 @@ import {
 
 export const getSoftwares = () => async (dispatch) => {
   try {
+    dispatch({
+      type: CLEAR_SOFTWARE
+    });
     const res = await axios.get('/api/software');
 
     dispatch({
@@ -138,6 +143,9 @@ export const deleteSoftware = (id) => async (dispatch) => {
 
 export const checkOutSoftware = (formData, id) => async (dispatch) => {
   try {
+    // dispatch({
+    //   type: CLEAR_SOFTWARES
+    // });
     const config = {
       headers: {
         'Content-Type': 'application/json'
@@ -150,11 +158,51 @@ export const checkOutSoftware = (formData, id) => async (dispatch) => {
       config
     );
     dispatch({
-      type: GET_SOFTWARE,
+      type: SOFTWARE_CHECKEDOUT,
       payload: res.data
     });
 
-    dispatch(setAlert('Įranga priskirta!', 'success'));
+    dispatch(setAlert('Programos licencija priskirta!', 'success'));
+    dispatch({
+      type: CLEAR_SOFTWARE
+    });
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
+
+    dispatch({
+      type: SOFTWARE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status }
+    });
+  }
+};
+
+export const checkInSoftware = (formData, id) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+
+    const res = await axios.post(
+      `/api/software/${id}/checkin`,
+      formData,
+      config
+    );
+    dispatch({
+      type: SOFTWARE_CHECKEDIN,
+
+      payload: res.data
+    });
+    dispatch(setAlert('Programos licencija atsiimta!', 'success'));
+    dispatch({
+      // type: CLEAR_SOFTWARES,
+      type: CLEAR_SOFTWARE
+    });
   } catch (err) {
     const errors = err.response.data.errors;
 
