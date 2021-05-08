@@ -140,6 +140,7 @@ config/default.json
 
 *.sublime*
 .config.env
+config.env
 psd
 thumb
 sketch
