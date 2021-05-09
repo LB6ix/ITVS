@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ErrorIcon from '@material-ui/icons/Error';
+
 import {
   TableBody,
   TableCell,
@@ -22,7 +22,6 @@ import {
   makeStyles
 } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
-import CheckOutHardware from './CheckOutHardware';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +39,7 @@ const Hardwares = ({
   getHardwares,
   deleteHardware,
   getUserHardwares,
-  user,
+
   hardware: { hardwares, loading },
   isAuthenticated,
   isAdmin,
@@ -91,23 +90,6 @@ const Hardwares = ({
           { id: 'date', label: 'Priskyrimo Data' }
         ]);
   }
-
-  //  headerCells = [
-  //   { id: 'name', label: 'Pavadinimas' },
-  //   { id: 'serialNumber', label: 'Serijinis Numeris', disableSorting: true },
-  //   { id: 'model', label: 'Modelis' },
-  //   { id: 'manufacturer', label: 'Gamintojas' },
-  //   { id: 'category', label: 'Kategorija' },
-  //   { id: 'status', label: 'Statusas' },
-  //   { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
-  //   { id: 'CheckInOut', label: 'Priskirti/Atsiimti', disableSorting: true },
-  //   // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
-  //   { id: 'cost', label: 'Kaina', disableSorting: true },
-  //   { id: 'date', label: 'Data' },
-  //   { id: 'Veiksmai', label: 'Veiksmai' }
-  // ];
-
-  //const TableContainer = (props) => <Table>{props.children}</Table>;
 
   const {
     TableContainer,

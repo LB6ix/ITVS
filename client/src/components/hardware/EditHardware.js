@@ -275,36 +275,8 @@ const EditHardware = ({
                     onChange={(e) => onChange(e)}
                   />
                 </div>
-                {/* <div className='form-group'>
-                  <input
-                    type='text'
-                    placeholder='Tikėtina grąžinimo data'
-                    name='expectedCheckInDate'
-                    value={formatDate(hardware[0].expectedCheckInDate)}
-                    disabled
-                  />
-                </div>
-                <div className='form-group'>
-                  <input
-                    type='text'
-                    placeholder='Priskyrimo data'
-                    name='checkOutDate'
-                    value={formatDate(hardware[0].checkOutDate)}
-                    disabled
-                  />
-                </div>
-                <div className='form-group'>
-                  <input
-                    type='text'
-                    placeholder='Atsiėmimo data'
-                    name='checkInDate'
-                    value={formatDate(hardware[0].checkInDate)}
-                    disabled
-                  />
-                </div> */}
               </Fragment>
             )}
-            {/* <input type='submit' class='btn btn-primary my-1' /> */}
           </form>
         </Fragment>
       )}

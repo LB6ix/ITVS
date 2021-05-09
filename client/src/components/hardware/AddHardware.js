@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addHardware } from '../../actions/assets/hardware';
-import { Button } from '@material-ui/core';
 
 const AddHardware = ({ addHardware, history }) => {
   const [formData, setFormData] = useState({
@@ -173,32 +172,6 @@ const AddHardware = ({ addHardware, history }) => {
           />
         </div>
         <input type='submit' class='btn btn-primary my-1' />
-        {/* FIX THIS */}
-        {/* <div className='my-2'>
-          <button
-            onClick={() => togglePasswordChange(!displayPasswordChange)}
-            type='button'
-            className='btn btn-light'
-          >
-            Keisti slaptažodį
-          </button>
-        </div>
-        {displayPasswordChange && (
-          <Fragment>
-            <div className='form-group'>
-              <input type='text' placeholder='Slaptažodis' name='password' />
-              <small className='form-text'></small>
-            </div>
-            <div className='form-group'>
-              <input
-                type='text'
-                placeholder='Pakartokite Slaptažodį'
-                name='password2'
-              />
-              <small className='form-text'></small>
-            </div>
-          </Fragment>
-        )} */}
       </form>
     </div>
   );

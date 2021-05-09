@@ -17,9 +17,6 @@ import {
   CLEAR_SOFTWARES
 } from './constants';
 import { setAlert } from './alert';
-// import decode from 'jwt-decode';
-// import jwt from 'jsonwebtoken';
-// import { check } from 'express-validator';
 
 //user load
 export const loadUser = () => async (dispatch) => {
@@ -109,8 +106,6 @@ export const userLogin = ({ email, password }) => async (dispatch) => {
     const res = await axios.post('/api/auth', body, config);
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
 
-    //checkAdminAuth();
-
     dispatch(loadUser());
   } catch (err) {
     const errors = err.response.data.errors;
@@ -152,51 +147,6 @@ export const adminLogin = ({ email, password }) => async (dispatch) => {
     });
   }
 };
-
-//testingas
-// export const checkAdminAuth = () => async (dispatch) => {
-//   const token = localStorage.getItem('token');
-//   if (!token) return false;
-//   console.log('123');
-//   try {
-//     jwt.verify(token, (decoded) => {
-//       if (decoded.user.role !== 'admin') {
-//         dispatch(loadUser());
-//       } else {
-//         dispatch(loadAdmin());
-//       }
-//     });
-
-// const role = decode(token);
-// if (!user) {
-//   dispatch({
-//     type: AUTH_ERROR
-//   });
-// }
-// if (role !== 'admin') {
-//   dispatch({
-//     type: AUTH_ERROR
-//   });
-// } else {
-//   dispatch({
-//     type: ADMIN_LOADED,
-//     payload: user.data
-//   });
-// }
-
-//dispatch(loadUser());
-//     //dispatch(loadAdmin());
-//   } catch (err) {
-//     const errors = err.response.data.errors;
-
-//     if (errors) {
-//       errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-//     }
-//     dispatch({
-//       type: AUTH_ERROR
-//     });
-//   }
-// };
 
 export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });

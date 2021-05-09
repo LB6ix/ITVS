@@ -10,7 +10,7 @@ const Posts = require('../../models/Posts');
 
 //@route  GET api/profile/me
 //@desc   Get current user profile
-//@access Private
+//@access user/admin
 router.get('/me', authUser, async (req, res) => {
   try {
     const profile = await Profile.findOne({
@@ -24,6 +24,7 @@ router.get('/me', authUser, async (req, res) => {
     }
 
     res.json(profile);
+    res.status(200).send('Success!');
   } catch (err) {
     console.error(err.message);
     res.status(500).send('Server Error');
@@ -32,7 +33,7 @@ router.get('/me', authUser, async (req, res) => {
 
 //@route  POST api/profile
 //@desc   Create/Update user profile
-//@access Private
+//@access user/admin
 
 router.post(
   '/',
@@ -90,9 +91,9 @@ router.post(
 
 //@route  GET api/profile
 //@desc   Get all prof
-//@access Public
+//@access admin only
 
-router.get('/', async (req, res) => {
+router.get('/', [authAdmin], async (req, res) => {
   try {
     const profiles = await Profile.find().populate('user', [
       'firstname',
@@ -108,9 +109,9 @@ router.get('/', async (req, res) => {
   }
 });
 
-//@route  GET api/profile/:user_id //
+//@route  GET api/profile/:user_id
 //@desc   Get prof by user id
-//@access Public
+//@access user/admin
 
 router.get('/user/:user_id', async (req, res) => {
   try {
@@ -130,26 +131,9 @@ router.get('/user/:user_id', async (req, res) => {
   }
 });
 
-// router.get('/user/:user_id', async (req, res) => {
-//   try {
-//     const profile = await Profile.findOne({
-//       user: req.params.user_id
-//     }).populate('user', ['firstname', 'lastname', 'email', 'title', 'avatar']);
-
-//     if (!profile) return res.status(400).json({ msg: 'Profilis nerastas' });
-//     res.json(profile);
-//   } catch (err) {
-//     console.error(err.message);
-//     if (err.kind == 'ObjectId') {
-//       return res.status(400).json({ msg: 'Profilis nerastas' });
-//     }
-//     res.status(500).status('Server Error');
-//   }
-// });
-
 //@route  DELETE api/profile/id
-//@desc   Delete profile, user, posts
-//@access Private
+//@desc   Delete profile, user, posts, unassign hardware, change status
+//@access admin only
 
 router.delete('/:id', [authAdmin], async (req, res) => {
   const userdel = await User.findById(req.params.id);

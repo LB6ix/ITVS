@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { userLogin } from '../../actions/auth';
 import { Button } from '@material-ui/core';
-// import Sidebar from '../layout/Sidebar';
 
 const UserLogin = ({
   userLogin,
@@ -29,18 +28,6 @@ const UserLogin = ({
       history.push('/main');
     }, 1000);
   };
-
-  // //redirect
-
-  // // if (showPageContent) {
-  // //   <Sidebar>
-  // // }
-  // if (isAuthenticated)
-  //   setTimeout(() => {
-  //     {
-  //       return <Redirect to='/main' />;
-  //     }
-  //   }, 2000);
 
   return (
     <Fragment>

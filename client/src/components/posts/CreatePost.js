@@ -15,11 +15,6 @@ const CreatePost = ({ addPost, history }) => {
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
-  // const onSubmit = (e) => {
-  //   e.preventDefault();
-  //   addPost(formData);
-  // };
-
   return (
     <div className='post-form'>
       <div className='bg-primary p'>
@@ -44,7 +39,6 @@ const CreatePost = ({ addPost, history }) => {
           rows='5'
           placeholder='Prašymo pateikimo vieta'
           value={text}
-          //   onChange={(e) => setText(e.target.value)}
           onChange={(e) => onChange(e)}
           required
         />

@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { adminLogin } from '../../actions/auth';
 import { Button } from '@material-ui/core';
-// import Sidebar from '../layout/Sidebar';
 
 const AdminLogin = ({ adminLogin, isAuthenticated, history }) => {
   const [formData, setFormData] = useState({

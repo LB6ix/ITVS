@@ -2,19 +2,18 @@ const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
 const gravatar = require('gravatar');
-const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const config = require('config');
+
 const logger = require('../api/logger');
 const sendEmail = require('../../utility/sendEmail');
 
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
-const { authUser, authAdmin } = require('../../middleware/auth');
+const { authAdmin } = require('../../middleware/auth');
 
 //@route  POST api/users
 //@desc   User registracija
-//@access Private
+//@access Admin only
 
 router.post(
   '/',
@@ -83,7 +82,7 @@ router.post(
           text: notification
         });
 
-        res.status(200).json;
+        res.status(200).send('Message sent');
       } catch (error) {
         console.error(error.message);
         res.status(500).send('Siuntimo klaida');
@@ -94,22 +93,6 @@ router.post(
         `Sukurtas naujas naudotojas: ${req.body.email}`
       );
       res.json(user);
-
-      // const payload = {
-      //   user: {
-      //     id: user.id,
-      //   },
-      // };
-
-      // jwt.sign(
-      //   payload,
-      //   config.get('jwtSecret'),
-      //   { expiresIn: 360000 },
-      //   (err, token) => {
-      //     if (err) throw err;
-      //     res.json({ token });
-      //   }
-      // );
     } catch (err) {
       console.error(err.message);
       res.status(500).send('Server error');

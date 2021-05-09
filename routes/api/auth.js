@@ -10,7 +10,7 @@ const User = require('../../models/User');
 
 //@route  GET api/auth
 //@desc   Test route
-//@access Public
+//@access non logged in
 router.get('/', authUser, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
@@ -33,7 +33,7 @@ router.get('/admin', authAdmin, async (req, res) => {
 });
 //@route  POST api/auth
 //@desc   Auth User get token
-//@access Public
+//@access non logged in
 
 router.post(
   '/',

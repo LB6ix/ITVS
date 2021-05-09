@@ -12,8 +12,8 @@ currentDate.setDate(currentDate.getDate() - 1);
 //currentDate.toISOString().split('T')[0];
 
 //@route  POST api/software/add-software
-//@desc   Test route
-//@access priv
+//@desc   add software
+//@access admin only
 router.post(
   '/add-software',
   [
@@ -85,7 +85,7 @@ router.post(
 
 //@route  GET api/software
 //@desc   Get all software assets
-//@access Private
+//@access admin only
 router.get('/', authAdmin, async (req, res) => {
   try {
     await Software.aggregate([
@@ -116,8 +116,6 @@ router.get('/', authAdmin, async (req, res) => {
         }
       }
     ]).then((softwares) => res.json(softwares));
-    // const softwarelist = await software.find();
-    //console.log(softwares);
   } catch (err) {
     console.error(err.message);
     res.status(500).status('Server Error');
@@ -260,8 +258,7 @@ router.post(
         );
         return res.json(software);
       }
-      // }
-      // software = software.updateOne({ _id: req.params.id }, softwareFields);
+
       software = new Software(softwareFields);
 
       await software.save();
@@ -367,7 +364,7 @@ router.post(
           { new: true }
         );
         logger.TurtoPriskyrimas(
-          `Programa ${software.name} priskirta naudotojui: ${usercheck.email}`
+          `Programa ${software.license} priskirta naudotojui: ${usercheck.email}`
         );
         return res.json(software);
       }

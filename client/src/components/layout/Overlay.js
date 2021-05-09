@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -90,7 +90,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
+
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end'
   },
@@ -369,16 +369,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, { logout })(Overlay);
-
-//  <Fragment>{getLinks(isAuthenticated, isAdmin)}</Fragment>
-
-//  {['Pranešimai', 'Pagrindinis puslapis', 'Atsijungti'].map(
-//   (text, index) => (
-//     <ListItem button key={text}>
-//       {/* {!loading && (
-//         <Fragment>{getLinks(isAuthenticated, isAdmin)}</Fragment>
-//       )}
-//       <ListItemText primary={text} />
-//     </ListItem>
-//   )
-// )} */}

@@ -254,11 +254,6 @@ router.get('/single/:id', authAdmin, async (req, res) => {
         }
       }
     ]).then((hardware) => res.json(hardware));
-
-    // if (!hardware) {
-    //   return res.status(404).json({ msg: 'Įranga nerasta' });
-    // }
-    // res.json(hardware);
   } catch (err) {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Įranga nerasta' });
@@ -269,7 +264,7 @@ router.get('/single/:id', authAdmin, async (req, res) => {
 
 //@route  DELETE api/hardware/:id
 //@desc   Delete hardware entry
-//@access Private
+//@access admin only
 
 router.delete('/:id', authAdmin, async (req, res) => {
   try {
@@ -323,7 +318,7 @@ router.post(
   }
 );
 
-// @route    DELETE api/posts/comment/:id/:comment_id
+// @route    DELETE api/hardware/comment/:id/:comment_id
 // @desc     Delete comment
 // @access   Authenticated (admin only)
 router.delete('/comment/:id/:comment_id', authAdmin, async (req, res) => {
@@ -336,12 +331,6 @@ router.delete('/comment/:id/:comment_id', authAdmin, async (req, res) => {
     if (!comment) {
       return res.status(404).json({ msg: 'Pastabos nėra' });
     }
-
-    // if (req.user.role === 'admin') {
-    //   if (comment.user.toString() !== req.user.id) {
-    //     return res.status(401).json({ msg: 'Neautorizuotas veiksmas' });
-    //   }
-    // }
 
     hardware.comments = hardware.comments.filter(
       ({ id }) => id !== req.params.comment_id

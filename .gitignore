@@ -134,10 +134,13 @@ temp/
 **/*.back.*
 
 node_modules
-
+  
+node_modules/
 config/production.json
 config/default.json
-
+client/build
+client/.eslintcache
+outputFiles/
 *.sublime*
 .config.env
 config.env
@@ -150,6 +153,8 @@ sketch
 !.vscode/tasks.json
 !.vscode/launch.json
 *.code-workspace
+
+
 
 ### VisualStudioCode Patch ###
 # Ignore all local history of files

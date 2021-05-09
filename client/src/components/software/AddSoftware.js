@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSoftware } from '../../actions/assets/software';
-import TextField from '@material-ui/core/TextField';
 
 const AddSoftware = ({ addSoftware, history }) => {
   const [formData, setFormData] = useState({
@@ -68,22 +67,14 @@ const AddSoftware = ({ addSoftware, history }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        {/* // <div className='form-group'>
-        //   <input
-        //     type='date'
-        //     placeholder='Galiojimo data'
-        //     name='expDate'
-        //     value={expDate}
-        //     onChange={(e) => onChange(e)} //FIXXXXXXXXX
-        //   />
-        // </div> */}
+
         <div className='form-group'>
           <input
             type='date'
             placeholder='Galiojimo data'
             name='expDate'
             value={expDate}
-            onChange={(e) => onChange(e)} //FIXXXXXXXXX
+            onChange={(e) => onChange(e)}
           />
         </div>
         <div className='form-group'>
@@ -92,7 +83,7 @@ const AddSoftware = ({ addSoftware, history }) => {
             placeholder='Leidėjas'
             name='manufacturer'
             value={manufacturer}
-            onChange={(e) => onChange(e)} //FIXXXXXXXXX
+            onChange={(e) => onChange(e)}
           />
         </div>
         <div className='form-group'>
@@ -134,32 +125,6 @@ const AddSoftware = ({ addSoftware, history }) => {
           />
         </div>
         <input type='submit' class='btn btn-primary my-1' />
-        {/* FIX THIS */}
-        {/* <div className='my-2'>
-          <button
-            onClick={() => togglePasswordChange(!displayPasswordChange)}
-            type='button'
-            className='btn btn-light'
-          >
-            Keisti slaptažodį
-          </button>
-        </div>
-        {displayPasswordChange && (
-          <Fragment>
-            <div className='form-group'>
-              <input type='text' placeholder='Slaptažodis' name='password' />
-              <small className='form-text'></small>
-            </div>
-            <div className='form-group'>
-              <input
-                type='text'
-                placeholder='Pakartokite Slaptažodį'
-                name='password2'
-              />
-              <small className='form-text'></small>
-            </div>
-          </Fragment>
-        )} */}
       </form>
     </div>
   );

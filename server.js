@@ -1,10 +1,16 @@
 require('dotenv').config({ path: './config.env' });
 
-const express = require('express');
-const connectDB = require('./config/db');
-const logger = require('./routes/api/logger');
+const db = require('./config/db');
 
-connectDB();
+const express = require('express');
+
+//const PORT = process.env.PORT || 5000;
+
+db.connectDB().then(() => {
+  app.listen(PORT, () => {
+    console.log('Prisijungta prie  DB, portas: ' + PORT);
+  });
+});
 
 const app = express();
 
@@ -20,6 +26,7 @@ app.use('/api/software', require('./routes/api/software'));
 app.use('/api/profile', require('./routes/api/profile'));
 app.use('/api/logs', require('./routes/api/logs'));
 
+// module.exports = app;
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

@@ -1,11 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  checkOutHardware,
-  getHardware,
-  getHardwares
-} from '../../actions/assets/hardware';
+import { checkOutHardware, getHardware } from '../../actions/assets/hardware';
 import { getProfiles } from '../../actions/profile';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -166,9 +162,6 @@ const CheckOutHardware = ({
                 <Button onClick={handleClose} color='primary'>
                   Atšaukti
                 </Button>
-                {/* <Button onClick={handleClose} color='primary'> */}
-
-                {/* </Button> */}
               </DialogActions>
             </Dialog>
           </div>

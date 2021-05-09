@@ -146,8 +146,4 @@ CreateProfile.propTypes = {
   createProfile: PropTypes.func.isRequired
 };
 
-// const mapStateToProps = state => ({
-//     isAuthenticated
-// })
-
 export default connect(null, { createProfile })(withRouter(CreateProfile));

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getSoftwares, deleteSoftware } from '../../actions/assets/software';
 import Loading from '../layout/Loading';
-import { Link, Switch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import formatDate from '../../utility/formatDate';
 import Tables from '../tables/Tables';
 import IconButton from '@material-ui/core/IconButton';
@@ -46,12 +46,6 @@ const Softwares = ({
   isAdmin
 }) => {
   useEffect(() => {
-    // {
-    //   !loading && isAdmin && getHardwares();
-    // }
-    // {
-    //   !loading && isAuthenticated && !isAdmin && getUserHardwares();
-    // }
     getSoftwares();
   }, [getSoftwares]);
   const classes = useStyles();

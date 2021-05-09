@@ -6,7 +6,7 @@ import Loading from '../layout/Loading';
 import CreateComment from '../hardware/hardwareComments/CreateComment';
 import CommentItem from '../hardware/hardwareComments/CommentItem';
 import HardwareItem from '../hardware/HardwareItem';
-// import ProfileAbout from './ProfileAbout';
+
 import { getHardware } from '../../actions/assets/hardware';
 import { Button } from '@material-ui/core';
 

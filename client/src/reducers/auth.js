@@ -14,7 +14,7 @@ const initialState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   isAdmin: null,
-  loading: true, //request is made, response received
+  loading: true,
   user: null
 };
 
@@ -50,7 +50,7 @@ function authReducer(state = initialState, action) {
         // ...payload,
         loading: false
       };
-    //add password confirmation?
+
     case LOGIN_FAIL:
       return {
         ...state,
@@ -67,13 +67,7 @@ function authReducer(state = initialState, action) {
         loading: false,
         user: null
       };
-      // case ACCOUNT_DELETED:
-      //   return {
-      //     ...state,
-      //     profiles: state.profiles.filter((profile) => profile._id !== payload),
-      //     loading: false
-      //   };
-      // case CREATE_USER_FAIL:
+
       return {
         ...state,
         loading: false

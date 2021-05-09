@@ -5,11 +5,10 @@ const { authUser, authAdmin } = require('../../middleware/auth');
 
 const User = require('../../models/User');
 const Post = require('../../models/Posts');
-const Profile = require('../../models/Profile');
 
 //@route  POSTT api/postst
 //@desc   Create a post
-//@access Private
+//@access user/admin logged in
 router.post(
   '/',
   [
@@ -48,7 +47,7 @@ router.post(
 
 //@route  GET api/posts
 //@desc   Get all posts
-//@access Private
+//@access admin only (logged in)
 
 router.get('/', [authUser, authAdmin], async (req, res) => {
   try {
@@ -62,7 +61,7 @@ router.get('/', [authUser, authAdmin], async (req, res) => {
 
 //@route  GET api/posts/:id
 //@desc   post by ID
-//@access Private
+//@access user/admin (loggedi n)
 
 router.get('/:id', [authUser], async (req, res) => {
   try {
@@ -107,7 +106,7 @@ router.get('/userposts/:id', [authUser], async (req, res) => {
 
 //@routas  DELETE api/posts/:id
 //@desc   Delete a post
-//@access Private
+//@access admin only
 
 router.delete('/:id', [authUser, authAdmin], async (req, res) => {
   try {
@@ -123,6 +122,7 @@ router.delete('/:id', [authUser, authAdmin], async (req, res) => {
 
     await post.remove();
     res.json({ msg: 'Prašymas ištrintas' });
+    return res.status(200).send('Success');
   } catch (err) {
     if (err.kind === 'ObjectId') {
       return res.status(404).json({ msg: 'Prašymas nerastas' });

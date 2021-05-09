@@ -22,8 +22,6 @@ import Softwares from './components/software/Softwares';
 import Post from './components/posts/Post';
 import { makeStyles } from '@material-ui/core/styles';
 
-// import PrivateAdminRoute from './components/routes/PrivateAdminRoute';
-// import auth from './reducers/auth';
 import './App.css';
 
 import { connect, Provider } from 'react-redux';
@@ -40,14 +38,12 @@ import CheckOutHardware from './components/hardware/CheckOutHardware';
 import CheckInHardware from './components/hardware/CheckInHardware';
 import CheckInSoftware from './components/software/CheckInSoftware';
 import CheckOutSoftware from './components/software/CheckOutSoftware';
-// import { stringify } from 'uuid';
 
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }
 //testingas
 store.dispatch(loadAdmin());
-//store.dispatch(loadAdmin());
 
 const useStyles = makeStyles((theme) => ({
   MuiContainerroot: {
@@ -64,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
 const App = ({ loading, isAuthenticated, isAdmin }) => {
   useEffect(() => {
     store.dispatch(loadAdmin());
-    // checkAdmin();
   }, []); //componentdidmount, runs once
 
   const classes = useStyles();
@@ -85,7 +80,7 @@ const App = ({ loading, isAuthenticated, isAdmin }) => {
               <PrivateRoute exact path='/user-list' component={Profiles} />
               <PrivateRoute exact path='/profile/:id' component={Profile} />
               <PrivateRoute exact path='/main' component={MainPage} />
-              {/* <PrivateRoute exact path='/userposts/:id' component={Posts} /> */}
+
               <PrivateRoute
                 exact
                 path='/create-profile'

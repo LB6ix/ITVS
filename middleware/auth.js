@@ -43,11 +43,6 @@ function authAdmin(req, res, next) {
     console.error('something wrong with auth middleware');
     res.status(500).json({ msg: 'Server Error' });
   }
-
-  //   if (req.user.role === 'admin') {
-  //     return next();
-  //   }
-  //   return res.status(401).send('Unauthorized');
 }
 
 module.exports = { authUser, authAdmin };

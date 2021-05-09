@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 // import formatDate from '../../utils/formatDate';
 import { deleteComment } from '../../../actions/assets/hardware';
-import { Button } from '@material-ui/core';
+
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 

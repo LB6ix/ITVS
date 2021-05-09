@@ -1,19 +1,15 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import {
-  checkInHardware,
-  getHardware,
-  getHardwares
-} from '../../actions/assets/hardware';
-import { getProfiles } from '../../actions/profile';
+import { checkInHardware, getHardware } from '../../actions/assets/hardware';
+
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tables from '../tables/Tables';
-import { Link } from 'react-router-dom';
+
 //import formatDate from '../../utility/formatDate';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
 import formatDate from '../../utility/formatDate';
@@ -67,8 +63,7 @@ const CheckInHardware = ({
     { id: 'category', label: 'Kategorija' },
     { id: 'status', label: 'Statusas' },
     { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
-    //{ id: 'CheckInOut', label: 'Priskirti/Atsiimti', disableSorting: true },
-    // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
+
     { id: 'cost', label: 'Kaina', disableSorting: true },
     { id: 'date', label: 'Įkėlimo Data' },
     { id: 'checkOutDate', label: 'Priskyrimo data' }
@@ -119,17 +114,6 @@ const CheckInHardware = ({
                     className='form'
                     onSubmit={(e) => onSubmit(e)}
                   >
-                    {/* <div className='form-group'>
-                  <input
-                    required
-                    name='assignedTo'
-                    value={assignedTo}
-                    disabled
-                  ></input>
-                  <small className='form-text'>
-                    Naudotojas, kuriam priskiriamas turtas
-                  </small>
-                </div> */}
                     <div className='form-group'>
                       <input
                         type='date'

@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const config = require('config');
-const db = config.get('mongoURI');
+
 const exportLogsToExcel = require('../../utility/exportService');
-const path = require('path');
 
 const { authAdmin } = require('../../middleware/auth');
 

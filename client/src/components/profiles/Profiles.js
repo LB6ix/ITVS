@@ -46,19 +46,7 @@ const Profiles = ({
       ) : (
         <Fragment>
           <h1 className='large text'>Naudotojų sąrašas</h1>
-          {/* <tr>
-              {profiles.length > 0 ? (
-                profiles.map((profile) => (
-                  <tr>
-                    {' '}
-                    key={profile._id}
-                    <td>profile={profile.phoneNumber}</td>
-                  </tr>
-                ))
-              ) : (
-                <h4>Nėraprof</h4>
-              )}
-            </tr> */}
+
           <TableContainer>
             <TableHeader />
             <TableBody>
