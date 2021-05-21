@@ -12,7 +12,7 @@ import Tables from '../tables/Tables';
 
 //import formatDate from '../../utility/formatDate';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
 const CheckInHardware = ({
@@ -69,12 +69,7 @@ const CheckInHardware = ({
     { id: 'checkOutDate', label: 'Priskyrimo data' }
   ];
 
-  const {
-    TableContainer,
-    TableHeader,
-    TablePaginationKomp,
-    recordsAfterPagingAndSorting
-  } = Tables(hardware, headerCells);
+  const { TableContainer, TableHeader } = Tables(hardware, headerCells);
 
   return (
     <Fragment>
@@ -122,7 +117,7 @@ const CheckInHardware = ({
                         value={checkInDate}
                         onChange={(e) => onChange(e)}
                       />
-                      <small className='form-text'>Priskyrimo data</small>
+                      <small className='form-text'>Atsiėmimo data</small>
                     </div>
                     <div className='form-group'>
                       <select
@@ -142,7 +137,7 @@ const CheckInHardware = ({
                     </div>
                     <DialogActions>
                       <Button
-                        color='secondary'
+                        color='primary'
                         variant='contained'
                         onClick={handleClose}
                       >
@@ -153,7 +148,7 @@ const CheckInHardware = ({
                       {/* </Button> */}
 
                       <Button
-                        color='primary'
+                        color='secondary'
                         type='submit'
                         variant='contained'
                         onClick={handleClose}

@@ -122,11 +122,12 @@ router.delete('/:id', [authUser, authAdmin], async (req, res) => {
 
     await post.remove();
     res.json({ msg: 'Prašymas ištrintas' });
-    return res.status(200).send('Success');
+    //return res.status(200).send('Success');
   } catch (err) {
-    if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Prašymas nerastas' });
-    }
+    console.error(err.message);
+    // if (err.kind === 'ObjectId') {
+    //   return res.status(404).json({ msg: 'Prašymas nerastas' });
+    // }
     res.status(500).send('Server Error');
   }
 });

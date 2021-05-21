@@ -51,7 +51,7 @@ const CreatePost = ({ addPost, history }) => {
             <option value='0'>* Pasirinkite prašymo kategoriją</option>
             <option value='Turto prašymas'>Turto prašymas</option>
             <option value='Turto remontas'>Turto remontas</option>
-            <option value='Licencijos'>Lincencijos</option>
+            <option value='Licencijos'>Licencijos</option>
             <option value='IT prašymas'>IT prašymas</option>
             <option value='Konsultacija'>Konsultacija</option>
           </select>

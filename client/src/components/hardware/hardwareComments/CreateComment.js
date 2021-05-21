@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addComment } from '../../../actions/assets/hardware';
+import { Button } from '@material-ui/core';
 
 const CreateComment = ({ hardware: { hardware }, addComment }) => {
   const [text, setText] = useState('');
@@ -28,7 +29,17 @@ const CreateComment = ({ hardware: { hardware }, addComment }) => {
           onChange={(e) => setText(e.target.value)}
           required
         />
-        <input type='submit' className='btn btn-dark my-1' value='Submit' />
+
+        <Button
+          size='medium'
+          color='secondary'
+          variant='contained'
+          type='submit'
+          value='submit'
+          style={{ marginTop: '10px' }}
+        >
+          Pridėti įrangos pastabą
+        </Button>
       </form>
     </div>
   );

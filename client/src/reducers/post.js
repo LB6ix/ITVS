@@ -8,6 +8,7 @@ import {
   REMOVE_COMMENT,
   COMMENT_ERROR,
   CLEAR_POSTS,
+  CLEAR_POST,
   GET_USER_POSTS
 } from '../actions/constants';
 
@@ -33,6 +34,12 @@ function postReducer(state = initialState, action) {
       return {
         ...state,
         post: payload,
+        loading: false
+      };
+    case CLEAR_POST:
+      return {
+        ...state,
+        post: null,
         loading: false
       };
     case ADD_POST:

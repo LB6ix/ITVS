@@ -6,7 +6,6 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  //ACCOUNT_DELETED,
   LOGOUT
 } from '../actions/constants';
 
@@ -68,10 +67,6 @@ function authReducer(state = initialState, action) {
         user: null
       };
 
-      return {
-        ...state,
-        loading: false
-      };
     default:
       return state;
   }

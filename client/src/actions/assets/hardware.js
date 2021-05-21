@@ -52,7 +52,6 @@ export const addHardware = (formData) => async (dispatch) => {
     );
     if (!res) {
       throw new Error('Bloga užklausa į serverį');
-      return;
     }
     dispatch({
       type: ADD_HARDWARE,

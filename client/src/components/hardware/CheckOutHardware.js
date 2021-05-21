@@ -10,7 +10,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Tables from '../tables/Tables';
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
 const CheckOutHardware = ({
@@ -70,12 +70,7 @@ const CheckOutHardware = ({
     { id: 'date', label: 'Data' }
   ];
 
-  const {
-    TableContainer,
-    TableHeader,
-    TablePaginationKomp,
-    recordsAfterPagingAndSorting
-  } = Tables(hardware, headerCells);
+  const { TableContainer, TableHeader } = Tables(hardware, headerCells);
 
   return (
     <Fragment>
@@ -146,23 +141,27 @@ const CheckOutHardware = ({
                         Tikėtina grąžinimo data
                       </small>
                     </div>
-                    <Button
-                      color='primary'
-                      type='submit'
-                      variant='contained'
-                      onClick={handleClose}
-                      color='primary'
-                    >
-                      Priskirti
-                    </Button>
+
+                    <DialogActions>
+                      <Button
+                        color='primary'
+                        variant='contained'
+                        onClick={handleClose}
+                      >
+                        Atšaukti
+                      </Button>{' '}
+                      <Button
+                        type='submit'
+                        variant='contained'
+                        onClick={handleClose}
+                        color='secondary'
+                      >
+                        Priskirti
+                      </Button>
+                    </DialogActions>
                   </form>
                 </Fragment>
               </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color='primary'>
-                  Atšaukti
-                </Button>
-              </DialogActions>
             </Dialog>
           </div>
           <div>

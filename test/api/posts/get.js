@@ -69,23 +69,3 @@ it(' turėtų gauti pranešimą pagal ID', (done) => {
     })
     .catch((err) => done(err));
 });
-
-// it('Turėtų sukurti pranešimą ir gauti sąrašą', (done) => {
-//   request(app)
-//     .post('/api/posts/')
-//     .set('Content-Type', 'application/json')
-//     .set(
-//       'x-auth-token',
-//       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjA5NWMzN2QwZTM1OTI0YjU0MTE0MDYzIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTYyMDUxNjU3NywiZXhwIjoxNjIwODc2NTc3fQ.fMuUeGMvHlM_b5sL6UwdyED8KkV98P7PnxFfAg-D8Wg'
-//     )
-//     .send({ text: 'Pranešimo tekstas', category: 'Licencijos' })
-//     .then((res) => {
-//       request(app).get('/api/posts')
-//       .then((res)=> {
-//           const body=res.body;
-//           expect (body.length).to.equal()
-
-//       })
-//     })
-//     .catch((err) => done(err));
-// });

@@ -11,7 +11,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Tables from '../tables/Tables';
 
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
 const CheckInSoftware = ({

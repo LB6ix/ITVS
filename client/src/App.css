@@ -151,6 +151,16 @@ img {
   color: #333;
 }
 
+.alert-success {
+  background: var(--success-color);
+  color: #fff;
+}
+
+.alert-danger {
+  background: var(--danger-color);
+  color: #fff;
+}
+
 .bg-category {
   background: #542407;
   border-radius: 10px;
@@ -240,6 +250,20 @@ button {
 
 .profile-top img {
   width: 250px;
+}
+
+.profile-top {
+  grid-area: top;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.bg-primary {
+  background: var(--primary-color);
+  color: #fff;
 }
 
 .profile-top .icons a {

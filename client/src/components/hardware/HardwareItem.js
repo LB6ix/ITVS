@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import PropTypes from 'prop-types';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 import { Button } from '@material-ui/core';
 
 const HardwareItem = ({ hardware }) => {

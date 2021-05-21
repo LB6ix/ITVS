@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addSoftware } from '../../actions/assets/software';
+import { Button } from '@material-ui/core';
 
 const AddSoftware = ({ addSoftware, history }) => {
   const [formData, setFormData] = useState({
@@ -25,7 +26,6 @@ const AddSoftware = ({ addSoftware, history }) => {
     status,
     totalAmount,
     //   availAmount,
-    assignedTo,
     cost,
     supplier
   } = formData;
@@ -124,7 +124,16 @@ const AddSoftware = ({ addSoftware, history }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input type='submit' class='btn btn-primary my-1' />
+        <Button
+          size='large'
+          color='secondary'
+          variant='contained'
+          type='submit'
+          value='submit'
+          style={{ marginRight: '10px' }}
+        >
+          Pridėti
+        </Button>
       </form>
     </div>
   );

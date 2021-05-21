@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import formatDate from '../../utils/formatDate';
 import { deleteComment } from '../../actions/post';
-import formatDate from '../../utility/formatDate';
-import { Button } from '@material-ui/core';
+import { formatPostDate } from '../../utility/formatDate';
+
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -27,20 +26,22 @@ const CommentItem = ({
     </div>
     <div>
       <p className='my-1'>{text}</p>
-      <p className='post-date'>Pateikimo data: {date}</p>
-      {!auth.loading && auth.user.role === 'admin' && (
-        <IconButton
-          style={{ display: 'inline-block' }}
-          className='tableActions'
-          aria-label='delete'
-          variant='contained'
-          color='secondary'
-          size='large'
-          onClick={() => deleteComment(postId, _id)}
-        >
-          <DeleteIcon fontSize='small' />
-        </IconButton>
-      )}
+      <p className='my-1' style={{ color: 'gray' }}>
+        Pateikimo data: {formatPostDate(date)}
+        {!auth.loading && auth.user.role === 'admin' && (
+          <IconButton
+            style={{ display: 'inline-block' }}
+            className='tableActions'
+            aria-label='delete'
+            variant='contained'
+            color='secondary'
+            size='large'
+            onClick={() => deleteComment(postId, _id)}
+          >
+            <DeleteIcon fontSize='small' />
+          </IconButton>
+        )}
+      </p>
     </div>
   </div>
 );

@@ -154,7 +154,7 @@ router.post(
       hardware = new Hardware(hardwareFields);
 
       await hardware.save();
-      logger.log('info', `Pkaeitats turtas naudotojui: asd`);
+
       res.json(hardware);
       hardwareFields.assignedTo = assignedTo;
     } catch (err) {

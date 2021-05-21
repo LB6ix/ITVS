@@ -44,12 +44,6 @@ function hardwareReducer(state = initialState, action) {
         hardwares: payload,
         loading: false
       };
-    case CLEAR_HARDWARE:
-      return {
-        ...state,
-        hardware: null,
-        loading: false
-      };
     case HARDWARE_CHECKEDIN:
     case HARDWARE_CHECKEDOUT:
     case GET_HARDWARE:

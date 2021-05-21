@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-// import formatDate from '../../utils/formatDate';
+import { formatPostDate } from '../../../utility/formatDate';
 import { deleteComment } from '../../../actions/assets/hardware';
-
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 
@@ -26,20 +25,22 @@ const CommentItem = ({
     </div>
     <div>
       <p className='my-1'>{text}</p>
-      <p className='post-date'>Pateikimo data: {date}</p>
-      {!auth.loading && auth.user.role === 'admin' && (
-        <IconButton
-          style={{ display: 'inline-block' }}
-          className='tableActions'
-          aria-label='delete'
-          variant='contained'
-          color='secondary'
-          size='medium'
-          onClick={() => deleteComment(hardware._id, _id)}
-        >
-          <DeleteIcon fontSize='small' />
-        </IconButton>
-      )}
+      <p className='my-1' style={{ color: 'gray' }}>
+        Pateikimo data: {formatPostDate(date)}
+        {!auth.loading && auth.user.role === 'admin' && (
+          <IconButton
+            style={{ display: 'inline-block' }}
+            className='tableActions'
+            aria-label='delete'
+            variant='contained'
+            color='secondary'
+            size='medium'
+            onClick={() => deleteComment(hardware._id, _id)}
+          >
+            <DeleteIcon fontSize='small' />
+          </IconButton>
+        )}
+      </p>
     </div>
   </div>
 );

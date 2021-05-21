@@ -13,7 +13,7 @@ import Tables from '../tables/Tables';
 //import formatDate from '../../utility/formatDate';
 
 import { TableBody, TableCell, TableRow, Button } from '@material-ui/core';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 import Loading from '../layout/Loading';
 
 const CheckOutSoftware = ({
@@ -36,7 +36,7 @@ const CheckOutSoftware = ({
     getSoftware(match.params.id);
   }, [loading, getSoftware, getProfiles, match.params.id]);
 
-  const { assignedTo, checkOutDate, expectedCheckInDate } = formData;
+  const { assignedTo, checkOutDate } = formData;
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value }); //key = name, value changes state
@@ -71,10 +71,7 @@ const CheckOutSoftware = ({
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
     { id: 'date', label: 'Data', disableSorting: true }
   ];
-  const { TableContainer, TableHeader, TablePaginationKomp } = Tables(
-    software,
-    headerCells
-  );
+  const { TableContainer, TableHeader } = Tables(software, headerCells);
 
   return (
     <Fragment>

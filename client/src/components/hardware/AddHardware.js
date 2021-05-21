@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { addHardware } from '../../actions/assets/hardware';
+import { Button } from '@material-ui/core';
 
 const AddHardware = ({ addHardware, history }) => {
   const [formData, setFormData] = useState({
@@ -29,15 +30,12 @@ const AddHardware = ({ addHardware, history }) => {
     model,
     category,
     status,
-    assignedTo,
+
     location,
     cost,
     supplier,
     warranty,
-    leaseExpDate,
-    checkInDate,
-    expectedCheckInDate,
-    checkOutdate
+    leaseExpDate
   } = formData;
 
   const onChange = (e) =>
@@ -171,7 +169,17 @@ const AddHardware = ({ addHardware, history }) => {
             onChange={(e) => onChange(e)}
           />
         </div>
-        <input type='submit' class='btn btn-primary my-1' />
+
+        <Button
+          size='large'
+          color='secondary'
+          variant='contained'
+          type='submit'
+          value='submit'
+          style={{ marginRight: '10px' }}
+        >
+          Pridėti
+        </Button>
       </form>
     </div>
   );

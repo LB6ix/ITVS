@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -21,7 +21,7 @@ import {
   Button,
   makeStyles
 } from '@material-ui/core';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -53,43 +53,42 @@ const Hardwares = ({
   const classes = useStyles();
 
   let headerCells = [];
-  {
-    !loading && isAuthenticated && isAdmin
-      ? (headerCells = [
-          { id: 'name', label: 'Pavadinimas' },
-          {
-            id: 'serialNumber',
-            label: 'Serijinis Numeris',
-            disableSorting: true
-          },
-          { id: 'model', label: 'Modelis' },
-          { id: 'manufacturer', label: 'Gamintojas' },
-          { id: 'category', label: 'Kategorija' },
-          { id: 'status', label: 'Statusas' },
-          { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
-          {
-            id: 'CheckInOut',
-            label: 'Priskirti/Atsiimti',
-            disableSorting: true
-          },
-          // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
-          { id: 'cost', label: 'Kaina', disableSorting: true },
-          { id: 'date', label: 'Data' },
-          { id: 'Veiksmai', label: 'Veiksmai' }
-        ])
-      : (headerCells = [
-          { id: 'name', label: 'Pavadinimas' },
-          {
-            id: 'serialNumber',
-            label: 'Serijinis Numeris',
-            disableSorting: true
-          },
-          { id: 'model', label: 'Modelis' },
-          { id: 'manufacturer', label: 'Gamintojas' },
-          { id: 'category', label: 'Kategorija' },
-          { id: 'date', label: 'Priskyrimo Data' }
-        ]);
-  }
+
+  !loading && isAuthenticated && isAdmin
+    ? (headerCells = [
+        { id: 'name', label: 'Pavadinimas' },
+        {
+          id: 'serialNumber',
+          label: 'Serijinis Numeris',
+          disableSorting: true
+        },
+        { id: 'model', label: 'Modelis' },
+        { id: 'manufacturer', label: 'Gamintojas' },
+        { id: 'category', label: 'Kategorija' },
+        { id: 'status', label: 'Statusas' },
+        { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
+        {
+          id: 'CheckInOut',
+          label: 'Priskirti/Atsiimti',
+          disableSorting: true
+        },
+        // { id: 'CheckIn', label: 'Atsiimti', disableSorting: true },
+        { id: 'cost', label: 'Kaina', disableSorting: true },
+        { id: 'date', label: 'Data' },
+        { id: 'Veiksmai', label: 'Veiksmai' }
+      ])
+    : (headerCells = [
+        { id: 'name', label: 'Pavadinimas' },
+        {
+          id: 'serialNumber',
+          label: 'Serijinis Numeris',
+          disableSorting: true
+        },
+        { id: 'model', label: 'Modelis' },
+        { id: 'manufacturer', label: 'Gamintojas' },
+        { id: 'category', label: 'Kategorija' },
+        { id: 'date', label: 'Priskyrimo Data' }
+      ]);
 
   const {
     TableContainer,

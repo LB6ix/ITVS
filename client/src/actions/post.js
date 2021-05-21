@@ -2,6 +2,7 @@ import axios from 'axios';
 import { setAlert } from './alert';
 import {
   GET_POSTS,
+  CLEAR_POST,
   POST_ERROR,
   DELETE_POST,
   ADD_POST,
@@ -14,6 +15,9 @@ import {
 
 export const getPosts = () => async (dispatch) => {
   try {
+    dispatch({
+      type: CLEAR_POST
+    });
     const res = await axios.get('/api/posts');
 
     dispatch({
@@ -46,6 +50,10 @@ export const addPost = (formData) => async (dispatch) => {
 
     dispatch(setAlert('Prašymas sukurtas', 'success'));
   } catch (err) {
+    const errors = err.response.data.errors;
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+    }
     dispatch({
       type: POST_ERROR,
       payload: { msg: err.response.statusText, status: err.response.status }
@@ -89,6 +97,9 @@ export const getPost = (id) => async (dispatch) => {
 
 export const getUserPosts = (id) => async (dispatch) => {
   try {
+    dispatch({
+      type: CLEAR_POST
+    });
     const res = await axios.get(`/api/posts/userposts/${id}`);
 
     dispatch({

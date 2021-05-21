@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { getSoftwares, deleteSoftware } from '../../actions/assets/software';
 import Loading from '../layout/Loading';
 import { Link } from 'react-router-dom';
-import formatDate from '../../utility/formatDate';
+import { formatDate } from '../../utility/formatDate';
 import Tables from '../tables/Tables';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
@@ -59,7 +59,7 @@ const Softwares = ({
     { id: 'assigned', label: 'Priskirta', disableSorting: true },
     { id: 'assignedTo', label: 'Kam priskirta', disableSorting: true },
     { id: 'CheckInOout', label: 'Priskirti/Atsiimti', disableSorting: true },
-    { id: 'cost', label: 'Kaina', disableSorting: true },
+    // { id: 'cost', label: 'Kaina', disableSorting: true },
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
     { id: 'date', label: 'Data', disableSorting: true },
     { id: 'Veiksmai', label: 'Veiksmai', disableSorting: true }
@@ -148,7 +148,7 @@ const Softwares = ({
                 </Fragment>
               )}
 
-              <TableCell>{sw.cost}€</TableCell>
+              {/* <TableCell>{sw.cost}€</TableCell> */}
               <TableCell>{sw.supplier}</TableCell>
               <TableCell>{formatDate(sw.date)}</TableCell>
               <TableCell>

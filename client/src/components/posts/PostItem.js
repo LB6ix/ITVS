@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { deletePost } from '../../actions/post';
 import { Button } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
+import { formatPostDate } from '../../utility/formatDate';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 const PostItem = ({
@@ -36,7 +37,7 @@ const PostItem = ({
     </div>
     <div>
       <p className='my-1'>{text}</p>
-      <p className='post-date'>Prašymo data: {date}</p>
+      <p className='post-date'>Prašymo data: {formatPostDate(date)}</p>
       <div className='bg-category p'>
         <h4 style={{ width: '200px' }}>Kategorija: {category} </h4>
       </div>
