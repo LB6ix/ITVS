@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-
 import Overlay from './components/layout/Overlay';
 import Landing from './components/layout/Landing';
 import CreateUser from './components/auth/CreateUser';
@@ -21,9 +20,7 @@ import Software from './components/software/Software';
 import Softwares from './components/software/Softwares';
 import Post from './components/posts/Post';
 import { makeStyles } from '@material-ui/core/styles';
-
 import './App.css';
-
 import { connect, Provider } from 'react-redux';
 import store from './store';
 import { loadUser, loadAdmin } from './actions/auth';

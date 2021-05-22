@@ -283,6 +283,10 @@ router.delete('/:id', authAdmin, async (req, res) => {
   }
 });
 
+//@route  POST api/hardware/comment/:id
+//@desc   Add hardware note
+//@access admin only
+
 router.post(
   '/comment/:id',
   authAdmin,
@@ -344,6 +348,10 @@ router.delete('/comment/:id/:comment_id', authAdmin, async (req, res) => {
     return res.status(500).send('Server Error');
   }
 });
+
+// @route    GET api/hardware/:id
+// @desc     Get hardware assigned to user by id
+// @access   Authenticated (user/admin)
 
 router.get('/:id', authUser, async (req, res) => {
   try {

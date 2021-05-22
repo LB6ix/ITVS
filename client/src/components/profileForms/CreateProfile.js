@@ -133,7 +133,6 @@ const CreateProfile = ({ createProfile, history }) => {
                 placeholder='Pakartokite Slaptažodį'
                 name='password2'
               />
-              <small className='form-text'></small>
             </div>
           </Fragment>
         )}
