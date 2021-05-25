@@ -30,7 +30,7 @@ const Posts = ({
         <Fragment>
           {profile !== null ? (
             <div>
-              <h1 className='large text'>Prašymai</h1>
+              <h1 className='large text'>Pranešimai</h1>
               <CreatePost />
             </div>
           ) : (

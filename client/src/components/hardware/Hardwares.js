@@ -62,8 +62,8 @@ const Hardwares = ({
           label: 'Serijinis Numeris',
           disableSorting: true
         },
-        { id: 'model', label: 'Modelis' },
         { id: 'manufacturer', label: 'Gamintojas' },
+        { id: 'model', label: 'Modelis' },
         { id: 'category', label: 'Kategorija' },
         { id: 'status', label: 'Statusas' },
         { id: 'assignedTo', label: 'Kam priskirtas', disableSorting: true },
@@ -84,8 +84,8 @@ const Hardwares = ({
           label: 'Serijinis Numeris',
           disableSorting: true
         },
-        { id: 'model', label: 'Modelis' },
         { id: 'manufacturer', label: 'Gamintojas' },
+        { id: 'model', label: 'Modelis' },
         { id: 'category', label: 'Kategorija' },
         { id: 'date', label: 'Priskyrimo Data' }
       ]);
@@ -128,8 +128,8 @@ const Hardwares = ({
                         >
                           <TableCell>{hw.name}</TableCell>
                           <TableCell>{hw.serialNumber}</TableCell>
-                          <TableCell>{hw.model}</TableCell>
                           <TableCell>{hw.manufacturer}</TableCell>
+                          <TableCell>{hw.model}</TableCell>
                           <TableCell>{hw.category}</TableCell>
                           <TableCell>{hw.status}</TableCell>
                           <TableCell>{hw.assignedTo}</TableCell>
@@ -188,6 +188,7 @@ const Hardwares = ({
                             <Link to={`/hardware/single/${hw._id}`}>
                               <IconButton
                                 className='tableActions'
+                                variant='contained'
                                 color='primary'
                                 style={{ display: 'inline' }}
                               >
@@ -223,7 +224,9 @@ const Hardwares = ({
                           <TableCell>{hw.model}</TableCell>
                           <TableCell>{hw.manufacturer}</TableCell>
                           <TableCell>{hw.category}</TableCell>
-                          <TableCell>{formatDate(hw.date)}</TableCell>
+                          <TableCell style={{ minWidth: '20px' }}>
+                            {formatDate(hw.date)}
+                          </TableCell>
                         </TableRow>
                       ))}
                     </TableBody>

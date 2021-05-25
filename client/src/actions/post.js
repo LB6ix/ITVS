@@ -48,7 +48,7 @@ export const addPost = (formData) => async (dispatch) => {
       payload: res.data
     });
 
-    dispatch(setAlert('Prašymas sukurtas', 'success'));
+    dispatch(setAlert('Pranešimas sukurtas', 'success'));
   } catch (err) {
     const errors = err.response.data.errors;
     if (errors) {
@@ -70,7 +70,7 @@ export const deletePost = (id) => async (dispatch) => {
       payload: id
     });
 
-    dispatch(setAlert('Prašymas pašalintas', 'success'));
+    dispatch(setAlert('Pranešimas pašalintas', 'success'));
   } catch (err) {
     dispatch({
       type: POST_ERROR,

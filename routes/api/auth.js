@@ -19,7 +19,7 @@ router.get('/', authUser, async (req, res) => {
     console.error(err.message);
     res.status(500).send('server error');
   }
-}); // auth 2nd parameter, apsaugotas route
+}); //
 
 //testing admin
 router.get('/admin', authAdmin, async (req, res) => {
@@ -76,7 +76,7 @@ router.post(
       jwt.sign(
         payload,
         config.get('jwtSecret'),
-        { expiresIn: 360000 },
+        { expiresIn: 3600000 }, //long expiration for testing
         (err, token) => {
           if (err) throw err;
           res.json({ token });
@@ -88,6 +88,10 @@ router.post(
     }
   }
 );
+
+//@route  POST api/auth/admin
+//@desc   Auth Admin get token
+//@access non logged in
 
 router.post(
   '/admin',

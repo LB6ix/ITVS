@@ -92,9 +92,6 @@ const EditHardware = ({
       ) : (
         <Fragment>
           <h1 className='large text-primary'>Keisti įrangos duomenis</h1>
-          <p className='lead'>
-            <i className='fas fa-user'></i> Užpildykite šią formą
-          </p>
           <form className='form' onSubmit={(e) => onSubmit(e)}>
             <div className='form-group'>
               <input

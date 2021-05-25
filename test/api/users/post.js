@@ -22,18 +22,18 @@ after((done) => {
     .catch((err) => done(err));
 });
 
-it('Turėtų sukurti naudotoją bei išsiųsti email į naudotojo paštą', (done) => {
+it('administratorius turėtų sukurti naudotoją bei išsiųsti email į naudotojo paštą', (done) => {
   request(app)
     .post('/api/users/')
     .set('Content-Type', 'application/json')
     .set(
       'x-auth-token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjA5NWMzN2QwZTM1OTI0YjU0MTE0MDYzIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTYyMDUxNjU3NywiZXhwIjoxNjIwODc2NTc3fQ.fMuUeGMvHlM_b5sL6UwdyED8KkV98P7PnxFfAg-D8Wg'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjA5NWMzN2QwZTM1OTI0YjU0MTE0MDYzIiwicm9sZSI6ImFkbWluIn0sImlhdCI6MTYyMTY5MDA4MywiZXhwIjoxNjIyMDUwMDgzfQ.4BUBqzmE3t5a0Y74vmhobr6AILgrU5yzUxsclvRm0ag'
     )
     .send({
       firstname: 'Testas',
       lastname: 'Testas2',
-      email: 'staymadboy@gmail.com',
+      email: 'throwawayacc7x@gmail.com',
       role: 'member',
       password: 'testing456'
     })

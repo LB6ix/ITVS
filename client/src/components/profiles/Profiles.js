@@ -8,6 +8,8 @@ import Tables from '../tables/Tables';
 import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import { formatDate } from '../../utility/formatDate';
 
 const Profiles = ({
   getProfiles,
@@ -25,9 +27,11 @@ const Profiles = ({
     { id: 'email', label: 'El.paštas' },
     { id: 'title', label: 'Pareigos' },
     { id: 'department', label: 'Skyrius' },
+    { id: 'company', label: 'Įmonė' },
     { id: 'location', label: 'Vieta' },
     { id: 'phoneNumber', label: 'Telefono numeris', disableSorting: true },
-    { id: 'actions', label: 'Veiksmai', disableSorting: true }
+    { id: 'date', label: 'Data' },
+    { id: 'Veiksmai', label: 'Veiksmai' }
   ];
 
   const {
@@ -63,12 +67,26 @@ const Profiles = ({
                   <TableCell>{prf.user.email}</TableCell>
                   <TableCell>{prf.title}</TableCell>
                   <TableCell>{prf.department}</TableCell>
+                  <TableCell>{prf.company}</TableCell>
                   {/* <TableCell>{sw.assignedTo}</TableCell> */}
                   <TableCell>{prf.location}</TableCell>
                   <TableCell>{prf.phoneNumber}</TableCell>
+                  <TableCell style={{ padding: '0' }}>
+                    {formatDate(prf.date)}
+                  </TableCell>
                   <TableCell>
+                    <Link to={`/profile/${prf.user._id}`}>
+                      <IconButton
+                        className='tableActions'
+                        variant='contained'
+                        color='primary'
+                        style={{ display: 'inline' }}
+                      >
+                        <VisibilityIcon fontSize='small' />
+                      </IconButton>
+                    </Link>
                     <IconButton
-                      style={{ display: 'inline-block' }}
+                      style={{ display: 'inline' }}
                       className='tableActions'
                       aria-label='delete'
                       variant='contained'

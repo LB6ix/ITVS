@@ -79,7 +79,7 @@ export const editHardware = (formData, id) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post(`/api/hardware/edit/${id}`, formData, config);
+    const res = await axios.put(`/api/hardware/edit/${id}`, formData, config);
     dispatch({
       type: GET_HARDWARE,
       payload: res.data
@@ -111,7 +111,7 @@ export const checkOutHardware = (formData, id) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post(
+    const res = await axios.put(
       `/api/hardware/${id}/checkout`,
       formData,
       config
@@ -155,7 +155,7 @@ export const checkInHardware = (formData, id) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post(
+    const res = await axios.put(
       `/api/hardware/${id}/checkin`,
       formData,
       config

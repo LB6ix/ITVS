@@ -40,16 +40,12 @@ router.post(
     authUser,
     [
       check('location', 'Darbo vietą privaloma nurodyti').not().isEmpty(),
-      check('phoneNumber', 'Nurodykite darbinį telefoną').isMobilePhone(
-        'lt-LT'
-      ),
+      check(
+        'phoneNumber',
+        'Nurodykite lietuviško formato telefono numerį'
+      ).isMobilePhone('lt-LT'),
       check('title', 'Nurodykite savo dabartines pareigas').not().isEmpty(),
-      check('department', 'Nurodykite savo dabartinį skyrių')
-        .not()
-        .isEmpty() /*{
-        options: { locale: 'lt-LT' },
-        errorMessage: 'Privalote nurodyti tinkamą, lietuvišką telefono numerį.',
-      }),*/
+      check('department', 'Nurodykite savo dabartinį skyrių').not().isEmpty()
     ]
   ],
   async (req, res) => {
@@ -108,9 +104,9 @@ router.get('/', [authAdmin], async (req, res) => {
   }
 });
 
-//@route  GET api/profile/:user_id
+//@route  GET api/profile/user/:user_id
 //@desc   Get prof by user id
-//@access user/admin
+//@access admin only
 
 router.get('/user/:user_id', async (req, res) => {
   try {

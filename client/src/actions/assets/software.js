@@ -76,7 +76,7 @@ export const editSoftware = (formData, id) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post(`/api/software/edit/${id}`, formData, config);
+    const res = await axios.put(`/api/software/edit/${id}`, formData, config);
     dispatch({
       type: GET_SOFTWARE,
       payload: res.data
@@ -151,7 +151,7 @@ export const checkOutSoftware = (formData, id) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post(
+    const res = await axios.put(
       `/api/software/${id}/checkout`,
       formData,
       config
@@ -187,7 +187,7 @@ export const checkInSoftware = (formData, id) => async (dispatch) => {
       }
     };
 
-    const res = await axios.post(
+    const res = await axios.put(
       `/api/software/${id}/checkin`,
       formData,
       config

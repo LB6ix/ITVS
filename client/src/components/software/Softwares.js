@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     width: '100%'
   },
   row: {
-    background: '#ff0009'
+    background: '#de3c31'
   },
   row2: {
     background: '#ebe6f0'
@@ -52,17 +52,17 @@ const Softwares = ({
   const headerCells = [
     { id: 'license', label: 'Licencija' },
     { id: 'key', label: 'Raktas', disableSorting: true },
-    { id: 'expDate', label: 'Galiojimo data', disableSorting: true },
+    { id: 'expDate', label: 'Galiojimas', disableSorting: true },
     { id: 'manufacturer', label: 'Leidėjas' },
     { id: 'status', label: 'Statusas' },
     { id: 'totalAmount', label: 'Kiekis', disableSorting: true },
     { id: 'assigned', label: 'Priskirta', disableSorting: true },
     { id: 'assignedTo', label: 'Kam priskirta', disableSorting: true },
-    { id: 'CheckInOout', label: 'Priskirti/Atsiimti', disableSorting: true },
-    // { id: 'cost', label: 'Kaina', disableSorting: true },
+    { id: 'CheckInOut', label: 'Priskirti/Atsiimti', disableSorting: true },
+    { id: 'cost', label: 'Kaina', disableSorting: true },
     { id: 'supplier', label: 'Tiekėjas', disableSorting: true },
     { id: 'date', label: 'Data', disableSorting: true },
-    { id: 'Veiksmai', label: 'Veiksmai', disableSorting: true }
+    { id: 'Veiksmai', label: 'Veiksmai' }
   ];
 
   const {
@@ -97,7 +97,9 @@ const Softwares = ({
             >
               <TableCell>{sw.license}</TableCell>
               <TableCell>{sw.key}</TableCell>
-              <TableCell>{formatDate(sw.expDate)}</TableCell>
+              <TableCell style={{ paddingRight: '0' }}>
+                {formatDate(sw.expDate)}
+              </TableCell>
               <TableCell>{sw.manufacturer}</TableCell>
               <TableCell
                 className={
@@ -148,7 +150,7 @@ const Softwares = ({
                 </Fragment>
               )}
 
-              {/* <TableCell>{sw.cost}€</TableCell> */}
+              <TableCell>{sw.cost}€</TableCell>
               <TableCell>{sw.supplier}</TableCell>
               <TableCell>{formatDate(sw.date)}</TableCell>
               <TableCell>
@@ -156,6 +158,8 @@ const Softwares = ({
                   <IconButton
                     className='tableActions'
                     style={{ display: 'inline' }}
+                    variant='contained'
+                    color='primary'
                   >
                     <VisibilityIcon fontSize='small' />
                   </IconButton>

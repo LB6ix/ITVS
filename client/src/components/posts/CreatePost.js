@@ -18,7 +18,7 @@ const CreatePost = ({ addPost, history }) => {
   return (
     <div className='post-form'>
       <div className='bg-primary p'>
-        <h3>Pateikite prašymą</h3>
+        <h3>Pateikite pranešimą</h3>
       </div>
       <form
         className='form my-1'
@@ -37,7 +37,7 @@ const CreatePost = ({ addPost, history }) => {
           name='text'
           cols='30'
           rows='5'
-          placeholder='Prašymo pateikimo vieta'
+          placeholder='Pranešimo pateikimo vieta'
           value={text}
           onChange={(e) => onChange(e)}
           required
@@ -48,14 +48,14 @@ const CreatePost = ({ addPost, history }) => {
             value={category}
             onChange={(e) => onChange(e)}
           >
-            <option value='0'>* Pasirinkite prašymo kategoriją</option>
+            <option value='0'>* Pasirinkite pranešimo kategoriją</option>
             <option value='Turto prašymas'>Turto prašymas</option>
             <option value='Turto remontas'>Turto remontas</option>
             <option value='Licencijos'>Licencijos</option>
             <option value='IT prašymas'>IT prašymas</option>
             <option value='Konsultacija'>Konsultacija</option>
           </select>
-          <small className='form-text'>Parinkite prašymo kategoriją</small>
+          <small className='form-text'>Parinkite pranešimo kategoriją</small>
         </div>
         <Button
           size='large'

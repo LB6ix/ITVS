@@ -68,12 +68,12 @@ router.get('/:id', [authUser], async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Prašymas nerastas' });
+      return res.status(404).json({ msg: 'Pranešimas nerastas' });
     }
     res.json(post);
   } catch (err) {
     if (err.kind === 'ObjectId') {
-      return res.status(404).json({ msg: 'Prašymas nerastas' });
+      return res.status(404).json({ msg: 'Pranešimas nerastas' });
     }
     res.status(500).send('Server Error');
   }
@@ -113,7 +113,7 @@ router.delete('/:id', [authUser, authAdmin], async (req, res) => {
     const post = await Post.findById(req.params.id);
 
     if (!post) {
-      return res.status(404).json({ msg: 'Prašymas nerastas' });
+      return res.status(404).json({ msg: 'Pranešimas nerastas' });
     }
 
     if (req.user.role !== 'admin') {
@@ -121,12 +121,12 @@ router.delete('/:id', [authUser, authAdmin], async (req, res) => {
     }
 
     await post.remove();
-    res.json({ msg: 'Prašymas ištrintas' });
+    res.json({ msg: 'Pranešimas ištrintas' });
     //return res.status(200).send('Success');
   } catch (err) {
     console.error(err.message);
     // if (err.kind === 'ObjectId') {
-    //   return res.status(404).json({ msg: 'Prašymas nerastas' });
+    //   return res.status(404).json({ msg: 'Pranešimas nerastas' });
     // }
     res.status(500).send('Server Error');
   }

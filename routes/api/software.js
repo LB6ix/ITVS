@@ -193,7 +193,7 @@ router.delete('/:id', authAdmin, async (req, res) => {
   }
 });
 
-router.post(
+router.put(
   '/edit/:id',
   [
     authAdmin,
@@ -273,7 +273,7 @@ router.post(
 
 //checkin route
 
-router.post(
+router.put(
   '/:id/checkin/',
   authAdmin,
   check('status', 'Privaloma nurodyti statusą').not().isEmpty(),
@@ -284,13 +284,14 @@ router.post(
     }
     let currentDate = new Date();
     try {
-      const { status, assigned, assignedTo, checkOutDate } = req.body;
+      // const { status, assigned, assignedTo, checkInDate, checkOutDate } =
+      //   req.body;
 
       const softwareFields = {};
       softwareFields.status = req.body.status;
       softwareFields.assigned = false;
       softwareFields.assignedTo = null;
-      softwareFields.checkInDate = currentDate;
+      softwareFields.checkInDate = req.body.checkInDate;
       softwareFields.checkOutDate = '';
 
       let software = await Software.findOne({
@@ -322,7 +323,7 @@ router.post(
 
 //checkout route
 
-router.post(
+router.put(
   '/:id/checkout/',
   [
     authAdmin,
@@ -347,7 +348,7 @@ router.post(
       const { status, assigned, assignedTo, checkOutDate } = req.body;
 
       const softwareFields = {};
-      softwareFields.status = 'Neaktyvi';
+      softwareFields.status = 'Aktyvi';
       softwareFields.assigned = true;
       softwareFields.assignedTo = assignedTo;
       softwareFields.checkOutDate = checkOutDate;

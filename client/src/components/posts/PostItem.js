@@ -48,7 +48,12 @@ const PostItem = ({
         <Fragment>
           {!auth.loading && auth.isAuthenticated && (
             <Link to={`/posts/${_id}`}>
-              <Button size='small' variant='contained' color='primary'>
+              <Button
+                size='small'
+                variant='contained'
+                color='primary'
+                style={{ marginTop: '5px' }}
+              >
                 Pastabos{'   '}
                 {comments.length > 0 && (
                   <span className='comment-count'>({comments.length})</span>

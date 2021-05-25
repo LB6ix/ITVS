@@ -10,7 +10,7 @@ const Log = require('../../models/Logs');
 const workSheetColumnNames = ['Įvykio Laikas', 'Tipas', 'Įvykio aprašymas'];
 
 const workSheetNames = 'Logs';
-const filePath = './outputFiles/ITVS.xlsx';
+const filePath = './outputFiles/ITVS_ivykiu_zurnalas.xlsx';
 
 router.get('/', [authAdmin], async (req, res) => {
   try {

@@ -83,11 +83,11 @@ router.post(
   }
 );
 
-//@route  POST api/hardware/edit/:id
+//@route  PUT api/hardware/edit/:id
 //@desc   hardware
 //@access Authenticated(admin only)
 
-router.post(
+router.put(
   '/edit/:id',
   [
     authAdmin,
@@ -375,10 +375,10 @@ router.get('/:id', authUser, async (req, res) => {
 });
 
 //checkout route'as
-// @route    POST api/hardware/:id/checkout/
+// @route    PUT api/hardware/:id/checkout/
 // @desc     Checkout
 // @access   Authenticated (admin only)
-router.post(
+router.put(
   '/:id/checkout/',
   [
     authAdmin,
@@ -456,11 +456,11 @@ router.post(
 );
 
 //checkin route
-// @route    POST api/hardware/:id/checkin/
+// @route    PUT api/hardware/:id/checkin/
 // @desc     Checkin
 // @access   Authenticated (admin only)
 
-router.post(
+router.put(
   '/:id/checkin/',
   authAdmin,
   check('status', 'Privaloma nurodyti statusą').not().isEmpty(),

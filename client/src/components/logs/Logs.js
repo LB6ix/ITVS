@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getLogs, exportLogs } from '../../actions/log';
-import ImportExportIcon from '@material-ui/icons/ImportExport';
+import FolderIcon from '@material-ui/icons/Folder';
 import IconButton from '@material-ui/core/IconButton';
 import Loading from '../layout/Loading';
 import { Link } from 'react-router-dom';
@@ -38,15 +38,16 @@ const Logs = ({ getLogs, exportLogs, log: { logs, loading } }) => {
         </Button>
       </Link>
 
-      <IconButton
-        style={{ display: 'inline' }}
+      <Button
+        style={{ marginLeft: '10px' }}
         variant='contained'
         color='secondary'
-        size='medium'
+        size='large'
+        startIcon={<FolderIcon />}
         onClick={() => exportLogs()}
       >
-        <ImportExportIcon fontSize='large' />
-      </IconButton>
+        Eksportuoti
+      </Button>
       {/* <table className='table'> */}
       <TableContainer>
         <TableHeader />

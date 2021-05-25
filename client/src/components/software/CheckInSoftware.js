@@ -142,7 +142,7 @@ const CheckInSoftware = ({
                     </div>
                     <DialogActions>
                       <Button
-                        color='secondary'
+                        color='primary'
                         variant='contained'
                         onClick={handleClose}
                       >
@@ -153,7 +153,7 @@ const CheckInSoftware = ({
                       {/* </Button> */}
 
                       <Button
-                        color='primary'
+                        color='secondary'
                         type='submit'
                         variant='contained'
                         onClick={handleClose}

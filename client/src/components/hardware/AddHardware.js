@@ -109,7 +109,6 @@ const AddHardware = ({ addHardware, history }) => {
             <option value='Spausdintuvai'>Spausdintuvai</option>
             <option value='Serveriai'>Serveriai</option>
           </select>
-          <small className='form-text'>FIXXXXXXXXXXX</small>
         </div>
         <div className='form-group'>
           <select name='status' value={status} onChange={(e) => onChange(e)}>

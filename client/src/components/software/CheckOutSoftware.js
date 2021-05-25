@@ -130,18 +130,27 @@ const CheckOutSoftware = ({
                       />
                       <small className='form-text'>Priskyrimo data</small>
                     </div>
-                    <input type='submit' onClick={handleClose} Priskirti />
+
+                    <DialogActions>
+                      <Button
+                        onClick={handleClose}
+                        variant='contained'
+                        color='primary'
+                      >
+                        Atšaukti
+                      </Button>
+                      <Button
+                        color='secondary'
+                        type='submit'
+                        variant='contained'
+                        onClick={handleClose}
+                      >
+                        Priskirti
+                      </Button>
+                    </DialogActions>
                   </form>
                 </Fragment>
               </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose} color='primary'>
-                  Atšaukti
-                </Button>
-                {/* <Button onClick={handleClose} color='primary'> */}
-
-                {/* </Button> */}
-              </DialogActions>
             </Dialog>
           </div>
           <div>

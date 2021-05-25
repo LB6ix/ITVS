@@ -22,18 +22,18 @@ after((done) => {
     .catch((err) => done(err));
 });
 
-it('Turėtų sukurti arba pakeisti profilį prisijungusiam naudotojui', (done) => {
+it('turėtų sukurti arba pakeisti profilį prisijungusiam naudotojui', (done) => {
   request(app)
     .post('/api/profile/')
     .set('Content-Type', 'application/json')
     .set(
       'x-auth-token',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjA5NzUyZTUwZGNmNWE0ODg4ODE5NzZlIiwicm9sZSI6Im1lbWJlciJ9LCJpYXQiOjE2MjA1MzAzNzksImV4cCI6MTYyMDg5MDM3OX0.KX_IyHXGP-DuSckbPk1vo29DBHH01j8cPdq0ygOBiYs'
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjBhODBkOTFmN2Y2M2EyMjQ4Njc0MGQ1Iiwicm9sZSI6Im1lbWJlciJ9LCJpYXQiOjE2MjE3OTYzMTAsImV4cCI6MTYyNTM5NjMxMH0.wS8ftHZEoCOjTuD4rQFGjJpLHHioAWDWts8Ooie-NzQ'
     )
     .send({
       title: 'Praktikantas',
       department: 'IT skyrius',
-      phoneNumber: '+37060474257',
+      phoneNumber: '+37055542421',
       company: 'Telia',
       location: 'Kaunas'
     })
