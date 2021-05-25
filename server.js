@@ -8,7 +8,7 @@ const express = require('express');
 
 db.connectDB().then(() => {
   app.listen(PORT, () => {
-    console.log('Prisijungta prie testinės DB, portas: ' + PORT);
+    console.log('Prisijungta prie DB, portas: ' + PORT);
   });
 });
 
