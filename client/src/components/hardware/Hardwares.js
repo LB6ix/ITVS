@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
@@ -13,13 +13,16 @@ import { Link } from 'react-router-dom';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import { Search } from '@material-ui/icons';
+import Toolbar from '@material-ui/core/Toolbar';
 import {
   TableBody,
   TableCell,
   TableRow,
   Button,
-  makeStyles
+  makeStyles,
+  InputAdornment,
+  TextField
 } from '@material-ui/core';
 import { formatDate } from '../../utility/formatDate';
 
@@ -32,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
   },
   row2: {
     background: '#ebe6f0'
+  },
+  searchInput: {
+    width: '33%'
   }
 }));
 
@@ -51,6 +57,11 @@ const Hardwares = ({
   }, [getHardwares, getUserHardwares]);
 
   const classes = useStyles();
+  const [filterFunction, setFilterFunction] = useState({
+    function: (items) => {
+      return items;
+    }
+  });
 
   let headerCells = [];
 
@@ -95,7 +106,17 @@ const Hardwares = ({
     TableHeader,
     TablePaginationKomp,
     recordsAfterPagingAndSorting
-  } = Tables(hardwares, headerCells);
+  } = Tables(hardwares, headerCells, filterFunction);
+
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFunction({
+      function: (assets) => {
+        if (target.value === '') return assets;
+        else return assets.filter((x) => x.name.includes(target.value));
+      }
+    });
+  };
 
   return (
     <Fragment>
@@ -110,10 +131,32 @@ const Hardwares = ({
               {!loading && isAuthenticated && isAdmin && (
                 <div>
                   <Link to={`/hardware/add-hardware`}>
-                    <Button size='large' variant='contained' color='primary'>
+                    <Button
+                      size='large'
+                      variant='contained'
+                      color='primary'
+                      style={{ marginTop: '8px' }}
+                    >
                       Pridėti naują įrangą
                     </Button>
                   </Link>
+                  <Toolbar style={{ display: 'inline', paddingLeft: '10px' }}>
+                    <TextField
+                      size='medium'
+                      variant='outlined'
+                      label='Ieškoti įrangos'
+                      className={classes.searchInput}
+                      name='searchHw'
+                      inputProps={{
+                        start: (
+                          <InputAdornment position='start'>
+                            <Search />
+                          </InputAdornment>
+                        )
+                      }}
+                      onChange={handleSearch}
+                    ></TextField>
+                  </Toolbar>
                   <TableContainer>
                     <TableHeader />
                     <TableBody>

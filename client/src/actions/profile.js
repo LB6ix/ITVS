@@ -60,45 +60,45 @@ export const getProfileById = (userId) => async (dispatch) => {
   }
 };
 
-export const createProfile = (formData, history, edit = false) => async (
-  dispatch
-) => {
-  try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
+export const createProfile =
+  (formData, history, edit = false) =>
+  async (dispatch) => {
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const res = await axios.post('/api/profile', formData, config);
+      dispatch({
+        type: GET_PROFILE,
+        payload: res.data
+      });
+
+      dispatch(
+        setAlert(edit ? 'Profilis Atnaujintas' : 'Profilis sukurtas', 'success')
+      );
+
+      if (!edit) {
+        history.push('/main');
       }
-    };
+    } catch (err) {
+      const errors = err.response.data.errors;
 
-    const res = await axios.post('/api/profile', formData, config);
-    dispatch({
-      type: GET_PROFILE,
-      payload: res.data
-    });
+      if (errors) {
+        errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      }
 
-    dispatch(
-      setAlert(edit ? 'Profilis Atnaujintas' : 'Profilis sukurtas', 'success')
-    );
-
-    if (!edit) {
-      history.push('/main');
+      dispatch({
+        type: PROFILE_ERROR,
+        payload: { msg: err.response.statusText, status: err.response.status }
+      });
     }
-  } catch (err) {
-    const errors = err.response.data.errors;
-
-    if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
-    }
-
-    dispatch({
-      type: PROFILE_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status }
-    });
-  }
-}; //history - redirect
+  }; //history - redirect
 
 export const deleteAccount = (id) => async (dispatch) => {
-  if (window.confirm('Tikrai?')) {
+  if (window.confirm('Tikrai norite ištrinti naudotoją?')) {
     try {
       await axios.delete(`/api/profile/${id}`);
 

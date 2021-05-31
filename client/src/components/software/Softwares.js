@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getSoftwares, deleteSoftware } from '../../actions/assets/software';
@@ -9,12 +9,17 @@ import Tables from '../tables/Tables';
 import IconButton from '@material-ui/core/IconButton';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import DeleteIcon from '@material-ui/icons/Delete';
+
+import { Search } from '@material-ui/icons';
+import Toolbar from '@material-ui/core/Toolbar';
 import {
   TableBody,
   TableCell,
   TableRow,
   Button,
-  makeStyles
+  makeStyles,
+  InputAdornment,
+  TextField
 } from '@material-ui/core';
 let currentDate = new Date();
 const offset = currentDate.getTimezoneOffset();
@@ -34,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   },
   row3: {
     background: '#006622'
+  },
+  searchInput: {
+    width: '33%'
   }
 }));
 
@@ -49,6 +57,12 @@ const Softwares = ({
     getSoftwares();
   }, [getSoftwares]);
   const classes = useStyles();
+  const [filterFunction, setFilterFunction] = useState({
+    function: (items) => {
+      return items;
+    }
+  });
+
   const headerCells = [
     { id: 'license', label: 'Licencija' },
     { id: 'key', label: 'Raktas', disableSorting: true },
@@ -70,7 +84,17 @@ const Softwares = ({
     TableHeader,
     TablePaginationKomp,
     recordsAfterPagingAndSorting
-  } = Tables(softwares, headerCells);
+  } = Tables(softwares, headerCells, filterFunction);
+
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFunction({
+      function: (assets) => {
+        if (target.value === '') return assets;
+        else return assets.filter((x) => x.license.includes(target.value));
+      }
+    });
+  };
 
   return loading ? (
     <Loading />
@@ -79,11 +103,32 @@ const Softwares = ({
       <h1 className='large text'>Programinės įrangos sąrašas</h1>
 
       <Link to={`/software/add-software`}>
-        <Button size='large' variant='contained' color='primary'>
+        <Button
+          size='large'
+          variant='contained'
+          color='primary'
+          style={{ marginTop: '8px' }}
+        >
           Pridėti naują įrangą
         </Button>
       </Link>
-      {/* <table className='table'> */}
+      <Toolbar style={{ display: 'inline', paddingLeft: '10px' }}>
+        <TextField
+          size='medium'
+          variant='outlined'
+          label='Ieškoti licencijos'
+          className={classes.searchInput}
+          name='searchHw'
+          inputProps={{
+            start: (
+              <InputAdornment position='start'>
+                <Search />
+              </InputAdornment>
+            )
+          }}
+          onChange={handleSearch}
+        ></TextField>
+      </Toolbar>
       <TableContainer>
         <TableHeader />
         <TableBody>

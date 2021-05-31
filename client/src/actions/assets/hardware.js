@@ -232,7 +232,7 @@ export const getUserHardwares = (id) => async (dispatch) => {
 };
 
 export const deleteHardware = (id) => async (dispatch) => {
-  if (window.confirm('Tikrai?')) {
+  if (window.confirm('Tikrai norite ištrinti įrašą?')) {
     try {
       await axios.delete(`/api/hardware/${id}`);
 

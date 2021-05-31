@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Loading from '../layout/Loading';
@@ -9,7 +9,16 @@ import { TableBody, TableCell, TableRow } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
 import VisibilityIcon from '@material-ui/icons/Visibility';
+import { InputAdornment, TextField, makeStyles } from '@material-ui/core';
+import { Search } from '@material-ui/icons';
+import Toolbar from '@material-ui/core/Toolbar';
 import { formatDate } from '../../utility/formatDate';
+
+const useStyles = makeStyles((theme) => ({
+  searchInput: {
+    width: '33%'
+  }
+}));
 
 const Profiles = ({
   getProfiles,
@@ -19,6 +28,13 @@ const Profiles = ({
   useEffect(() => {
     getProfiles();
   }, [getProfiles]);
+
+  const classes = useStyles();
+  const [filterFunction, setFilterFunction] = useState({
+    function: (items) => {
+      return items;
+    }
+  });
 
   const headerCells = [
     { id: 'avatar', label: 'Nuotrauka', disableSorting: true },
@@ -39,7 +55,17 @@ const Profiles = ({
     TableHeader,
     TablePaginationKomp,
     recordsAfterPagingAndSorting
-  } = Tables(profiles, headerCells);
+  } = Tables(profiles, headerCells, filterFunction);
+
+  const handleSearch = (e) => {
+    let target = e.target;
+    setFilterFunction({
+      function: (users) => {
+        if (target.value === '') return users;
+        else return users.filter((x) => x.user.email.includes(target.value));
+      }
+    });
+  };
 
   return loading ? (
     <Loading />
@@ -50,7 +76,23 @@ const Profiles = ({
       ) : (
         <Fragment>
           <h1 className='large text'>Naudotojų sąrašas</h1>
-
+          <Toolbar style={{ display: 'inline', paddingLeft: '0px' }}>
+            <TextField
+              size='medium'
+              variant='outlined'
+              label='Ieškoti naudotojo pagal el. paštą'
+              className={classes.searchInput}
+              name='searchHw'
+              inputProps={{
+                start: (
+                  <InputAdornment position='start'>
+                    <Search />
+                  </InputAdornment>
+                )
+              }}
+              onChange={handleSearch}
+            ></TextField>
+          </Toolbar>
           <TableContainer>
             <TableHeader />
             <TableBody>

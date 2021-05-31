@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
-const dbtest = config.get('mongoTest');
+//const dbtest = config.get('mongoTest');
 
 function connectDB() {
   return new Promise((resolve, reject) => {

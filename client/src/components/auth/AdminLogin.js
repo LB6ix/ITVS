@@ -38,11 +38,10 @@ const AdminLogin = ({ adminLogin, isAuthenticated, history }) => {
 
   return (
     <Fragment>
-      <h5 className='large text-primary'>Prisijungti</h5>
-      <p className='lead'>
-        <i className='fas fa-user'></i> Prisijunkite prie administratoriaus
-        paskyros:
-      </p>
+      <h5 className='large text'>Prisijungti</h5>
+      <div className='bg-primary p'>
+        <h3>Prisijunkite prie administratoriaus paskyros:</h3>
+      </div>
       <form className='form' onSubmit={(e) => onSubmit(e)}>
         <div className='form-group'>
           <input

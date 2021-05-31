@@ -24,7 +24,6 @@ router.get('/me', authUser, async (req, res) => {
     }
 
     res.json(profile);
-    // res.status(200).send('Success!');
   } catch (err) {
     console.error(err.message);
   }
